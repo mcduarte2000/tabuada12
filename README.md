@@ -49,6 +49,7 @@ styles.css            estilos (Material Design 3, temas claro/escuro)
 app.js                lógica do jogo
 mascots.js            lista de mascotes e frases de recurso
 content.json          frases de cada mascote (editável)
+CHANGELOG.md          histórico de versões
 manifest.webmanifest  metadados da app instalável
 assets/
   icon.svg            ícone da aplicação
@@ -88,6 +89,12 @@ os dados do site no navegador.
 
 Não são usados ficheiros de música nem áudio de terceiros. Os efeitos
 sonoros são gerados em tempo real pela Web Audio API.
+
+## Versões
+
+O histórico de alterações está em [`CHANGELOG.md`](CHANGELOG.md), seguindo
+[Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
+[Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## Licença
 
