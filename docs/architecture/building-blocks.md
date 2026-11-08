@@ -35,7 +35,7 @@ C4Container
 | File | Role |
 | --- | --- |
 | `index.html` | Document shell, setup form, game screen, stat panel, keypad, licence and privacy dialog, inline SVG icons. |
-| `styles.css` | Material Design 3 tokens, light and dark palettes, layout, components, motion. Mascot picker is a horizontal carousel with page dots and a scroll hint; line heights are unitless so text scales with the system font size; the header holds only the app title and the action buttons, with the speaking mascot and its name rendered beside the speech bubble. |
+| `styles.css` | Material Design 3 tokens, light and dark palettes, layout, components, motion. Mascot picker is a horizontal carousel with page dots and a scroll hint; line heights are unitless so text scales with the system font size; the header sits at the top of the page and stacks a left-aligned row with the static app icon and title above a right-aligned row of action buttons, while the speaking mascot and its name render beside the speech bubble. |
 | `app.js` | Entire game logic in one IIFE, ES5 syntax. |
 | `mascots.js` | `window.MASCOTS` list (30 entries: id, name, image path, background colour) and `window.FALLBACK_CONTENT`. |
 | `content.json` | Per-mascot phrase pools and generic pools, fetched at runtime. |

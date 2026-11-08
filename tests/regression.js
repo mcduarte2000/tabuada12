@@ -121,12 +121,20 @@ function staticTests() {
   check('no pixel line-heights', /line-height:\s*\d+px/.test(css) === false,
     'fixed px line-height clips text when the OS scales fonts');
 
-  check('header keeps the title beside the actions',
-    /class="top-app-bar"[\s\S]{0,120}?class="brand-title"[\s\S]{0,200}?class="top-actions"/.test(html),
-    'the title and the buttons share the header row');
+  check('header shows the app icon beside the title',
+    /class="brand"[\s\S]{0,180}?class="brand-mark"[\s\S]{0,300}?class="brand-title"/.test(html),
+    'the icon and the app name share the first header row, aligned left');
 
-  check('header has no mascot or subtitle', /\.brand-mark|\.brand-subtitle|id="brandMark"|id="brandSubtitle"/.test(html + css) === false,
-    'the mascot moved below the dialogue and the subtitle was removed');
+  check('header has no subtitle and no mascot in the bar',
+    /\.brand-subtitle|id="brandSubtitle"/.test(html + css) === false &&
+      /id="brandMark"/.test(html) === false,
+    'the bar keeps a static app icon; the mascot lives beside the speech bubble');
+
+  check('header stacks title above right-aligned actions',
+    /\.top-app-bar\s*\{[^}]*flex-direction:\s*column/.test(css) &&
+      /\.top-app-bar\s*\{[^}]*align-items:\s*flex-start/.test(css) &&
+      /\.top-actions\s*\{[^}]*align-self:\s*flex-end/.test(css),
+    'the icon and title sit left on the first row, buttons right on the second');
 
   check('mascot name sits under the speaker', /class="coach-face"[\s\S]{0,200}?class="coach-name"/.test(html),
     'each speaking mascot is labelled underneath');
@@ -539,14 +547,17 @@ async function browserTests(browser) {
     return t.scrollWidth <= t.clientWidth + 1;
   }), 'the app name must survive the narrowest viewport');
 
-  check('header stays on one row at 320 px', await page.evaluate(function () {
-    var bar = document.querySelector('.top-app-bar');
-    var actions = document.querySelector('.top-actions');
-    var title = document.querySelector('.brand-title');
-    return bar.getBoundingClientRect().height < 60 &&
-      actions.getBoundingClientRect().bottom <= bar.getBoundingClientRect().bottom + 1 &&
-      title.getBoundingClientRect().height > 0;
-  }), 'title and four buttons must share one compact row');
+  check('actions sit below the title, right aligned', await page.evaluate(function () {
+    var bar = document.querySelector('.top-app-bar').getBoundingClientRect();
+    var brand = document.querySelector('.brand').getBoundingClientRect();
+    var actions = document.querySelector('.top-actions').getBoundingClientRect();
+    var icon = document.querySelector('.brand-mark').getBoundingClientRect();
+    var title = document.querySelector('.brand-title').getBoundingClientRect();
+    return actions.top >= brand.bottom - 1 &&
+      title.left >= icon.right &&
+      Math.abs(bar.right - actions.right) <= 8 &&
+      actions.left > icon.left + 40;
+  }), 'two rows: icon and title left on top, buttons right below');
 
   check('no vertical overflow at 320 px', await page.evaluate(function () {
     return document.documentElement.scrollHeight <= window.innerHeight + 1;

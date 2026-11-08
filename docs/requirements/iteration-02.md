@@ -234,14 +234,15 @@ Feature: Mascot row affordance
 
 ### Requirements
 
-**R13.1 (ubiquitous)** The system shall render the app title on its own line,
-above the mascot and the action buttons.
+**R13.1 (ubiquitous)** The system shall render, in every screen, a header pinned
+to the top of the page with two rows: the application icon and app title
+aligned left on the first, the action buttons aligned right on the second.
 
 **R13.2 (state-driven)** While the title is wider than the available space, the
 system shall wrap or shrink it rather than truncate it with an ellipsis.
 
-**R13.3 (ubiquitous)** The system shall show the application icon next to the
-subtitle before a mascot is chosen, and the chosen mascot afterwards.
+**R13.3 (ubiquitous)** The application icon in the header shall be static, so
+that the header never changes with the chosen mascot.
 
 **R13.4 (state-driven)** While the header subtitle does not fit on one line, the
 system shall wrap it to at most two lines.
@@ -258,16 +259,17 @@ under its image, in both the setup preview and the game.
 ```gherkin
 Feature: Header legibility
 
-  Scenario: Title on its own line
+  Scenario: Two header rows, title left and buttons right
     Given the app is open on a 360x640 viewport
-    Then "Tabuada 12" is fully visible
-    And the mascot and action buttons are on the line below
+    Then the application icon and "Tabuada 12" share the first row, aligned left
+    And the action buttons are on the row below, aligned right
+    And the header sits at the top of the page, not vertically centred
 
-  Scenario: Application icon before choosing a mascot
-    Given no game has started
-    Then the header shows the application icon
+  Scenario: Static application icon
+    Given the header is visible on the setup screen
     When the child starts a game
-    Then the header shows the chosen mascot instead
+    Then the header still shows the application icon
+    And the chosen mascot appears beside the speech bubble instead
 
   Scenario: Subtitle wraps at 320 px
     Given a 320 px wide viewport

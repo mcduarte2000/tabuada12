@@ -38,7 +38,8 @@ defect from returning unnoticed.
 | No pixel `line-height` | Enlarged Android fonts clipped every text box |
 | Title on its own row | "Tabuada 12" was truncated to "Tabuada..." by the buttons |
 | Title has no ellipsis | The app name must never be abbreviated |
-| Header has no mascot or subtitle | The mascot belongs beside the speech bubble |
+| Header has no subtitle and a static icon | The mascot belongs beside the speech bubble |
+| Header stacks title above right-aligned actions | Identity left, controls right, two rows |
 | No mandatory scroll snap | Short swipes on Android sprang back to the start |
 | `touch-action: pan-x` on the row | Native horizontal scroll was blocked |
 | Page dots present | The row did not look scrollable |

@@ -77,8 +77,10 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ### Alterado
 
-- O cabeçalho fica só com o título e os botões; o mascote passou para junto da
-  fala, com o nome por baixo da imagem.
+- O cabeçalho passa a estar fixo ao topo, em duas linhas: o ícone da aplicação
+  e o título à esquerda, e os botões de som, tema, edição e informação à
+  direita, na linha de baixo. O mascote fica junto da fala, com o nome por
+  baixo da imagem.
 - "Acertos" e o respetivo número aparecem a verde; "Falhas" e o número a
   vermelho.
 - O diálogo de licença e privacidade abre no topo, em "Privacidade", em vez de
