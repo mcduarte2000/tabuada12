@@ -17,6 +17,15 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+### Adicionado
+
+- Documentação de arquitetura em `docs/` (arc42 + ADRs em MADR), com diagramas
+  C4 de contexto, container e deployment em Mermaid.
+- Sete ADRs a registar as decisões já tomadas: aplicação estática, ausência de
+  build, mascotes Fluent Emoji, seleção adaptativa, armazenamento no browser,
+  Material Design 3 e som sintetizado.
+- `AGENTS.md` com as convenções de código, documentação e versionamento.
+
 ## [1.2.0] - 2026-11-08
 
 ### Adicionado

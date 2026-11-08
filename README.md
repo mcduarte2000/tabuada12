@@ -50,6 +50,7 @@ app.js                lógica do jogo
 mascots.js            lista de mascotes e frases de recurso
 content.json          frases de cada mascote (editável)
 CHANGELOG.md          histórico de versões
+AGENTS.md             regras para contribuidores e agentes
 manifest.webmanifest  metadados da app instalável
 assets/
   icon.svg            ícone da aplicação
@@ -57,6 +58,7 @@ assets/
   icon-512.png        ícone para PWA
   apple-touch-icon.png
   mascots/fluent/     mascotes SVG + licença de origem
+docs/                 documentação de arquitetura (arc42 + ADRs)
 ```
 
 ## Conteúdo editável
@@ -89,6 +91,11 @@ os dados do site no navegador.
 
 Não são usados ficheiros de música nem áudio de terceiros. Os efeitos
 sonoros são gerados em tempo real pela Web Audio API.
+
+## Documentação
+
+A arquitetura está documentada em [`docs/`](docs/README.md): visão geral com
+diagrama de contexto, blocos de construção, qualidade e riscos, e os ADRs.
 
 ## Versões
 
