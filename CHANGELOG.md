@@ -17,6 +17,15 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-11-08
+
+### Alterado
+
+- Documentação da iteração 2 alinhada com o que foi entregue: 9 user stories,
+  64 requisitos EARS e 40 cenários Gherkin, com o âmbito, o registo de
+  verificação e as lacunas conhecidas reescritos.
+- `iteration-01.md` assinala os requisitos substituídos pela iteração 2.
+
 ## [1.4.0] - 2026-11-08
 
 ### Adicionado
@@ -215,7 +224,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.0...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.1...main
+[1.4.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/mcduarte2000/tabuada12/compare/32a6e5e...cee4b10

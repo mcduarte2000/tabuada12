@@ -8,7 +8,7 @@ iteration, written when the iteration closes.
 | Iteration | Title | Status | Document |
 | --- | --- | --- | --- |
 | 1 | Playable multiplication game | completed | [iteration-01.md](./iteration-01.md) |
-| 2 | One-screen setup and large-font support | completed | [iteration-02.md](./iteration-02.md) |
+| 2 | Phone polish, privacy, statistics and installability | completed | [iteration-02.md](./iteration-02.md) |
 
 ## Why this folder exists
 

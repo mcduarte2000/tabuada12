@@ -1,33 +1,63 @@
-# Iteration 2 — Fits on one phone screen and survives large system fonts
+# Iteration 2 — Polish for phones, privacy and installability
 
 * Status: completed
 * Period: 2026-11-08
+* Shipped in: v1.3.0 to v1.4.1
 
-This iteration fixed usability defects reported on a real Android phone: the
-mascot picker pushed the play button off screen, the operating system font-size
-setting broke the header and the statistics panel, the carousel had no
-affordance, and the app title was truncated by the action buttons.
+### Sprint close summary
+
+| Metric | Value |
+| --- | --- |
+| User stories | 9 (US-10 to US-18) |
+| EARS requirements | 64 |
+| Gherkin scenarios | 40 |
+| Automated checks | 91 |
+| Defects found and fixed | 10 |
+| New ADRs | 1 (ADR-0008) |
+| Releases | 3 (v1.3.0, v1.4.0, v1.4.1) |
+
+All nine user stories were verified against their acceptance criteria before
+closing. The verification record below names the method used for each group.
+Nothing in this iteration was dropped or descoped.
+
+## Summary
+
+This iteration responded to feedback from a real Android phone and to product
+requests. It fixed layout defects caused by enlarged system fonts, made the
+mascot picker usable on one screen, replaced the placeholder name request with
+a privacy-minded nickname, added an in-app licence and privacy dialog, made the
+statistics explorable, recorded one result per session, and turned the app into
+an installable Progressive Web App that works offline.
 
 ## Scope
 
 ### In scope
 
-- Horizontal mascot carousel replacing the 4-column grid.
+- Horizontal mascot carousel replacing the 4-column grid, with visible
+  affordance and keyboard support.
 - Guarantee that the profile setup fits a 360x640 phone screen without page
   scrolling.
 - Correct behaviour with enlarged system font sizes.
-- Fix the header clash between the title and the action buttons.
-- Fix truncated statistic labels.
-- Keep the sound toggle available in the setup screen.
-- Signal that the mascot row scrolls horizontally.
-- Render the app title on its own line, with the application icon in the
-  header before a mascot is chosen.
+- Header layout: app icon and title aligned left, action buttons right on the
+  row below, pinned to the top of the page.
+- Statistic indicators that open detail dialogs for Acertos, Falhas and
+  Recorde, including a top-10 session history.
+- Coloured indicators: Acertos green, Falhas red.
+- Nickname instead of a real first name, with autofill disabled.
+- In-app licence and privacy dialog, reachable from every screen.
+- Distinct greetings per mascot.
+- One record per session, persisted for one year in `localStorage` and a
+  cookie.
+- Installable PWA with manifest, maskable icon, screenshots and a service
+  worker for offline play.
 
 ### Out of scope
 
-- Offline support.
 - Localisation.
 - Native packaging.
+- Background music.
+- Play Store or F-Droid distribution. Investigated and recorded in
+  [backlog.md](../backlog.md).
 
 ---
 
@@ -646,15 +676,21 @@ Feature: Installable web app
 
 ## Known gaps at the end of this iteration
 
-- The simulation used injected CSS rather than a real Android device with the
-  font-size accessibility setting. `TODO: confirm` on a physical device.
-- The mascot carousel has no keyboard arrow navigation; Tab still reaches every
-  option.
-- At 320 px the subtitle occupies two lines, which slightly reduces the space
-  available for the carousel. Acceptable, but worth revisiting if more vertical
-  elements are added.
-- The carousel gesture was validated with emulated touch events in Chromium.
-  `TODO: confirm` on a physical Android device after deploying.
+- The large-font behaviour was simulated with injected CSS, not a real Android
+  device. `TODO: confirm` on a physical phone with the accessibility font size
+  set above default.
+- The carousel gesture was validated with emulated touch events in Chromium and
+  with real mouse input. `TODO: confirm` with a real finger on Android.
+- Roboto is still fetched from Google Fonts. Offline the app falls back to
+  system fonts, which changes text metrics slightly. Tracked as debt D8;
+  self-hosting is also a prerequisite for F-Droid, see
+  [backlog.md](../backlog.md).
+- The install prompt cannot be triggered in automated tests, so the browser
+  check only asserts the worker activation, the cache and the offline load.
+  The install button itself is covered by a static check on
+  `beforeinstallprompt`.
+- iOS installation uses "Add to Home Screen". The service worker works on iOS
+  16.4 and later; older versions fall back to an online-only experience.
 
 ## Defects found while writing the tests
 

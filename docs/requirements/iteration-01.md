@@ -3,6 +3,8 @@
 * Status: completed
 * Period: 2026-11-08
 * Shipped in: v1.0.0 to v1.2.0
+* Superseded in part by [iteration-02.md](./iteration-02.md) for the name step
+  wording and the header layout.
 
 This iteration produced the first complete, playable version of Tabuada 12: a
 child enters a name, picks a mascot, answers multiplication questions with two
