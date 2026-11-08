@@ -95,7 +95,9 @@ sonoros são gerados em tempo real pela Web Audio API.
 ## Documentação
 
 A arquitetura está documentada em [`docs/`](docs/README.md): visão geral com
-diagrama de contexto, blocos de construção, qualidade e riscos, e os ADRs.
+diagrama de contexto, blocos de construção, qualidade e riscos, e os ADRs. Os
+requisitos por iteração, com user stories, EARS e critérios de aceitação em
+Gherkin, estão em [`docs/requirements/`](docs/requirements/README.md).
 
 ## Versões
 

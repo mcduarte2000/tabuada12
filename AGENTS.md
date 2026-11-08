@@ -38,7 +38,7 @@ mascots.js            mascot list and fallback phrases
 content.json          per-mascot phrases, fetched at runtime (editable)
 manifest.webmanifest  PWA metadata
 assets/               icons, mascot SVGs, vendored licence
-docs/                 architecture documentation (see below)
+docs/                 documentation (see below): architecture and requirements
 CHANGELOG.md          Keep a Changelog + SemVer
 ```
 
@@ -78,9 +78,17 @@ docs/
 │   └── adr/
 │       ├── README.md                # ADR index
 │       └── NNNN-slug.md             # one ADR per decision
+└── requirements/
+    ├── README.md                    # requirements index and format rules
+    └── iteration-NN.md              # one file per closed iteration
 ```
 
-Do not invent new folders without justifying it in the pull request.
+Justification for `requirements/`: architecture says *how* the system is built,
+requirements say *what* was asked and *how it was verified*. Keeping them apart
+prevents product intent from being mixed with design rationale.
+
+Do not invent new folders beyond these without justifying it in the pull
+request.
 
 ### 2. File naming
 
@@ -187,13 +195,35 @@ The newest ADR uses the next free number.
   absolute.
 - English for document content, unless stated otherwise.
 
-### 7. Update discipline
+### 7. Requirements per iteration
+
+- One file per **closed** iteration: `docs/requirements/iteration-NN.md`,
+  zero-padded, lowercase, kebab-case.
+- Every requirement has three layers, all in English:
+  1. **User story** — `US-n`, in the form "As a ..., I want ..., so that ...".
+  2. **EARS requirements** — `R<iteration>.<n>`, tagged with the EARS pattern
+     in parentheses: Ubiquitous ("shall"), Event-driven ("When ..."), 
+     State-driven ("While ..."), Optional feature ("Where ..."), Unwanted
+     behaviour ("If ... then ...").
+  3. **Acceptance criteria** — Gherkin `Feature` and `Scenario` blocks with
+     `Given`/`When`/`Then` that a tester can run without reading the code.
+- Record only behaviour that is implemented and verified. If a criterion
+  disagrees with the code, fix one of them before marking the iteration
+  `completed`.
+- Add a **Verification record** table with the method used per requirement
+  group, and a **Known gaps** list.
+- Never renumber requirements. Mark removed ones as removed.
+- Update the index table in `docs/requirements/README.md` and `CHANGELOG.md`
+  in the same commit.
+
+### 8. Update discipline
 
 Every development iteration must update the whole documentation set to match
 the code: `overview.md` when constraints, goals or context change,
 `building-blocks.md` when the decomposition changes, `quality-and-risks.md`
 when risks or debt appear or close, a new ADR for a new architectural
-decision, and `CHANGELOG.md` for user-visible changes.
+decision, a new iteration file in `docs/requirements/` when an iteration
+closes, and `CHANGELOG.md` for user-visible changes.
 
 ## Versioning and changelog
 

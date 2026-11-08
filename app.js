@@ -86,6 +86,7 @@
     best: 0,
     sound: true,
     startedAt: null,
+    elapsed: 0,
     timerId: null,
     progress: {}
   };
@@ -322,12 +323,12 @@
     return minutes + ':' + (seconds < 10 ? '0' + seconds : String(seconds));
   }
 
+  function elapsedTime() {
+    return state.elapsed + (state.startedAt ? Date.now() - state.startedAt : 0);
+  }
+
   function renderTime() {
-    if (!state.startedAt) {
-      els.statTime.textContent = '0:00';
-      return;
-    }
-    els.statTime.textContent = formatTime(Date.now() - state.startedAt);
+    els.statTime.textContent = formatTime(elapsedTime());
   }
 
   function startTimer() {
@@ -338,6 +339,14 @@
     if (state.timerId === null) {
       state.timerId = window.setInterval(renderTime, 1000);
     }
+  }
+
+  function pauseTimer() {
+    if (state.startedAt) {
+      state.elapsed += Date.now() - state.startedAt;
+      state.startedAt = null;
+    }
+    stopTimer();
   }
 
   function stopTimer() {
@@ -906,6 +915,8 @@
       state.missCount = 0;
       state.streak = 0;
       state.startedAt = null;
+      state.elapsed = 0;
+      renderTime();
     }
 
     els.game.hidden = true;
@@ -1070,10 +1081,12 @@
   });
 
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden || !state.startedAt) {
-      stopTimer();
-    } else if (!els.game.hidden) {
-      state.timerId = window.setInterval(renderTime, 1000);
+    if (els.game.hidden) return;
+
+    if (document.hidden) {
+      pauseTimer();
+    } else {
+      startTimer();
     }
   });
 

@@ -25,6 +25,13 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   build, mascotes Fluent Emoji, seleção adaptativa, armazenamento no browser,
   Material Design 3 e som sintetizado.
 - `AGENTS.md` com as convenções de código, documentação e versionamento.
+- Requisitos da iteração 1 em `docs/requirements/`, com user stories, EARS e
+  critérios de aceitação em Gherkin.
+
+### Corrigido
+
+- O cronómetro da sessão deixava de contar enquanto o separador estava oculto;
+  agora pausa e retoma sem perder o tempo acumulado.
 
 ## [1.2.0] - 2026-11-08
 

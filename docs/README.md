@@ -6,6 +6,8 @@ Documentation for **Tabuada 12**, versioned with the code (docs-as-code).
 
 - [Architecture](./architecture/README.md) — context, building blocks, quality,
   risks and architectural decisions.
+- [Requirements](./requirements/README.md) — user stories, EARS requirements and
+  Gherkin acceptance criteria, one file per closed iteration.
 - [Changelog](../CHANGELOG.md) — released versions and pending changes.
 
 ## Conventions

@@ -12,6 +12,11 @@ adapted for a small static web app.
 | [quality-and-risks.md](./quality-and-risks.md) | 10-11 | Quality requirements, risks and technical debt |
 | [adr/README.md](./adr/README.md) | — | Architecture Decision Records index |
 
+## Related
+
+- [Requirements](../requirements/README.md) — what was asked and how it was
+  verified.
+
 ## Reading order
 
 1. [overview.md](./overview.md) — what the system is and why it is built this
