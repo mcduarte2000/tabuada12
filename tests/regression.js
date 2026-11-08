@@ -197,7 +197,12 @@ function staticTests() {
     'progress cookie must expire after 24 hours');
 
   check('profile TTL is one year', /PROFILE_TTL\s*=\s*365\s*\*\s*24\s*\*\s*60\s*\*\s*60/.test(js),
-    'name and mascot cookies last one year');
+    'name, mascot and record cookies last one year');
+
+  check('records are stored in a cookie too',
+    /records:\s*'tabuada12_records'/.test(js) &&
+      /setCookie\(COOKIE\.records,\s*compact,\s*PROFILE_TTL\)/.test(js),
+    'the top 10 records must survive with a one-year cookie');
 
   check('cookie writes are guarded', /COOKIE_LIMIT/.test(js),
     'the compact progress must be size-checked before writing a cookie');
@@ -413,6 +418,47 @@ async function browserTests(browser) {
     return /tabuada12_progress=/.test(document.cookie);
   }), 'compact progress must also reach the cookie');
 
+  check('statistics open detail dialogs', await page.evaluate(async function () {
+    function openClose(id, dialogId) {
+      document.getElementById(id).click();
+      var open = document.getElementById(dialogId).open;
+      document.querySelector('#' + dialogId + ' .sheet-actions button').click();
+      return open;
+    }
+
+    var correct = openClose('statCorrectBtn', 'correctDialog');
+    var miss = openClose('statMissBtn', 'missDialog');
+    var best = openClose('statBestBtn', 'bestDialog');
+    return correct && miss && best;
+  }), 'Acertos, Falhas and Recorde must each open their dialog');
+
+  check('correct dialog reports the session split', await page.evaluate(async function () {
+    document.getElementById('statCorrectBtn').click();
+    await new Promise(function (r) { setTimeout(r, 100); });
+    var lead = document.getElementById('correctLead').textContent;
+    var split = document.getElementById('correctSplit').textContent;
+    document.querySelector('#correctDialog .sheet-actions button').click();
+    return /acerto/.test(lead) && /à primeira/.test(split) && /à segunda/.test(split);
+  }), 'the dialog must break successes into first and second attempt');
+
+  check('miss dialog reports the session split', await page.evaluate(async function () {
+    document.getElementById('statMissBtn').click();
+    await new Promise(function (r) { setTimeout(r, 100); });
+    var lead = document.getElementById('missLead').textContent;
+    var split = document.getElementById('missSplit').textContent;
+    document.querySelector('#missDialog .sheet-actions button').click();
+    return /falha/.test(lead) && /primeira tentativa/.test(split) && /segunda/.test(split);
+  }), 'the dialog must break misses by attempt');
+
+  check('record dialog lists records newest first', await page.evaluate(async function () {
+    document.getElementById('statBestBtn').click();
+    await new Promise(function (r) { setTimeout(r, 120); });
+    var rows = document.querySelectorAll('#recordList li');
+    var first = rows[0] ? rows[0].textContent : '';
+    document.querySelector('#bestDialog .sheet-actions button').click();
+    return rows.length > 0 && /\d/.test(first);
+  }), 'the top-10 list must render with streak and date');
+
   check('profile cookies written', await page.evaluate(function () {
     return /tabuada12_name=Foguet/.test(document.cookie) &&
       /tabuada12_mascot=/.test(document.cookie);
@@ -497,9 +543,9 @@ async function browserTests(browser) {
   check('about dialog opens at the top', await page.evaluate(async function () {
     document.getElementById('aboutBtn').click();
     await new Promise(function (r) { setTimeout(r, 160); });
-    var body = document.querySelector('.sheet-body');
+    var body = document.querySelector('#aboutDialog .sheet-body');
     var scrolled = body.scrollTop;
-    document.querySelector('.sheet-actions button').click();
+    document.querySelector('#aboutDialog .sheet-actions button').click();
     await new Promise(function (r) { setTimeout(r, 120); });
     return scrolled === 0;
   }), 'the dialog must open on Privacidade, not scrolled to the GitHub link');
@@ -516,7 +562,7 @@ async function browserTests(browser) {
   }), 'the dialog must state local-only storage and list licences');
 
   check('about dialog closes', await page.evaluate(async function () {
-    document.querySelector('.sheet-actions button').click();
+    document.querySelector('#aboutDialog .sheet-actions button').click();
     await new Promise(function (r) { setTimeout(r, 120); });
     return document.getElementById('aboutDialog').open === false;
   }), 'the close button must dismiss the dialog');
@@ -527,7 +573,7 @@ async function browserTests(browser) {
     var before = document.getElementById('answerBox').textContent;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: '5', bubbles: true }));
     var after = document.getElementById('answerBox').textContent;
-    document.querySelector('.sheet-actions button').click();
+    document.querySelector('#aboutDialog .sheet-actions button').click();
     await new Promise(function (r) { setTimeout(r, 120); });
     return before === after;
   }), 'digits must not reach the game behind the dialog');

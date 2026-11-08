@@ -5,6 +5,7 @@
     name: 'tabuada12.name',
     mascot: 'tabuada12.mascot',
     best: 'tabuada12.bestStreak',
+    records: 'tabuada12.records',
     sound: 'tabuada12.sound',
     theme: 'tabuada12.theme',
     progress: 'tabuada12.progress'
@@ -13,7 +14,8 @@
   var COOKIE = {
     name: 'tabuada12_name',
     mascot: 'tabuada12_mascot',
-    progress: 'tabuada12_progress'
+    progress: 'tabuada12_progress',
+    records: 'tabuada12_records'
   };
 
   var PROGRESS_TTL = 24 * 60 * 60;
@@ -66,6 +68,19 @@
     statMiss: document.getElementById('statMiss'),
     statStreak: document.getElementById('statStreak'),
     statBest: document.getElementById('statBest'),
+    statCorrectBtn: document.getElementById('statCorrectBtn'),
+    statMissBtn: document.getElementById('statMissBtn'),
+    statBestBtn: document.getElementById('statBestBtn'),
+    correctDialog: document.getElementById('correctDialog'),
+    missDialog: document.getElementById('missDialog'),
+    bestDialog: document.getElementById('bestDialog'),
+    correctLead: document.getElementById('correctLead'),
+    correctSplit: document.getElementById('correctSplit'),
+    missLead: document.getElementById('missLead'),
+    missSplit: document.getElementById('missSplit'),
+    bestLead: document.getElementById('bestLead'),
+    bestNote: document.getElementById('bestNote'),
+    recordList: document.getElementById('recordList'),
     confetti: document.getElementById('confetti')
   };
 
@@ -90,6 +105,11 @@
     missCount: 0,
     streak: 0,
     best: 0,
+    firstTryCount: 0,
+    secondTryCount: 0,
+    missFirst: 0,
+    missSecond: 0,
+    records: [],
     sound: true,
     startedAt: null,
     elapsed: 0,
@@ -364,10 +384,80 @@
     }
   }
 
+  function sanitizeRecords(list) {
+    if (!list || Object.prototype.toString.call(list) !== '[object Array]') return [];
+
+    return list.filter(function (item) {
+      return item && typeof item.streak === 'number' && typeof item.at === 'number';
+    }).slice(0, 10);
+  }
+
+  function encodeRecords(list) {
+    return list.map(function (item) {
+      return item.streak + '.' + item.at;
+    }).join(';');
+  }
+
+  function decodeRecords(raw) {
+    if (!raw) return [];
+
+    return raw.split(';').map(function (chunk) {
+      var dot = chunk.indexOf('.');
+      if (dot <= 0) return null;
+
+      var streak = parseInt(chunk.slice(0, dot), 10);
+      var at = parseInt(chunk.slice(dot + 1), 10);
+      if (!streak || !at) return null;
+
+      return { streak: streak, at: at };
+    }).filter(Boolean).slice(0, 10);
+  }
+
+  function readRecords() {
+    var fromCookie = sanitizeRecords(decodeRecords(getCookie(COOKIE.records)));
+    var fromStore = [];
+
+    try {
+      var raw = window.localStorage.getItem(STORAGE.records);
+      fromStore = sanitizeRecords(raw ? JSON.parse(raw) : []);
+    } catch (error) {
+      fromStore = [];
+    }
+
+    var best = fromStore.length >= fromCookie.length ? fromStore : fromCookie;
+
+    return best.slice().sort(function (a, b) {
+      return b.streak - a.streak;
+    });
+  }
+
+  function writeRecords() {
+    var payload = JSON.stringify(state.records);
+
+    try {
+      window.localStorage.setItem(STORAGE.records, payload);
+    } catch (error) {
+      /* ignora */
+    }
+
+    var compact = encodeRecords(state.records);
+    if (compact.length <= COOKIE_LIMIT) {
+      setCookie(COOKIE.records, compact, PROFILE_TTL);
+    }
+  }
+
+  function recordBest(streak) {
+    state.records.push({ streak: streak, at: Date.now() });
+    state.records.sort(function (a, b) { return b.streak - a.streak; });
+    state.records = state.records.slice(0, 10);
+    writeRecords();
+  }
+
   function updateBest() {
     if (state.streak <= state.best) return;
     state.best = state.streak;
     writeStored(STORAGE.best, state.best);
+    recordBest(state.streak);
     bump(els.statBest);
   }
 
@@ -691,8 +781,11 @@
       recordResult(state.a, state.b, firstTry ? 'ok' : 'second');
 
       if (firstTry) {
+        state.firstTryCount += 1;
         state.streak += 1;
         updateBest();
+      } else {
+        state.secondTryCount += 1;
       }
 
       els.card.classList.add('is-correct');
@@ -713,6 +806,7 @@
     state.missCount += 1;
 
     if (state.attempt === 1) {
+      state.missFirst += 1;
       state.attempt = 2;
       state.input = '';
       resetStreak();
@@ -727,6 +821,7 @@
       return;
     }
 
+    state.missSecond += 1;
     state.phase = 'revealed';
     state.input = String(product);
     state.busy = false;
@@ -1087,6 +1182,10 @@
     if (!keepSession) {
       state.correctCount = 0;
       state.missCount = 0;
+      state.firstTryCount = 0;
+      state.secondTryCount = 0;
+      state.missFirst = 0;
+      state.missSecond = 0;
       state.streak = 0;
       state.startedAt = null;
       state.elapsed = 0;
@@ -1178,6 +1277,97 @@
 
   els.startBtn.addEventListener('click', startGame);
 
+  function plural(count, singular, pluralForm) {
+    return count + ' ' + (count === 1 ? singular : pluralForm);
+  }
+
+  function formatRecordDate(timestamp) {
+    try {
+      return new Date(timestamp).toLocaleDateString('pt-PT', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function renderRecords() {
+    if (!els.recordList) return;
+
+    els.recordList.innerHTML = '';
+    var records = state.records.slice(0, 10);
+
+    if (!records.length) {
+      els.bestLead.textContent = 'Ainda não há recordes.';
+      els.bestNote.hidden = true;
+
+      var empty = document.createElement('li');
+      empty.className = 'detail-empty';
+      empty.textContent = 'Acerta várias contas seguidas à primeira para começares a série.';
+      els.recordList.appendChild(empty);
+      return;
+    }
+
+    els.bestLead.textContent = 'A tua melhor série é de ' + records[0].streak + '.';
+    els.bestNote.hidden = false;
+
+    records.forEach(function (item, index) {
+      var row = document.createElement('li');
+      if (item.at > Date.now() - 60000) row.className = 'is-latest';
+
+      var rank = document.createElement('span');
+      rank.className = 'record-rank';
+      rank.textContent = (index + 1) + '.';
+
+      var value = document.createElement('span');
+      value.className = 'record-value';
+      value.textContent = plural(item.streak, 'acerto', 'acertos');
+
+      var date = document.createElement('span');
+      date.className = 'record-date';
+      date.textContent = formatRecordDate(item.at);
+
+      row.appendChild(rank);
+      row.appendChild(value);
+      row.appendChild(date);
+      els.recordList.appendChild(row);
+    });
+  }
+
+  function renderSessionDialogs() {
+    if (els.correctLead) {
+      els.correctLead.textContent = plural(state.correctCount, 'acerto', 'acertos') + '.';
+      els.correctSplit.textContent =
+        state.firstTryCount + ' à primeira, ' + state.secondTryCount + ' à segunda.';
+    }
+
+    if (els.missLead) {
+      els.missLead.textContent = plural(state.missCount, 'falha', 'falhas') + '.';
+      els.missSplit.textContent =
+        state.missFirst + ' na primeira tentativa, ' + state.missSecond + ' na segunda.';
+    }
+  }
+
+  function openDialog(dialog, render) {
+    if (!dialog) return;
+
+    if (typeof render === 'function') render();
+
+    if (typeof dialog.showModal === 'function') {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute('open', '');
+    }
+
+    var body = dialog.querySelector('.sheet-body');
+    if (body) body.scrollTop = 0;
+
+    var title = dialog.querySelector('.sheet-title');
+    if (title && title.focus) title.focus({ preventScroll: true });
+  }
+
   function openAbout() {
     if (!els.aboutDialog) return;
 
@@ -1195,6 +1385,31 @@
   }
 
   els.aboutBtn.addEventListener('click', openAbout);
+
+  if (els.statCorrectBtn) {
+    els.statCorrectBtn.addEventListener('click', function () {
+      openDialog(els.correctDialog, renderSessionDialogs);
+    });
+  }
+
+  if (els.statMissBtn) {
+    els.statMissBtn.addEventListener('click', function () {
+      openDialog(els.missDialog, renderSessionDialogs);
+    });
+  }
+
+  if (els.statBestBtn) {
+    els.statBestBtn.addEventListener('click', function () {
+      openDialog(els.bestDialog, renderRecords);
+    });
+  }
+
+  [els.correctDialog, els.missDialog, els.bestDialog].forEach(function (dialog) {
+    if (!dialog) return;
+    dialog.addEventListener('click', function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+  });
   if (els.aboutLink) els.aboutLink.addEventListener('click', openAbout);
 
   els.aboutDialog.addEventListener('click', function (event) {
@@ -1265,7 +1480,10 @@
     if (els.game.hidden) return;
 
     var target = event.target instanceof Element ? event.target : null;
-    if (els.aboutDialog && els.aboutDialog.open) return;
+    if ((els.aboutDialog && els.aboutDialog.open) ||
+        (els.correctDialog && els.correctDialog.open) ||
+        (els.missDialog && els.missDialog.open) ||
+        (els.bestDialog && els.bestDialog.open)) return;
 
     var onControl = target && target.closest('#soundToggle, #themeToggle, #editBtn, #aboutBtn, #nextBtn, a');
 
@@ -1304,6 +1522,7 @@
 
   function init() {
     state.best = parseInt(readStored(STORAGE.best, '0'), 10) || 0;
+    state.records = readRecords();
     state.sound = readStored(STORAGE.sound, 'on') !== 'off';
     state.progress = readProgress();
 

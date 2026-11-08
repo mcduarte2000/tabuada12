@@ -51,6 +51,7 @@ defect from returning unnoticed.
 | No music leftovers | The removed music feature must not reappear in code |
 | Clock pauses on hidden tab | Elapsed time jumped by the hidden duration |
 | Progress TTL 24 h, profile 1 year | Expiry drifted from the documented values |
+| Records stored in a one-year cookie | The record history could be lost with `localStorage` |
 | Cookie write is size-checked | The compact progress could exceed 4 KB |
 | Failures weigh more than successes | Adaptive selection lost its purpose |
 | Storage access wrapped | Storage failures must never break the game |
@@ -84,6 +85,8 @@ Run with Playwright or system Chrome at 360x640.
   policy and the licences, closes on its button, and does not forward digits to
   the game.
 - Acertos renders green and Falhas red, on both the number and the label.
+- Acertos, Falhas and Recorde each open a dialog; the first two report the
+  first/second attempt split, the third lists the top ten with dates.
 - Reduced motion does not break layout.
 - At 320x568: title fits, subtitle is not clipped, no vertical overflow.
 

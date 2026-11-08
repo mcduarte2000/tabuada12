@@ -50,11 +50,11 @@ C4Container
 | Block | Representative functions | Responsibility |
 | --- | --- | --- |
 | Constants and state | `STORAGE`, `COOKIE`, `PROGRESS_TTL`, `PROFILE_TTL`, `COOKIE_LIMIT`, `PRIORITY`, `state` | Single source of truth for magic numbers and mutable session data. |
-| Persistence | `readStored`, `writeStored`, `setCookie`, `getCookie`, `setProfileCookies`, `readProfileCookies`, `readProgress`, `saveProgress`, `encodeProgress`, `decodeProgress` | Dual-write profile and progress, validate 24 h TTL, tolerate corrupt or missing data. |
+| Persistence | `readStored`, `writeStored`, `setCookie`, `getCookie`, `setProfileCookies`, `readProfileCookies`, `readProgress`, `saveProgress`, `encodeProgress`, `decodeProgress`, `readRecords`, `writeRecords`, `encodeRecords`, `decodeRecords` | Dual-write profile, progress and top-10 records; progress expires after 24 h, name, mascot and records after one year; tolerate corrupt or missing data. |
 | Content and phrasing | `fill`, `phrases`, `mascotPhrases`, `pickFresh`, `loadContent` | Load `content.json`, substitute placeholders, avoid repeating the previous phrase. |
 | Adaptive selection | `factKey`, `factWeight`, `chooseFact`, `recordResult` | Weighted random choice per fact and progress recording. |
 | Game flow | `newQuestion`, `pressDigit`, `pressDelete`, `submit`, `nextQuestion`, `scheduleAdvance` | Attempt counting, correct/wrong/reveal phases, automatic advance. |
-| Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `resetStreak` | Correct count, miss count, streak, record, elapsed time. |
+| Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `recordBest`, `resetStreak`, `renderSessionDialogs`, `renderRecords`, `openDialog` | Correct count, miss count, streak, record history, elapsed time, and the detail dialogs behind each indicator. |
 | Rendering and feedback | `say`, `react`, `setAvatar`, `applyThemeColors`, `bump`, `restartAnimation`, `burstConfetti`, `spawnRipple` | Bubble text, mascot animation, ripple and confetti effects. |
 | Audio | `ensureAudio`, `beep`, `soundCorrect`, `soundWrong`, `soundReveal` | Synthesised feedback tones, no files. |
 | Setup flow | `renderMascotOptions`, `selectMascot`, `ownedHello`, `startGame`, `goToMascotStep`, `resetToSetup`, `applyTheme`, `updateThemeButton`, `updateSoundButton` | Name entry, mascot choice, profile switching, preferences. |
@@ -70,6 +70,8 @@ C4Container
 | `lastPhrase` | Last phrase used per category, to avoid immediate repetition. |
 | `a`, `b`, `input`, `attempt`, `phase`, `busy` | Current question and interaction state. |
 | `correctCount`, `missCount`, `streak`, `best` | Session and lifetime counters. |
+| `firstTryCount`, `secondTryCount`, `missFirst`, `missSecond` | Session breakdown shown in the Acertos and Falhas dialogs. |
+| `records` | Top-10 streak history, persisted in `localStorage` and a one-year cookie. |
 | `sound` | Whether sound effects are enabled. |
 | `startedAt`, `timerId` | Session clock. |
 | `progress` | Per-fact counters: `ok`, `second`, `fail`, `last`, `lastOk`. |

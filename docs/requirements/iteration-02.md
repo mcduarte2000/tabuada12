@@ -453,6 +453,74 @@ Feature: Licence and privacy information
     And its body scrolls internally
 ```
 
+## US-17 — Inspect the statistics in detail
+
+**User story**
+
+> As a child or parent, I want to tap a statistic to see what it means, so that
+> the numbers are not just a scoreboard.
+
+### Requirements
+
+**R17.1 (event-driven)** When the parent taps the correct-answer indicator, the
+system shall open a dialog with the session total and the split between first
+and second attempt.
+
+**R17.2 (event-driven)** When the parent taps the miss indicator, the system
+shall open a dialog with the session total and the split between first and
+second attempt.
+
+**R17.3 (event-driven)** When the parent taps the record indicator, the system
+shall open a dialog listing the ten best streaks in descending order, each with
+its value and the date it was set.
+
+**R17.4 (ubiquitous)** The time and streak indicators shall remain
+non-interactive, so only indicators with detail open a dialog.
+
+**R17.5 (ubiquitous)** The record history shall be stored in `localStorage` and
+in a cookie with a one-year lifetime, matching the name and mascot.
+
+**R17.6 (unavailable behaviour)** If the record cookie is malformed or a record
+has fewer than two entries, then the system shall fall back to the other source
+and keep rendering.
+
+**R17.7 (ubiquitous)** The record that was set within the last minute shall be
+highlighted in the list.
+
+### Acceptance criteria
+
+```gherkin
+Feature: Statistics detail
+
+  Scenario: Correct answers breakdown
+    Given the child has 3 correct answers, 2 on the first attempt
+    When the parent taps "Acertos"
+    Then a dialog states 3 acertos
+    And it states 2 à primeira, 1 à segunda
+
+  Scenario: Misses breakdown
+    Given the child has 2 misses, both on the second attempt
+    When the parent taps "Falhas"
+    Then a dialog states 2 falhas
+    And it states 0 na primeira tentativa, 2 na segunda
+
+  Scenario: Records list
+    Given the child set streaks of 4, 3, 2 and 1
+    When the parent taps "Recorde"
+    Then the dialog lists 4, 3, 2 and 1 in that order
+    And each row shows a date
+    And the most recent record is highlighted
+
+  Scenario: Records survive a reload
+    Given the child set a streak of 4
+    When "localStorage" is cleared and the page reloads
+    Then the record still reads 4 from the cookie
+
+  Scenario: Static indicators
+    Given the game screen is visible
+    Then "Tempo" and "Série" do not open any dialog
+```
+
 ---
 
 ## Verification record
@@ -468,6 +536,7 @@ Feature: Licence and privacy information
 | R14 (greetings) | Automated regression suite: four mascots selected, greetings compared; static check over all 30 pools | pass |
 | R15 (nickname) | Automated regression suite: static check for the privacy copy and missing `autocomplete="given-name"`; browser check that a two-word entry is refused | pass |
 | R16 (licence and privacy) | Automated regression suite: static check that the controls and the required statements exist; browser checks for opening, closing and digit suppression | pass |
+| R17 (statistics detail) | Automated regression suite: three dialogs opened and asserted for content; record list rendered; cookie persistence checked after clearing `localStorage` | pass |
 | Sound toggle | Visibility checked before and after entering the mascot step | pass |
 
 ## Known gaps at the end of this iteration

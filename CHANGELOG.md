@@ -65,6 +65,11 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ### Adicionado
 
+- Os indicadores "Acertos", "Falhas" e "Recorde" são agora botões: abrem um
+  diálogo com o total da sessão e o desdobramento entre primeira e segunda
+  tentativa, e a lista dos 10 melhores recordes por ordem decrescente, com data.
+- O histórico de recordes é guardado em `localStorage` e num cookie com
+  validade de 1 ano, como o nome e o mascote.
 - Botão de informação no cabeçalho, presente em todos os ecrãs, que abre um
   diálogo "Sobre esta aplicação" com a licença MIT, a lista de conteúdos de
   terceiros e a política de privacidade.
@@ -77,6 +82,7 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ### Alterado
 
+- Mais espaço vertical entre o título e os botões do cabeçalho.
 - O cabeçalho passa a estar fixo ao topo, em duas linhas: o ícone da aplicação
   e o título à esquerda, e os botões de som, tema, edição e informação à
   direita, na linha de baixo. O mascote fica junto da fala, com o nome por

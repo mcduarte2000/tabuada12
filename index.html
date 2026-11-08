@@ -122,26 +122,26 @@
 
     <section id="game" hidden>
       <section class="stats" aria-label="Estatísticas da sessão">
-        <div class="stat stat--time">
+        <div class="stat stat--time stat--static">
           <span class="stat-value" id="statTime" aria-label="Tempo de jogo">0:00</span>
           <span class="stat-label">Tempo</span>
         </div>
-        <div class="stat stat--correct">
+        <button class="stat stat--correct" id="statCorrectBtn" type="button" aria-haspopup="dialog">
           <span class="stat-value" id="statCorrect">0</span>
           <span class="stat-label">Acertos</span>
-        </div>
-        <div class="stat stat--miss">
+        </button>
+        <button class="stat stat--miss" id="statMissBtn" type="button" aria-haspopup="dialog">
           <span class="stat-value" id="statMiss">0</span>
           <span class="stat-label">Falhas</span>
-        </div>
-        <div class="stat">
+        </button>
+        <div class="stat stat--static">
           <span class="stat-value" id="statStreak">0</span>
           <span class="stat-label">Série</span>
         </div>
-        <div class="stat">
+        <button class="stat stat--best" id="statBestBtn" type="button" aria-haspopup="dialog">
           <span class="stat-value" id="statBest">0</span>
           <span class="stat-label">Recorde</span>
-        </div>
+        </button>
       </section>
 
       <section class="card" id="card" aria-label="Jogo da tabuada">
@@ -199,6 +199,54 @@
   </main>
 
   <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <dialog class="sheet" id="correctDialog" aria-labelledby="correctTitle">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="correctTitle" tabindex="-1">Acertos da sessão</h2>
+    <div class="sheet-body">
+      <p class="detail-lead" id="correctLead">0 acertos.</p>
+      <p class="detail-split" id="correctSplit">0 à primeira, 0 à segunda.</p>
+      <p class="about-note">
+        Contas certas desde o início desta sessão de jogo. Acertar à segunda
+        conta na mesma conta, mas não aumenta a série.
+      </p>
+    </div>
+    <form method="dialog" class="sheet-actions">
+      <button class="next-button" type="submit">Fechar</button>
+    </form>
+  </dialog>
+
+  <dialog class="sheet" id="missDialog" aria-labelledby="missTitle">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="missTitle" tabindex="-1">Falhas da sessão</h2>
+    <div class="sheet-body">
+      <p class="detail-lead" id="missLead">0 falhas.</p>
+      <p class="detail-split" id="missSplit">0 na primeira tentativa, 0 na segunda.</p>
+      <p class="about-note">
+        Cada tentativa errada conta como uma falha, mesmo quando acertas na
+        tentativa seguinte. As contas que falhas aparecem mais vezes.
+      </p>
+    </div>
+    <form method="dialog" class="sheet-actions">
+      <button class="next-button" type="submit">Fechar</button>
+    </form>
+  </dialog>
+
+  <dialog class="sheet" id="bestDialog" aria-labelledby="bestTitle">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="bestTitle" tabindex="-1">As melhores séries</h2>
+    <div class="sheet-body">
+      <p class="detail-lead" id="bestLead">Ainda não há recordes.</p>
+      <ol class="record-list" id="recordList"></ol>
+      <p class="about-note" id="bestNote" hidden>
+        Guardamos os 10 melhores resultados. A série conta os acertos
+        consecutivos à primeira tentativa.
+      </p>
+    </div>
+    <form method="dialog" class="sheet-actions">
+      <button class="next-button" type="submit">Fechar</button>
+    </form>
+  </dialog>
 
   <dialog class="sheet" id="aboutDialog" aria-labelledby="aboutTitle">
     <div class="sheet-handle" aria-hidden="true"></div>
