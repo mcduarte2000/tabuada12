@@ -53,6 +53,7 @@ defect from returning unnoticed.
 | Progress TTL 24 h, profile 1 year | Expiry drifted from the documented values |
 | Records stored in a one-year cookie | The record history could be lost with `localStorage` |
 | One record per session | A 16-answer streak wrote 16 descending entries |
+| Live session row matches the header | The list hid the current record while the header showed it |
 | Cookie write is size-checked | The compact progress could exceed 4 KB |
 | Failures weigh more than successes | Adaptive selection lost its purpose |
 | Storage access wrapped | Storage failures must never break the game |
@@ -88,7 +89,8 @@ Run with Playwright or system Chrome at 360x640.
 - Acertos renders green and Falhas red, on both the number and the label.
 - Acertos, Falhas and Recorde each open a dialog **by real mouse click**; only
   those three are buttons, while Tempo and Série are not; the first two report
-  the first/second attempt split, the third lists the top ten with dates.
+  the first/second attempt split, the third lists the top ten with dates and
+  includes the running session marked "agora".
 - Reduced motion does not break layout.
 - At 320x568: title fits, subtitle is not clipped, no vertical overflow.
 

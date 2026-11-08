@@ -67,6 +67,8 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 - Os indicadores "Acertos", "Falhas" e "Recorde" são agora botões: abrem um
   diálogo com o total da sessão e o desdobramento entre primeira e segunda
   tentativa, e a lista dos 10 melhores recordes por ordem decrescente, com data.
+- A sessão em curso aparece no histórico de recordes, marcada "agora", para
+  não contradizer o valor mostrado no cabeçalho.
 - O histórico de recordes guarda **uma entrada por sessão**, com a melhor série
   alcançada nela, em vez de uma entrada por cada incremento da série.
 - O histórico de recordes é guardado em `localStorage` e num cookie com

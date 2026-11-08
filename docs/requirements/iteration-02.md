@@ -484,6 +484,10 @@ with the best streak reached in that session and the session date.
 the best streak of that session, and shall not append an entry for every
 increment of a streak inside the same session.
 
+**R17.3b (state-driven)** While a session is in progress and its best streak is
+above zero, the system shall show it in the list marked "agora", so the list
+agrees with the record counter in the header.
+
 **R17.4 (ubiquitous)** The time and streak indicators shall remain
 non-interactive, so only indicators with detail open a dialog.
 
@@ -521,6 +525,13 @@ Feature: Statistics detail
     And it shows 12 seguidas
     And it does not list 12, 11, 10 and so on
 
+  Scenario: The running session is listed
+    Given the child is on a streak of 3 in the current session
+    And the header record counter shows 3
+    When the parent taps "Recorde"
+    Then the list contains a row marked "agora" showing 3 seguidas
+    And the headline also reports 3 seguidas
+
   Scenario: Records list across sessions
     Given three finished sessions with best streaks of 4, 6 and 2
     When the parent taps "Recorde"
@@ -552,7 +563,7 @@ Feature: Statistics detail
 | R14 (greetings) | Automated regression suite: four mascots selected, greetings compared; static check over all 30 pools | pass |
 | R15 (nickname) | Automated regression suite: static check for the privacy copy and missing `autocomplete="given-name"`; browser check that a two-word entry is refused | pass |
 | R16 (licence and privacy) | Automated regression suite: static check that the controls and the required statements exist; browser checks for opening, closing and digit suppression | pass |
-| R17 (statistics detail) | Automated regression suite: three dialogs opened by real mouse click and asserted for content; one-record-per-session asserted statically and by a 12-answer browser run; cookie persistence checked after clearing `localStorage` | pass |
+| R17 (statistics detail) | Automated regression suite: three dialogs opened by real mouse click and asserted for content; one-record-per-session asserted statically and by a 12-answer browser run; the live session row asserted to match the header counter; cookie persistence checked after clearing `localStorage` | pass |
 | Sound toggle | Visibility checked before and after entering the mascot step | pass |
 
 ## Known gaps at the end of this iteration

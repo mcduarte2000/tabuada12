@@ -492,6 +492,26 @@ async function browserTests(browser) {
     return /falha/.test(text.lead) && /primeira tentativa/.test(text.split) && /segunda/.test(text.split);
   })(), 'the dialog must break misses by attempt');
 
+  check('live session appears in the record list', await (async function () {
+    await realClick('#statBestBtn');
+    var info = await page.evaluate(function () {
+      var rows = document.querySelectorAll('#recordList li');
+      var live = document.querySelector('#recordList li.is-live');
+      var header = Number(document.getElementById('statBest').textContent);
+      var leadMatch = document.getElementById('bestLead').textContent.match(/(\d+) seguidas/);
+      return {
+        hasLive: !!live,
+        liveText: live ? live.textContent : '',
+        header: header,
+        lead: leadMatch ? Number(leadMatch[1]) : -1
+      };
+    });
+    await realClick('#bestDialog .sheet-actions button');
+    return info.hasLive &&
+      /agora/.test(info.liveText) &&
+      info.header === info.lead;
+  })(), 'the current best streak must be visible and match the header counter');
+
   check('record dialog lists records with date', await (async function () {
     await realClick('#statBestBtn');
     var info = await page.evaluate(function () {

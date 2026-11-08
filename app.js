@@ -1315,11 +1315,36 @@
     }
   }
 
+  function currentSessionRecord() {
+    if (state.sessionPeak <= 0) return null;
+    if (state.sessionRecorded) return null;
+
+    return {
+      streak: state.sessionPeak,
+      at: state.sessionStart || Date.now(),
+      live: true
+    };
+  }
+
+  function visibleRecords() {
+    var live = currentSessionRecord();
+    var list = state.records.slice();
+
+    if (live) list.push(live);
+
+    list.sort(function (a, b) {
+      if (b.streak !== a.streak) return b.streak - a.streak;
+      return b.at - a.at;
+    });
+
+    return list.slice(0, 10);
+  }
+
   function renderRecords() {
     if (!els.recordList) return;
 
     els.recordList.innerHTML = '';
-    var records = state.records.slice(0, 10);
+    var records = visibleRecords();
 
     if (!records.length) {
       els.bestLead.textContent = 'Ainda não há recordes.';
@@ -1337,11 +1362,11 @@
 
     records.forEach(function (item, index) {
       var row = document.createElement('li');
-      if (item.at > Date.now() - 60000) row.className = 'is-latest';
+      if (item.live) row.className = 'is-live';
 
       var rank = document.createElement('span');
       rank.className = 'record-rank';
-      rank.textContent = (index + 1) + '.';
+      rank.textContent = item.live ? '•' : (index + 1) + '.';
 
       var value = document.createElement('span');
       value.className = 'record-value';
@@ -1349,7 +1374,12 @@
 
       var date = document.createElement('span');
       date.className = 'record-date';
-      date.textContent = formatRecordDate(item.at);
+
+      if (item.live) {
+        date.textContent = 'agora';
+      } else {
+        date.textContent = formatRecordDate(item.at);
+      }
 
       row.appendChild(rank);
       row.appendChild(value);

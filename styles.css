@@ -977,7 +977,7 @@ input:focus-visible {
   line-height: 1.35;
 }
 
-.record-list li.is-latest {
+.record-list li.is-live {
   background: var(--md-primary-container);
   color: var(--md-on-primary-container);
 }
@@ -1002,7 +1002,7 @@ input:focus-visible {
   color: var(--md-on-surface-variant);
 }
 
-.record-list li.is-latest .record-date { color: inherit; opacity: .8; }
+.record-list li.is-live .record-date { color: inherit; opacity: .8; }
 
 .detail-empty {
   margin: 8px 0 10px;
