@@ -28,6 +28,8 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   jogar sem rede depois da primeira visita.
 - Ícone maskable dedicado, com a arte dentro da zona segura de 80 %.
 - Metadados para o ecrã principal do iOS.
+- `docs/backlog.md` regista a investigação sobre publicar na F-Droid, com os
+  bloqueios encontrados e o trabalho que exigiria.
 
 ### Alterado
 

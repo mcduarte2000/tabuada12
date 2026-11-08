@@ -84,9 +84,14 @@ docs/
 ├── requirements/
 │   ├── README.md                    # requirements index and format rules
 │   └── iteration-NN.md              # one file per closed iteration
-└── tests/
-    └── README.md                    # what the regression suite covers
+├── tests/
+│   └── README.md                    # what the regression suite covers
+└── backlog.md                       # investigated, unscheduled ideas
 ```
+
+Justification for `backlog.md`: research that rules an idea out is expensive to
+repeat. A single file at the docs root keeps unscheduled work out of
+`requirements/`, which must only describe implemented iterations.
 
 Justification for `tests/`: the test runner lives in `tests/regression.js` and
 its catalogue is documentation, so it belongs under `docs/tests/`. Keeping the
@@ -226,7 +231,19 @@ The newest ADR uses the next free number.
 - Update the index table in `docs/requirements/README.md` and `CHANGELOG.md`
   in the same commit.
 
-### 8. Update discipline
+### 8. Backlog
+
+- `docs/backlog.md` holds investigated ideas that are deliberately not
+  scheduled. It is not a promise and not a roadmap.
+- Each entry states why it is deferred, what would be needed, and which
+  decisions it would force.
+- Nothing enters the backlog without having been checked against the real
+  upstream policy or documentation. Cite the sources.
+- When an item is scheduled, promote it to an iteration file and delete it from
+  the backlog. When it is dropped, delete it and record the reason in an ADR or
+  in `quality-and-risks.md`.
+
+### 9. Update discipline
 
 Every development iteration must update the whole documentation set to match
 the code: `overview.md` when constraints, goals or context change,
