@@ -39,7 +39,8 @@ mascots.js            mascot list and fallback phrases
 content.json          per-mascot phrases, fetched at runtime (editable)
 manifest.webmanifest  PWA metadata
 assets/               icons, mascot SVGs, vendored licence
-docs/                 documentation (see below): architecture and requirements
+docs/                 documentation: architecture, requirements, tests
+tests/regression.js   dependency-free regression suite
 CHANGELOG.md          Keep a Changelog + SemVer
 ```
 
@@ -79,10 +80,17 @@ docs/
 │   └── adr/
 │       ├── README.md                # ADR index
 │       └── NNNN-slug.md             # one ADR per decision
-└── requirements/
-    ├── README.md                    # requirements index and format rules
-    └── iteration-NN.md              # one file per closed iteration
+├── requirements/
+│   ├── README.md                    # requirements index and format rules
+│   └── iteration-NN.md              # one file per closed iteration
+└── tests/
+    └── README.md                    # what the regression suite covers
 ```
+
+Justification for `tests/`: the test runner lives in `tests/regression.js` and
+its catalogue is documentation, so it belongs under `docs/tests/`. Keeping the
+catalogue next to the architecture and requirements means a defect fix must
+update all three in the same commit.
 
 Justification for `requirements/`: architecture says *how* the system is built,
 requirements say *what* was asked and *how it was verified*. Keeping them apart
@@ -239,6 +247,19 @@ closes, and `CHANGELOG.md` for user-visible changes.
   licence, or incompatible with MIT redistribution. Ask for an ADR first.
 - When adding or removing third-party files, update `LICENSE` in the same
   commit and keep the file list in sync with the disk contents.
+
+## Tests
+
+- `node tests/regression.js` must pass before any commit that changes
+  behaviour. It exits non-zero on failure.
+- Static checks need no browser. Browser checks use Playwright when available,
+  otherwise the system Chrome.
+- When a defect is found, add a failing check first, then fix it. Name the check
+  after the behaviour it protects.
+- Never delete a check to make the suite pass. If a requirement changed, update
+  the check and the requirement together.
+- The catalogue of covered defects lives in `docs/tests/README.md`; update it
+  in the same commit as the test.
 
 ## Versioning and changelog
 

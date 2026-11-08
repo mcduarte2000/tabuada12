@@ -5,7 +5,13 @@
     {
       "id": "gato",
       "nome": "Bigodes",
-      "ola": "Olá! Eu sou o Bigodes. Miau! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Miau! Eu sou o Bigodes. Sabias que o meu bigode nunca mente?",
+        "Olá, {nome}! Sou o Bigodes. Miau! Vamos a mais umas contas?",
+        "Oi! Sou o Bigodes. Miau! Pronto para treinar?",
+        "Olá, {nome}! Miau! Sou o Bigodes, e hoje quem manda sou eu.",
+        "Miau! Sou o Bigodes. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -44,7 +50,13 @@
     {
       "id": "cao",
       "nome": "Bolota",
-      "ola": "Olá! Eu sou o Bolota. Au-au! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Au-au! Eu sou o Bolota. Sabias que eu abano a cauda quando acertas?",
+        "Olá, {nome}! Sou o Bolota. Au-au! Vamos a mais umas contas?",
+        "Oi! Sou o Bolota. Au-au! Pronto para treinar?",
+        "Olá, {nome}! Au-au! Sou o Bolota, e hoje quem manda sou eu.",
+        "Au-au! Sou o Bolota. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -83,7 +95,13 @@
     {
       "id": "raposa",
       "nome": "Fofuxa",
-      "ola": "Olá! Eu sou a Fofuxa. Yip! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Yip! Eu sou a Fofuxa. Sabias que raposa esperta não desiste?",
+        "Olá, {nome}! Sou a Fofuxa. Yip! Vamos a mais umas contas?",
+        "Oi! Sou a Fofuxa. Yip! Pronto para treinar?",
+        "Olá, {nome}! Yip! Sou a Fofuxa, e hoje quem manda sou eu.",
+        "Yip! Sou a Fofuxa. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -122,7 +140,13 @@
     {
       "id": "tigre",
       "nome": "Risquinho",
-      "ola": "Olá! Eu sou o Risquinho. Grrr! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Grrr! Eu sou o Risquinho. Sabias que conto as riscas todas a cada acerto?",
+        "Olá, {nome}! Sou o Risquinho. Grrr! Vamos a mais umas contas?",
+        "Oi! Sou o Risquinho. Grrr! Pronto para treinar?",
+        "Olá, {nome}! Grrr! Sou o Risquinho, e hoje quem manda sou eu.",
+        "Grrr! Sou o Risquinho. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -161,7 +185,13 @@
     {
       "id": "leao",
       "nome": "Jubas",
-      "ola": "Olá! Eu sou o Jubas. Roar! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Roar! Eu sou o Jubas. Sabias que a minha juba cresce com cada conta certa?",
+        "Olá, {nome}! Sou o Jubas. Roar! Vamos a mais umas contas?",
+        "Oi! Sou o Jubas. Roar! Pronto para treinar?",
+        "Olá, {nome}! Roar! Sou o Jubas, e hoje quem manda sou eu.",
+        "Roar! Sou o Jubas. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -200,7 +230,13 @@
     {
       "id": "macaco",
       "nome": "Bananinha",
-      "ola": "Olá! Eu sou o Bananinha. U-u-u! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "U-u-u! Eu sou o Bananinha. Sabias que uma banana por cada resposta certa?",
+        "Olá, {nome}! Sou o Bananinha. U-u-u! Vamos a mais umas contas?",
+        "Oi! Sou o Bananinha. U-u-u! Pronto para treinar?",
+        "Olá, {nome}! U-u-u! Sou o Bananinha, e hoje quem manda sou eu.",
+        "U-u-u! Sou o Bananinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -239,7 +275,13 @@
     {
       "id": "urso",
       "nome": "Mel",
-      "ola": "Olá! Eu sou o Mel. Grr! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Grr! Eu sou o Mel. Sabias que só acordo do sono profundo para contas?",
+        "Olá, {nome}! Sou o Mel. Grr! Vamos a mais umas contas?",
+        "Oi! Sou o Mel. Grr! Pronto para treinar?",
+        "Olá, {nome}! Grr! Sou o Mel, e hoje quem manda sou eu.",
+        "Grr! Sou o Mel. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -278,7 +320,13 @@
     {
       "id": "panda",
       "nome": "Bambu",
-      "ola": "Olá! Eu sou o Bambu. Pff! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Pff! Eu sou o Bambu. Sabias que calmo como um ramo de bambu?",
+        "Olá, {nome}! Sou o Bambu. Pff! Vamos a mais umas contas?",
+        "Oi! Sou o Bambu. Pff! Pronto para treinar?",
+        "Olá, {nome}! Pff! Sou o Bambu, e hoje quem manda sou eu.",
+        "Pff! Sou o Bambu. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -317,7 +365,13 @@
     {
       "id": "coelho",
       "nome": "Cenourinha",
-      "ola": "Olá! Eu sou o Cenourinha. Boing! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Boing! Eu sou o Cenourinha. Sabias que as minhas orelhas ouvem tudo?",
+        "Olá, {nome}! Sou o Cenourinha. Boing! Vamos a mais umas contas?",
+        "Oi! Sou o Cenourinha. Boing! Pronto para treinar?",
+        "Olá, {nome}! Boing! Sou o Cenourinha, e hoje quem manda sou eu.",
+        "Boing! Sou o Cenourinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -356,7 +410,13 @@
     {
       "id": "hamster",
       "nome": "Bolachinha",
-      "ola": "Olá! Eu sou o Bolachinha. Squeak! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Squeak! Eu sou o Bolachinha. Sabias que guardo bolachas nas bochechas?",
+        "Olá, {nome}! Sou o Bolachinha. Squeak! Vamos a mais umas contas?",
+        "Oi! Sou o Bolachinha. Squeak! Pronto para treinar?",
+        "Olá, {nome}! Squeak! Sou o Bolachinha, e hoje quem manda sou eu.",
+        "Squeak! Sou o Bolachinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -395,7 +455,13 @@
     {
       "id": "koala",
       "nome": "Eucalipto",
-      "ola": "Olá! Eu sou o Eucalipto. Hmm! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Hmm! Eu sou o Eucalipto. Sabias que sonolento mas atento às contas?",
+        "Olá, {nome}! Sou o Eucalipto. Hmm! Vamos a mais umas contas?",
+        "Oi! Sou o Eucalipto. Hmm! Pronto para treinar?",
+        "Olá, {nome}! Hmm! Sou o Eucalipto, e hoje quem manda sou eu.",
+        "Hmm! Sou o Eucalipto. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -434,7 +500,13 @@
     {
       "id": "guaxinim",
       "nome": "Mascarilha",
-      "ola": "Olá! Eu sou o Mascarilha. Tsk! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Tsk! Eu sou o Mascarilha. Sabias que ando sempre de máscara, como um herói?",
+        "Olá, {nome}! Sou o Mascarilha. Tsk! Vamos a mais umas contas?",
+        "Oi! Sou o Mascarilha. Tsk! Pronto para treinar?",
+        "Olá, {nome}! Tsk! Sou o Mascarilha, e hoje quem manda sou eu.",
+        "Tsk! Sou o Mascarilha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -473,7 +545,13 @@
     {
       "id": "preguica",
       "nome": "Soneca",
-      "ola": "Olá! Eu sou a Soneca. Zzz! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Zzz! Eu sou a Soneca. Sabias que devagar, mas sem falhar?",
+        "Olá, {nome}! Sou a Soneca. Zzz! Vamos a mais umas contas?",
+        "Oi! Sou a Soneca. Zzz! Pronto para treinar?",
+        "Olá, {nome}! Zzz! Sou a Soneca, e hoje quem manda sou eu.",
+        "Zzz! Sou a Soneca. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -512,7 +590,13 @@
     {
       "id": "lontra",
       "nome": "Ondinha",
-      "ola": "Olá! Eu sou a Ondinha. Aaaah! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Aaaah! Eu sou a Ondinha. Sabias que nado de conta em conta?",
+        "Olá, {nome}! Sou a Ondinha. Aaaah! Vamos a mais umas contas?",
+        "Oi! Sou a Ondinha. Aaaah! Pronto para treinar?",
+        "Olá, {nome}! Aaaah! Sou a Ondinha, e hoje quem manda sou eu.",
+        "Aaaah! Sou a Ondinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -551,7 +635,13 @@
     {
       "id": "ourico",
       "nome": "Espinho",
-      "ola": "Olá! Eu sou o Espinho. Ufa! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Ufa! Eu sou o Espinho. Sabias que sou espinhoso por fora e fofo por dentro?",
+        "Olá, {nome}! Sou o Espinho. Ufa! Vamos a mais umas contas?",
+        "Oi! Sou o Espinho. Ufa! Pronto para treinar?",
+        "Olá, {nome}! Ufa! Sou o Espinho, e hoje quem manda sou eu.",
+        "Ufa! Sou o Espinho. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -590,7 +680,13 @@
     {
       "id": "coruja",
       "nome": "Sabichona",
-      "ola": "Olá! Eu sou a Sabichona. Uh-uh! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Uh-uh! Eu sou a Sabichona. Sabias que já li o livro das tabuadas três vezes?",
+        "Olá, {nome}! Sou a Sabichona. Uh-uh! Vamos a mais umas contas?",
+        "Oi! Sou a Sabichona. Uh-uh! Pronto para treinar?",
+        "Olá, {nome}! Uh-uh! Sou a Sabichona, e hoje quem manda sou eu.",
+        "Uh-uh! Sou a Sabichona. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -629,7 +725,13 @@
     {
       "id": "pinguim",
       "nome": "Gelado",
-      "ola": "Olá! Eu sou o Gelado. Brrr! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Brrr! Eu sou o Gelado. Sabias que escorrego pela neve a festejar?",
+        "Olá, {nome}! Sou o Gelado. Brrr! Vamos a mais umas contas?",
+        "Oi! Sou o Gelado. Brrr! Pronto para treinar?",
+        "Olá, {nome}! Brrr! Sou o Gelado, e hoje quem manda sou eu.",
+        "Brrr! Sou o Gelado. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -668,7 +770,13 @@
     {
       "id": "pato",
       "nome": "Pato-Rico",
-      "ola": "Olá! Eu sou o Pato-Rico. Quack! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Quack! Eu sou o Pato-Rico. Sabias que o meu chapéu é o mais elegante do lago?",
+        "Olá, {nome}! Sou o Pato-Rico. Quack! Vamos a mais umas contas?",
+        "Oi! Sou o Pato-Rico. Quack! Pronto para treinar?",
+        "Olá, {nome}! Quack! Sou o Pato-Rico, e hoje quem manda sou eu.",
+        "Quack! Sou o Pato-Rico. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -707,7 +815,13 @@
     {
       "id": "tartaruga",
       "nome": "Casquinha",
-      "ola": "Olá! Eu sou a Casquinha. Lento e certo! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Lento e certo! Eu sou a Casquinha. Sabias que levo a casa às costas?",
+        "Olá, {nome}! Sou a Casquinha. Lento e certo! Vamos a mais umas contas?",
+        "Oi! Sou a Casquinha. Lento e certo! Pronto para treinar?",
+        "Olá, {nome}! Lento e certo! Sou a Casquinha, e hoje quem manda sou eu.",
+        "Lento e certo! Sou a Casquinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -746,7 +860,13 @@
     {
       "id": "sapo",
       "nome": "Saltitão",
-      "ola": "Olá! Eu sou o Saltitão. Croac! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Croac! Eu sou o Saltitão. Sabias que salto de conta em conta?",
+        "Olá, {nome}! Sou o Saltitão. Croac! Vamos a mais umas contas?",
+        "Oi! Sou o Saltitão. Croac! Pronto para treinar?",
+        "Olá, {nome}! Croac! Sou o Saltitão, e hoje quem manda sou eu.",
+        "Croac! Sou o Saltitão. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -785,7 +905,13 @@
     {
       "id": "dinossauro",
       "nome": "Dino",
-      "ola": "Olá! Eu sou o Dino. Raaawr! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Raaawr! Eu sou o Dino. Sabias que sou grande mas as contas não me assustam?",
+        "Olá, {nome}! Sou o Dino. Raaawr! Vamos a mais umas contas?",
+        "Oi! Sou o Dino. Raaawr! Pronto para treinar?",
+        "Olá, {nome}! Raaawr! Sou o Dino, e hoje quem manda sou eu.",
+        "Raaawr! Sou o Dino. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -824,7 +950,13 @@
     {
       "id": "dragao",
       "nome": "Fumacinha",
-      "ola": "Olá! Eu sou o Fumacinha. Fuuu! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Fuuu! Eu sou o Fumacinha. Sabias que deito fumo só quando erro?",
+        "Olá, {nome}! Sou o Fumacinha. Fuuu! Vamos a mais umas contas?",
+        "Oi! Sou o Fumacinha. Fuuu! Pronto para treinar?",
+        "Olá, {nome}! Fuuu! Sou o Fumacinha, e hoje quem manda sou eu.",
+        "Fuuu! Sou o Fumacinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -863,7 +995,13 @@
     {
       "id": "unicornio",
       "nome": "Estrelinha",
-      "ola": "Olá! Eu sou a Estrelinha. Shhh! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Shhh! Eu sou a Estrelinha. Sabias que a minha crina brilha com magia?",
+        "Olá, {nome}! Sou a Estrelinha. Shhh! Vamos a mais umas contas?",
+        "Oi! Sou a Estrelinha. Shhh! Pronto para treinar?",
+        "Olá, {nome}! Shhh! Sou a Estrelinha, e hoje quem manda sou eu.",
+        "Shhh! Sou a Estrelinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -902,7 +1040,13 @@
     {
       "id": "polvo",
       "nome": "Polvinho",
-      "ola": "Olá! Eu sou o Polvinho. Blub! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Blub! Eu sou o Polvinho. Sabias que tenho oito braços para contar?",
+        "Olá, {nome}! Sou o Polvinho. Blub! Vamos a mais umas contas?",
+        "Oi! Sou o Polvinho. Blub! Pronto para treinar?",
+        "Olá, {nome}! Blub! Sou o Polvinho, e hoje quem manda sou eu.",
+        "Blub! Sou o Polvinho. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -941,7 +1085,13 @@
     {
       "id": "borboleta",
       "nome": "Colorida",
-      "ola": "Olá! Eu sou a Colorida. Flap! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Flap! Eu sou a Colorida. Sabias que as minhas asas têm todas as cores?",
+        "Olá, {nome}! Sou a Colorida. Flap! Vamos a mais umas contas?",
+        "Oi! Sou a Colorida. Flap! Pronto para treinar?",
+        "Olá, {nome}! Flap! Sou a Colorida, e hoje quem manda sou eu.",
+        "Flap! Sou a Colorida. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -980,7 +1130,13 @@
     {
       "id": "joaninha",
       "nome": "Pintinhas",
-      "ola": "Olá! Eu sou a Pintinhas. Bzz! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Bzz! Eu sou a Pintinhas. Sabias que trago a sorte sempre comigo?",
+        "Olá, {nome}! Sou a Pintinhas. Bzz! Vamos a mais umas contas?",
+        "Oi! Sou a Pintinhas. Bzz! Pronto para treinar?",
+        "Olá, {nome}! Bzz! Sou a Pintinhas, e hoje quem manda sou eu.",
+        "Bzz! Sou a Pintinhas. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -1019,7 +1175,13 @@
     {
       "id": "caranguejo",
       "nome": "Pinças",
-      "ola": "Olá! Eu sou o Pinças. Clic-clic! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Clic-clic! Eu sou o Pinças. Sabias que ando de lado mas penso em frente?",
+        "Olá, {nome}! Sou o Pinças. Clic-clic! Vamos a mais umas contas?",
+        "Oi! Sou o Pinças. Clic-clic! Pronto para treinar?",
+        "Olá, {nome}! Clic-clic! Sou o Pinças, e hoje quem manda sou eu.",
+        "Clic-clic! Sou o Pinças. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -1058,7 +1220,13 @@
     {
       "id": "caracol",
       "nome": "Devagarinho",
-      "ola": "Olá! Eu sou o Devagarinho. Devagar! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Devagar! Eu sou o Devagarinho. Sabias que devagarinho se vai ao longe?",
+        "Olá, {nome}! Sou o Devagarinho. Devagar! Vamos a mais umas contas?",
+        "Oi! Sou o Devagarinho. Devagar! Pronto para treinar?",
+        "Olá, {nome}! Devagar! Sou o Devagarinho, e hoje quem manda sou eu.",
+        "Devagar! Sou o Devagarinho. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -1097,7 +1265,13 @@
     {
       "id": "baleia",
       "nome": "Jorjinha",
-      "ola": "Olá! Eu sou a Jorjinha. Fuuush! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Fuuush! Eu sou a Jorjinha. Sabias que jorro água a cada acerto?",
+        "Olá, {nome}! Sou a Jorjinha. Fuuush! Vamos a mais umas contas?",
+        "Oi! Sou a Jorjinha. Fuuush! Pronto para treinar?",
+        "Olá, {nome}! Fuuush! Sou a Jorjinha, e hoje quem manda sou eu.",
+        "Fuuush! Sou a Jorjinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",
@@ -1136,7 +1310,13 @@
     {
       "id": "golfinho",
       "nome": "Bolhinha",
-      "ola": "Olá! Eu sou o Bolhinha. Iiii! Vamos treinar a tabuada juntos?",
+      "ola": [
+        "Iiii! Eu sou o Bolhinha. Sabias que salto mais alto que a tua resposta?",
+        "Olá, {nome}! Sou o Bolhinha. Iiii! Vamos a mais umas contas?",
+        "Oi! Sou o Bolhinha. Iiii! Pronto para treinar?",
+        "Olá, {nome}! Iiii! Sou o Bolhinha, e hoje quem manda sou eu.",
+        "Iiii! Sou o Bolhinha. Queres treinar a tabuada comigo, {nome}?"
+      ],
       "perguntar": [
         "{interjeicao}! Qual é o resultado, {nome}?",
         "{interjeicao}! Diz-me quanto é: {a} × {b}.",

@@ -11,6 +11,8 @@ Documentation for **Tabuada 12**, versioned with the code (docs-as-code).
   risks and architectural decisions.
 - [Requirements](./requirements/README.md) — user stories, EARS requirements and
   Gherkin acceptance criteria, one file per closed iteration.
+- [Tests](./tests/README.md) — the regression suite and the defects it
+  protects against.
 - [Changelog](../CHANGELOG.md) — released versions and pending changes.
 
 ## Conventions

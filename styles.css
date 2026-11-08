@@ -409,22 +409,31 @@ body {
 
 .mascot-scroller.can-scroll-right::after { opacity: 1; }
 
-.mascot-progress {
-  height: 3px;
-  margin: 0 4px;
-  border-radius: 2px;
-  background: var(--md-surface-container-highest);
-  overflow: hidden;
+.mascot-pages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 8px 0 0;
+  min-height: 8px;
 }
 
-.mascot-progress span {
+.mascot-pages i {
   display: block;
-  height: 100%;
-  width: 22%;
-  border-radius: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--md-surface-container-highest);
+  transition: background-color 160ms var(--motion-standard), transform 160ms var(--motion-standard);
+}
+
+.mascot-pages i.is-active {
   background: var(--md-primary);
-  transform: translateX(0);
-  transition: transform 120ms linear, width 120ms linear;
+  transform: scale(1.25);
+}
+
+.mascot-pages i.is-near {
+  background: color-mix(in srgb, var(--md-primary) 45%, var(--md-surface-container-highest));
 }
 
 .mascot-hint {
@@ -460,12 +469,14 @@ body {
   padding: 4px 4px 10px;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-padding-left: 4px;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  touch-action: pan-x;
+  cursor: grab;
 }
+
+.mascot-grid:active { cursor: grabbing; }
 
 .mascot-grid::-webkit-scrollbar { display: none; }
 
@@ -475,7 +486,6 @@ body {
   isolation: isolate;
   flex: 0 0 auto;
   width: 76px;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -487,7 +497,7 @@ body {
   color: var(--md-on-surface);
   font: inherit;
   cursor: pointer;
-  touch-action: manipulation;
+  touch-action: pan-x;
   transition: background-color 150ms var(--motion-standard), border-color 150ms var(--motion-standard), transform 80ms var(--motion-standard);
 }
 

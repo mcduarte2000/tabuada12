@@ -173,10 +173,23 @@ system shall hide the hint.
 that represents both the visible portion and the current scroll position.
 
 **R12.4 (event-driven)** When the child scrolls the row, the system shall update
-the progress indicator and the hint without animation jank.
+the page indicators and the hint without animation jank.
+
+**R12.4a (ubiquitous)** The system shall indicate the current position with one
+dot per visible page, rather than a continuous progress bar, because a single
+swipe moves a small fraction of a 2400 px row and a bar looks static.
 
 **R12.5 (ubiquitous)** The system shall render a gradient fade at the right edge
 while more content is available in that direction.
+
+**R12.7 (ubiquitous)** The system shall allow horizontal dragging with a pointer
+or a finger, and shall not swallow a tap that follows no movement.
+
+**R12.8 (event-driven)** When the child presses Arrow Left or Arrow Right while
+a mascot option has focus, the system shall scroll the row by one screen.
+
+**R12.9 (unwanted behaviour)** If a pointer gesture moved more than four pixels,
+then the system shall treat it as a drag and not as a mascot selection.
 
 **R12.6 (event-driven)** When a mascot is selected, the system shall scroll it
 into view if it is outside the visible area.
@@ -257,6 +270,55 @@ Feature: Header legibility
 
 ---
 
+## US-14 — Every mascot introduces itself differently
+
+**User story**
+
+> As a child, I want each animal to greet me in its own way, so that choosing a
+> different mascot actually feels different.
+
+### Requirements
+
+**R14.1 (ubiquitous)** The system shall provide at least five greeting lines per
+mascot.
+
+**R14.2 (event-driven)** When a mascot is selected, the system shall pick one
+greeting at random from that mascot's own pool.
+
+**R14.3 (ubiquitous)** The first greeting of every mascot shall be different from
+the first greeting of every other mascot.
+
+**R14.4 (unwanted behaviour)** If `content.json` is unavailable or holds a single
+string instead of a list, then the system shall fall back to a generic greeting
+for that mascot.
+
+### Acceptance criteria
+
+```gherkin
+Feature: Individual mascot greetings
+
+  Scenario: Selecting two mascots shows different lines
+    Given the mascot step is visible
+    When the child selects "Bigodes"
+    Then the bubble shows one of the cat greetings
+    When the child selects "Sabichona"
+    Then the bubble shows one of the owl greetings
+    And it differs from the cat line
+
+  Scenario: Greetings rotate
+    Given a mascot with five greetings
+    When the child selects it several times across visits
+    Then different greetings can appear
+
+  Scenario: Fallback without the content file
+    Given "content.json" cannot be fetched
+    When the child selects a mascot
+    Then a generic greeting that names the mascot is shown
+    And no raw placeholder is displayed
+```
+
+---
+
 ## Verification record
 
 | Requirement group | Method | Result |
@@ -266,6 +328,8 @@ Feature: Header legibility
 | Header overlap | Bounding boxes of title, subtitle and action buttons compared | pass |
 | R12 (carousel affordance) | Browser test: indicator width/transform and hint visibility measured before and after scrolling to the end | pass |
 | R13 (header) | Browser test at 360x640 and 320x568; title overflow and subtitle line count measured | pass |
+| R12.4a-12.9 (carousel) | Automated regression suite, touch emulation with `Input.dispatchTouchEvent`; scroll delta and active dot asserted | pass |
+| R14 (greetings) | Automated regression suite: four mascots selected, greetings compared; static check over all 30 pools | pass |
 | Sound toggle | Visibility checked before and after entering the mascot step | pass |
 
 ## Known gaps at the end of this iteration
@@ -277,5 +341,13 @@ Feature: Header legibility
 - At 320 px the subtitle occupies two lines, which slightly reduces the space
   available for the carousel. Acceptable, but worth revisiting if more vertical
   elements are added.
-- The carousel affordance was validated by setting `scrollLeft` programmatically,
-  not by a physical swipe. `TODO: confirm` on a real touch device.
+- The carousel gesture was validated with emulated touch events in Chromium.
+  `TODO: confirm` on a physical Android device after deploying.
+
+## Defects found while writing the tests
+
+| Defect | Cause | Fix |
+| --- | --- | --- |
+| Mascot taps stopped working | `setPointerCapture` fired on `pointerdown`, so the click reached the row instead of the button | Capture only after real movement; delegate clicks to the row |
+| Only one page dot rendered | The dot count was computed before the mascot images loaded, when the row had no width | Recompute on image `load`, on fonts ready, and on resize |
+| The bar looked frozen on Android | One swipe moves about 7 % of a 2400 px row, so a 3 px bar shifted a few pixels | Replaced the bar with page dots, which step visibly

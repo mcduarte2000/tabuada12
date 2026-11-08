@@ -55,10 +55,27 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 - Documentação passa a indicar o endereço público
   <https://tabuada12.miguelduarte.eu/>.
 
+### Adicionado
+
+- Suite de testes de regressão em `tests/regression.js`, sem dependências
+  obrigatórias: 25 verificações estáticas e 32 de browser, com catálogo em
+  `docs/tests/README.md`.
+- Cada mascote tem agora cinco frases de apresentação próprias, sorteadas de
+  forma diferente quando é escolhido.
+
 ### Corrigido
 
 - O cronómetro da sessão deixava de contar enquanto o separador estava oculto;
   agora pausa e retoma sem perder o tempo acumulado.
+- O deslize da fila de mascotes não funcionava no Android: o `scroll-snap`
+  obrigatório fazia o deslocamento voltar atrás e o `touch-action` bloqueava o
+  gesto nativo.
+- Tocar num mascote deixava de o selecionar, porque a captura de ponteiro
+  desviava o clique para a fila.
+- A barra de progresso parecia estática; foi substituída por pontos de página,
+  um por ecrã, que mudam visivelmente a cada deslize.
+- Só era desenhado um ponto de página, porque a contagem ocorria antes de as
+  imagens carregarem.
 - O título "Tabuada 12" ficava sobreposto pelos botões de ação com fontes
   grandes.
 

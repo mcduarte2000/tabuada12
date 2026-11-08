@@ -39,7 +39,7 @@
     mascotGrid: document.getElementById('mascotGrid'),
     mascotScroller: document.getElementById('mascotScroller'),
     mascotHint: document.getElementById('mascotHint'),
-    mascotProgressBar: document.getElementById('mascotProgressBar'),
+    mascotPages: document.getElementById('mascotPages'),
     coachPreview: document.getElementById('coachPreview'),
     setupAvatar: document.getElementById('setupAvatar'),
     setupBubbleText: document.getElementById('setupBubbleText'),
@@ -821,18 +821,50 @@
       label.className = 'mascot-option-name';
       label.textContent = mascot.name;
 
+      img.addEventListener('load', refreshMascotPages, { once: true });
+
       button.appendChild(avatar);
       button.appendChild(label);
       button.setAttribute('aria-label', mascot.name);
 
-      button.addEventListener('click', function () {
-        selectMascot(mascot.id);
-      });
-
       els.mascotGrid.appendChild(button);
     });
 
+    renderMascotPages();
     updateScrollHint();
+  }
+
+  function refreshMascotPages() {
+    renderMascotPages();
+    updateScrollHint();
+  }
+
+  function mascotPageCount() {
+    if (!els.mascotGrid) return 1;
+    var grid = els.mascotGrid;
+    var max = Math.max(0, grid.scrollWidth - grid.clientWidth);
+    if (max <= 4) return 1;
+    return Math.ceil(grid.scrollWidth / grid.clientWidth);
+  }
+
+  function currentMascotPage() {
+    var grid = els.mascotGrid;
+    if (!grid) return 0;
+    var max = Math.max(1, grid.scrollWidth - grid.clientWidth);
+    var ratio = Math.min(1, Math.max(0, grid.scrollLeft / max));
+    return Math.round(ratio * (mascotPageCount() - 1));
+  }
+
+  function renderMascotPages() {
+    if (!els.mascotPages) return;
+
+    var total = mascotPageCount();
+    els.mascotPages.innerHTML = '';
+
+    for (var i = 0; i < total; i += 1) {
+      var dot = document.createElement('i');
+      els.mascotPages.appendChild(dot);
+    }
   }
 
   function updateScrollHint() {
@@ -842,21 +874,98 @@
     var max = grid.scrollWidth - grid.clientWidth;
     var canScroll = max > 4;
     var atEnd = grid.scrollLeft >= max - 4;
+    var active = currentMascotPage();
 
     els.mascotScroller.classList.toggle('can-scroll-right', canScroll && !atEnd);
 
-    if (els.mascotProgressBar) {
-      var visible = grid.clientWidth / grid.scrollWidth;
-      var ratio = canScroll ? Math.min(1, Math.max(0, grid.scrollLeft / max)) : 0;
-      var width = Math.min(100, Math.max(14, visible * 100));
-      var travel = (100 - width) * ratio;
-      els.mascotProgressBar.style.width = width + '%';
-      els.mascotProgressBar.style.transform = 'translateX(' + (travel / width * 100) + '%)';
+    if (els.mascotPages) {
+      Array.prototype.forEach.call(els.mascotPages.children, function (dot, index) {
+        dot.classList.toggle('is-active', index === active);
+        dot.classList.toggle('is-near', Math.abs(index - active) === 1);
+      });
     }
 
     if (els.mascotHint) {
       els.mascotHint.hidden = !canScroll || atEnd;
     }
+  }
+
+  function scrollMascotsBy(direction) {
+    var grid = els.mascotGrid;
+    if (!grid) return;
+
+    var amount = Math.max(120, grid.clientWidth * 0.8);
+    grid.scrollLeft += direction * amount;
+  }
+
+  function attachMascotDrag() {
+    var grid = els.mascotGrid;
+    if (!grid) return;
+
+    var dragging = false;
+    var captured = false;
+    var startX = 0;
+    var startScroll = 0;
+    var moved = false;
+
+    grid.addEventListener('pointerdown', function (event) {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      dragging = true;
+      moved = false;
+      startX = event.clientX;
+      startScroll = grid.scrollLeft;
+    });
+
+    grid.addEventListener('pointermove', function (event) {
+      if (!dragging) return;
+      var delta = event.clientX - startX;
+      if (Math.abs(delta) > 4) moved = true;
+      if (!moved) return;
+      if (event.cancelable) event.preventDefault();
+
+      if (!captured && grid.setPointerCapture) {
+        captured = true;
+        try { grid.setPointerCapture(event.pointerId); } catch (error) { /* ignora */ }
+      }
+
+      grid.scrollLeft = startScroll - delta;
+      updateScrollHint();
+    });
+
+    function stopDrag() {
+      dragging = false;
+      captured = false;
+    }
+
+    grid.addEventListener('pointerup', stopDrag);
+    grid.addEventListener('pointercancel', stopDrag);
+
+    grid.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-mascot]');
+
+      if (moved) {
+        event.preventDefault();
+        event.stopPropagation();
+        moved = false;
+        return;
+      }
+
+      if (button && button.dataset.mascot) {
+        selectMascot(button.dataset.mascot);
+      }
+    });
+
+    grid.addEventListener('scroll', updateScrollHint, { passive: true });
+
+    grid.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        scrollMascotsBy(1);
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        scrollMascotsBy(-1);
+      }
+    });
   }
 
   function selectMascot(id) {
@@ -879,7 +988,7 @@
       els.coachPreview.hidden = true;
     }
 
-    updateScrollHint();
+    refreshMascotPages();
   }
 
   function scrollMascotIntoView(id) {
@@ -901,7 +1010,15 @@
 
   function ownedHello(mascot) {
     var owned = state.content ? state.content[mascot.id] : null;
-    return owned && owned.ola ? owned.ola : ('Olá! Eu sou ' + (mascot.article || 'o') + ' ' + mascot.name + '.');
+    var fallback = 'Olá! Eu sou ' + (mascot.article || 'o') + ' ' + mascot.name + '.';
+
+    if (!owned || !owned.ola) return fallback;
+
+    if (Object.prototype.toString.call(owned.ola) === '[object Array]') {
+      return pick(owned.ola) || fallback;
+    }
+
+    return owned.ola;
   }
 
   function startGame() {
@@ -953,7 +1070,11 @@
 
     els.startBtn.textContent = 'Vamos jogar, ' + state.name + '!';
     els.startBtn.disabled = !state.mascot;
-    updateScrollHint();
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(refreshMascotPages);
+    }
+    window.requestAnimationFrame(refreshMascotPages);
 
     if (state.mascot) {
       els.coachPreview.hidden = false;
@@ -1057,9 +1178,12 @@
 
   els.startBtn.addEventListener('click', startGame);
 
-  els.mascotGrid.addEventListener('scroll', updateScrollHint, { passive: true });
+  attachMascotDrag();
 
-  window.addEventListener('resize', updateScrollHint);
+  window.addEventListener('resize', function () {
+    renderMascotPages();
+    updateScrollHint();
+  });
 
   els.editBtn.addEventListener('click', function () {
     resetToSetup(true, true);
