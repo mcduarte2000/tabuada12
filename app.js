@@ -29,7 +29,6 @@
     soundToggle: document.getElementById('soundToggle'),
     editBtn: document.getElementById('editBtn'),
     aboutBtn: document.getElementById('aboutBtn'),
-    aboutLink: document.getElementById('aboutLink'),
     aboutDialog: document.getElementById('aboutDialog'),
     setup: document.getElementById('setup'),
     nameStep: document.getElementById('nameStep'),
@@ -107,6 +106,9 @@
     best: 0,
     firstTryCount: 0,
     secondTryCount: 0,
+    sessionPeak: 0,
+    sessionStart: 0,
+    sessionRecorded: false,
     missFirst: 0,
     missSecond: 0,
     records: [],
@@ -446,23 +448,38 @@
     }
   }
 
-  function recordBest(streak) {
-    state.records.push({ streak: streak, at: Date.now() });
-    state.records.sort(function (a, b) { return b.streak - a.streak; });
+  function startSessionRecord() {
+    state.sessionPeak = 0;
+    state.sessionStart = Date.now();
+    state.sessionRecorded = false;
+  }
+
+  function finalizeSession() {
+    if (state.sessionRecorded) return;
+    if (state.sessionPeak <= 0) return;
+
+    state.sessionRecorded = true;
+    state.records.push({ streak: state.sessionPeak, at: state.sessionStart || Date.now() });
+    state.records.sort(function (a, b) {
+      if (b.streak !== a.streak) return b.streak - a.streak;
+      return b.at - a.at;
+    });
     state.records = state.records.slice(0, 10);
     writeRecords();
   }
 
   function updateBest() {
+    if (state.streak > state.sessionPeak) state.sessionPeak = state.streak;
+
     if (state.streak <= state.best) return;
     state.best = state.streak;
     writeStored(STORAGE.best, state.best);
-    recordBest(state.streak);
     bump(els.statBest);
   }
 
   function resetStreak() {
     if (state.streak === 0) return;
+
     state.streak = 0;
     renderStats();
     bump(els.statStreak);
@@ -1115,6 +1132,9 @@
   function startGame() {
     if (!state.mascot || !state.name) return;
 
+    finalizeSession();
+    startSessionRecord();
+
     writeStored(STORAGE.name, state.name);
     writeStored(STORAGE.mascot, state.mascot.id);
     setProfileCookies(state.name, state.mascot.id);
@@ -1174,6 +1194,7 @@
   function resetToSetup(keepValues, keepSession) {
     clearAdvance();
     stopTimer();
+    finalizeSession();
 
     state.phase = 'answering';
     state.busy = false;
@@ -1189,6 +1210,7 @@
       state.streak = 0;
       state.startedAt = null;
       state.elapsed = 0;
+      startSessionRecord();
       renderTime();
     }
 
@@ -1305,12 +1327,12 @@
 
       var empty = document.createElement('li');
       empty.className = 'detail-empty';
-      empty.textContent = 'Acerta várias contas seguidas à primeira para começares a série.';
+      empty.textContent = 'Acerta várias contas seguidas à primeira para começares uma série.';
       els.recordList.appendChild(empty);
       return;
     }
 
-    els.bestLead.textContent = 'A tua melhor série é de ' + records[0].streak + '.';
+    els.bestLead.textContent = 'A tua melhor série é de ' + records[0].streak + ' seguidas.';
     els.bestNote.hidden = false;
 
     records.forEach(function (item, index) {
@@ -1323,7 +1345,7 @@
 
       var value = document.createElement('span');
       value.className = 'record-value';
-      value.textContent = plural(item.streak, 'acerto', 'acertos');
+      value.textContent = item.streak + ' seguidas';
 
       var date = document.createElement('span');
       date.className = 'record-date';
@@ -1410,8 +1432,6 @@
       if (event.target === dialog) dialog.close();
     });
   });
-  if (els.aboutLink) els.aboutLink.addEventListener('click', openAbout);
-
   els.aboutDialog.addEventListener('click', function (event) {
     if (event.target === els.aboutDialog) els.aboutDialog.close();
   });
@@ -1509,6 +1529,8 @@
       }
     }
   });
+
+  window.addEventListener('pagehide', finalizeSession);
 
   document.addEventListener('visibilitychange', function () {
     if (els.game.hidden) return;

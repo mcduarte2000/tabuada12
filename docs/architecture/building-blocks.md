@@ -54,7 +54,7 @@ C4Container
 | Content and phrasing | `fill`, `phrases`, `mascotPhrases`, `pickFresh`, `loadContent` | Load `content.json`, substitute placeholders, avoid repeating the previous phrase. |
 | Adaptive selection | `factKey`, `factWeight`, `chooseFact`, `recordResult` | Weighted random choice per fact and progress recording. |
 | Game flow | `newQuestion`, `pressDigit`, `pressDelete`, `submit`, `nextQuestion`, `scheduleAdvance` | Attempt counting, correct/wrong/reveal phases, automatic advance. |
-| Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `recordBest`, `resetStreak`, `renderSessionDialogs`, `renderRecords`, `openDialog` | Correct count, miss count, streak, record history, elapsed time, and the detail dialogs behind each indicator. |
+| Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `finalizeSession`, `startSessionRecord`, `resetStreak`, `renderSessionDialogs`, `renderRecords`, `openDialog` | Correct count, miss count, streak, record history, elapsed time, and the detail dialogs behind each indicator. |
 | Rendering and feedback | `say`, `react`, `setAvatar`, `applyThemeColors`, `bump`, `restartAnimation`, `burstConfetti`, `spawnRipple` | Bubble text, mascot animation, ripple and confetti effects. |
 | Audio | `ensureAudio`, `beep`, `soundCorrect`, `soundWrong`, `soundReveal` | Synthesised feedback tones, no files. |
 | Setup flow | `renderMascotOptions`, `selectMascot`, `ownedHello`, `startGame`, `goToMascotStep`, `resetToSetup`, `applyTheme`, `updateThemeButton`, `updateSoundButton` | Name entry, mascot choice, profile switching, preferences. |
@@ -71,7 +71,8 @@ C4Container
 | `a`, `b`, `input`, `attempt`, `phase`, `busy` | Current question and interaction state. |
 | `correctCount`, `missCount`, `streak`, `best` | Session and lifetime counters. |
 | `firstTryCount`, `secondTryCount`, `missFirst`, `missSecond` | Session breakdown shown in the Acertos and Falhas dialogs. |
-| `records` | Top-10 streak history, persisted in `localStorage` and a one-year cookie. |
+| `records` | Top-10 history, one entry per finished session, persisted in `localStorage` and a one-year cookie. |
+| `sessionPeak`, `sessionStart`, `sessionRecorded` | Best streak of the current session, when it started, and whether it was already appended. |
 | `sound` | Whether sound effects are enabled. |
 | `startedAt`, `timerId` | Session clock. |
 | `progress` | Per-fact counters: `ok`, `second`, `fail`, `last`, `lastOk`. |

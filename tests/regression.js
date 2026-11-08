@@ -204,6 +204,12 @@ function staticTests() {
   check('profile TTL is one year', /PROFILE_TTL\s*=\s*365\s*\*\s*24\s*\*\s*60\s*\*\s*60/.test(js),
     'name, mascot and record cookies last one year');
 
+  check('one record per session, not per streak increment',
+    /function finalizeSession/.test(js) &&
+      /state\.records\.push\(\{\s*streak:\s*state\.sessionPeak/.test(js) &&
+      /state\.recordBest\(/.test(js) === false,
+    'a long streak used to write 16, 15, 14... entries for the same session');
+
   check('records are stored in a cookie too',
     /records:\s*'tabuada12_records'/.test(js) &&
       /setCookie\(COOKIE\.records,\s*compact,\s*PROFILE_TTL\)/.test(js),
@@ -247,10 +253,11 @@ function staticTests() {
     var html = read('index.html');
     return /id="aboutBtn"/.test(html) &&
       /id="aboutDialog"/.test(html) &&
+      /id="aboutLink"/.test(html) === false &&
       html.indexOf('sai deste dispositivo') >= 0 &&
       html.indexOf('licença MIT') >= 0 &&
       html.indexOf('Apache 2.0') >= 0;
-  })(), 'the app must expose its licence and local-only storage policy');
+  })(), 'one entry point in the header; no duplicate link in the footer');
 
   check('licence dialog links to the repository', (function () {
     var html = read('index.html');

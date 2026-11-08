@@ -413,8 +413,9 @@ or Escape, the system shall return focus to the page without losing game state.
 **R16.7 (unwanted behaviour)** If a digit or Enter is pressed while the dialog is
 open, then the system shall not forward it to the game.
 
-**R16.8 (optional feature)** Where the viewport is tall enough to show the
-footnote, the system shall also expose a "Licença e privacidade" link there.
+**R16.8 (superseded by R16.1)** Removed. A duplicate footer link existed while
+the header control was hidden on the setup screen. The header control is now
+always visible, so a second entry point was removed to avoid redundancy.
 
 ### Acceptance criteria
 
@@ -446,6 +447,11 @@ Feature: Licence and privacy information
     And it points at the repository
     And it opens in a new tab without opener access
 
+  Scenario: Single entry point
+    Given the app is open on any screen
+    Then the licence and privacy dialog opens from the header control
+    And no duplicate link exists in the page body
+
   Scenario: Dialog fits a small phone
     Given a 320x568 viewport
     When the dialog opens
@@ -471,8 +477,12 @@ shall open a dialog with the session total and the split between first and
 second attempt.
 
 **R17.3 (event-driven)** When the parent taps the record indicator, the system
-shall open a dialog listing the ten best streaks in descending order, each with
-its value and the date it was set.
+shall open a dialog listing the ten best sessions in descending order, each
+with the best streak reached in that session and the session date.
+
+**R17.3a (ubiquitous)** The system shall append one record per session, holding
+the best streak of that session, and shall not append an entry for every
+increment of a streak inside the same session.
 
 **R17.4 (ubiquitous)** The time and streak indicators shall remain
 non-interactive, so only indicators with detail open a dialog.
@@ -504,12 +514,18 @@ Feature: Statistics detail
     Then a dialog states 2 falhas
     And it states 0 na primeira tentativa, 2 na segunda
 
-  Scenario: Records list
-    Given the child set streaks of 4, 3, 2 and 1
+  Scenario: One record per session
+    Given the child answers 12 questions correctly in a row in one session
+    When the session ends
+    Then the dialog lists exactly one row for that session
+    And it shows 12 seguidas
+    And it does not list 12, 11, 10 and so on
+
+  Scenario: Records list across sessions
+    Given three finished sessions with best streaks of 4, 6 and 2
     When the parent taps "Recorde"
-    Then the dialog lists 4, 3, 2 and 1 in that order
+    Then the dialog lists 6, 4 and 2 in that order
     And each row shows a date
-    And the most recent record is highlighted
 
   Scenario: Records survive a reload
     Given the child set a streak of 4
@@ -536,7 +552,7 @@ Feature: Statistics detail
 | R14 (greetings) | Automated regression suite: four mascots selected, greetings compared; static check over all 30 pools | pass |
 | R15 (nickname) | Automated regression suite: static check for the privacy copy and missing `autocomplete="given-name"`; browser check that a two-word entry is refused | pass |
 | R16 (licence and privacy) | Automated regression suite: static check that the controls and the required statements exist; browser checks for opening, closing and digit suppression | pass |
-| R17 (statistics detail) | Automated regression suite: three dialogs opened and asserted for content; record list rendered; cookie persistence checked after clearing `localStorage` | pass |
+| R17 (statistics detail) | Automated regression suite: three dialogs opened by real mouse click and asserted for content; one-record-per-session asserted statically and by a 12-answer browser run; cookie persistence checked after clearing `localStorage` | pass |
 | Sound toggle | Visibility checked before and after entering the mascot step | pass |
 
 ## Known gaps at the end of this iteration

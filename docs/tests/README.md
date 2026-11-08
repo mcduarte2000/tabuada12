@@ -52,11 +52,12 @@ defect from returning unnoticed.
 | Clock pauses on hidden tab | Elapsed time jumped by the hidden duration |
 | Progress TTL 24 h, profile 1 year | Expiry drifted from the documented values |
 | Records stored in a one-year cookie | The record history could be lost with `localStorage` |
+| One record per session | A 16-answer streak wrote 16 descending entries |
 | Cookie write is size-checked | The compact progress could exceed 4 KB |
 | Failures weigh more than successes | Adaptive selection lost its purpose |
 | Storage access wrapped | Storage failures must never break the game |
 | The app asks for a nickname | Personal data must not be requested |
-| Licence and privacy dialog exists | The information must stay reachable in the app |
+| Licence and privacy dialog exists | The information must stay reachable from one place only |
 | Licence dialog links to the repository | The source must stay discoverable and open safely |
 | Required files exist | Broken links and missing assets |
 | Licence lists third-party content | MIT attribution is a legal obligation |

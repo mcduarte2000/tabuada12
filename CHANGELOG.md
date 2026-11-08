@@ -67,6 +67,8 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 - Os indicadores "Acertos", "Falhas" e "Recorde" são agora botões: abrem um
   diálogo com o total da sessão e o desdobramento entre primeira e segunda
   tentativa, e a lista dos 10 melhores recordes por ordem decrescente, com data.
+- O histórico de recordes guarda **uma entrada por sessão**, com a melhor série
+  alcançada nela, em vez de uma entrada por cada incremento da série.
 - O histórico de recordes é guardado em `localStorage` e num cookie com
   validade de 1 ano, como o nome e o mascote.
 - Botão de informação no cabeçalho, presente em todos os ecrãs, que abre um
@@ -74,10 +76,10 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   terceiros e a política de privacidade.
 - O diálogo explica que nada sai do dispositivo, que não há contas, servidores,
   análises nem publicidade, e indica os prazos de conservação dos dados.
-- Ligação "Licença e privacidade" no rodapé, quando o ecrã tem altura para o
-  mostrar.
 - Ligação "Ver o código no GitHub" no fim da secção de licença, a abrir numa
   nova aba.
+- Removida a ligação duplicada "Licença e privacidade" do rodapé, já que o
+  botão do cabeçalho está sempre visível.
 
 ### Alterado
 
