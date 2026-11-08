@@ -213,7 +213,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.3.0...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.0...main
+[1.4.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/mcduarte2000/tabuada12/compare/32a6e5e...cee4b10
 [1.1.0]: https://github.com/mcduarte2000/tabuada12/compare/8bb1b47...32a6e5e
