@@ -229,6 +229,15 @@ function staticTests() {
       html.indexOf('Apache 2.0') >= 0;
   })(), 'the app must expose its licence and local-only storage policy');
 
+  check('licence dialog links to the repository', (function () {
+    var html = read('index.html');
+    var link = html.match(/class="about-link"[^>]*href="([^"]+)"/);
+    return !!link &&
+      link[1] === 'https://github.com/mcduarte2000/tabuada12' &&
+      /rel="noopener noreferrer"/.test(html) &&
+      /target="_blank"/.test(html);
+  })(), 'the source must be reachable, opened safely in a new tab');
+
   check('required files exist', missing.length === 0, 'missing: ' + missing.join(', '));
 
   var licence = read('LICENSE');
