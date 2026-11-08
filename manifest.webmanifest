@@ -1,21 +1,27 @@
 {
-  "name": "Tabuada 12",
+  "name": "Tabuada 12 — Treina a tabuada do 1 ao 12",
   "short_name": "Tabuada 12",
-  "description": "Treina a tabuada do 1 ao 12 com mascotes divertidos.",
+  "description": "Jogo gratuito para treinar a tabuada do 1 ao 12 com mascotes divertidos. Funciona offline e não recolhe dados.",
   "lang": "pt-PT",
-  "start_url": ".",
-  "scope": ".",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "portrait",
   "background_color": "#fef7ff",
   "theme_color": "#6750a4",
+  "categories": [
+    "education",
+    "games",
+    "kids"
+  ],
+  "prefer_related_applications": false,
   "icons": [
-    {
-      "src": "assets/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
     {
       "src": "assets/icon-192.png",
       "sizes": "192x192",
@@ -29,10 +35,52 @@
       "purpose": "any"
     },
     {
-      "src": "assets/icon-512.png",
+      "src": "assets/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshot-setup.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Escolhe o nome de jogo e o mascote"
+    },
+    {
+      "src": "assets/screenshot-game.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Responde às contas com o teu mascote"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Começar a jogar",
+      "short_name": "Jogar",
+      "url": "./?source=shortcut",
+      "icons": [
+        {
+          "src": "assets/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

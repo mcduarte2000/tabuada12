@@ -17,6 +17,23 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-08
+
+### Adicionado
+
+- Aplicação instalável como PWA: manifest completo com ícones normais e
+  maskable, dois screenshots e um atalho, e botão "Instalar aplicação" no
+  cabeçalho quando o browser o permite.
+- Service worker que guarda em cache a aplicação e os 30 mascotes, permitindo
+  jogar sem rede depois da primeira visita.
+- Ícone maskable dedicado, com a arte dentro da zona segura de 80 %.
+- Metadados para o ecrã principal do iOS.
+
+### Alterado
+
+- `manifest.webmanifest` ganha `id`, `display_override`, categorias,
+  screenshots e atalho.
+
 ## [1.3.0] - 2026-11-08
 
 ### Adicionado

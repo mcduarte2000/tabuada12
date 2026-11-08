@@ -548,6 +548,83 @@ Feature: Statistics detail
     Then "Tempo" and "Série" do not open any dialog
 ```
 
+## US-18 — Install the game like an app
+
+**User story**
+
+> As a parent, I want to install the game from the browser, so that it sits on
+> the home screen like an app, without a store or a cost.
+
+### Requirements
+
+**R18.1 (ubiquitous)** The system shall provide a web app manifest with name,
+short name, start URL, scope, standalone display, theme colour, background
+colour, and at least one 192 px or 512 px icon plus one maskable icon.
+
+**R18.2 (ubiquitous)** The maskable icon shall keep the artwork inside the
+central 80 % safe zone so that launchers can crop it.
+
+**R18.3 (event-driven)** When the browser fires `beforeinstallprompt`, the
+system shall show an install control in the header.
+
+**R18.4 (event-driven)** When the parent activates the install control, the
+system shall call the browser prompt and afterwards hide the control.
+
+**R18.5 (event-driven)** When the app is installed, the system shall hide the
+install control.
+
+**R18.6 (event-driven)** When the app loads over HTTPS, the system shall
+register a service worker.
+
+**R18.7 (state-driven)** While offline, the system shall serve the shell, the
+styles, the scripts, the content catalogue and all 30 mascots from the cache.
+
+**R18.8 (unwanted behaviour)** If a precached file is missing, then the install
+of the worker shall fail loudly rather than leave a partial cache.
+
+**R18.9 (ubiquitous)** The system shall declare iOS standalone metadata
+(`apple-mobile-web-app-capable`, `apple-touch-icon`) because iOS ignores the
+manifest for the home-screen experience.
+
+### Acceptance criteria
+
+```gherkin
+Feature: Installable web app
+
+  Scenario: Install from the browser
+    Given the app is served over HTTPS
+    When the site is opened in Chrome on Android
+    Then the browser offers "Install app"
+    And the install prompt shows the app name, icon and screenshots
+
+  Scenario: In-app install control
+    Given the browser has fired beforeinstallprompt
+    Then an install button is visible in the header
+    When the parent presses it and completes the install
+    Then the button disappears
+
+  Scenario: No install control without the prompt
+    Given the browser has not offered installation
+    Then no install button is visible
+
+  Scenario: Works offline
+    Given the app has been opened once while online
+    When the device loses network and the page is reloaded
+    Then the setup screen renders with styles applied
+    And all 30 mascots are listed
+    And a question can be answered
+
+  Scenario: Missing precache entry
+    Given one file listed in the service worker is absent
+    Then the worker does not activate
+    And the regression suite fails on that file
+
+  Scenario: iOS home screen
+    Given the site is added to the home screen on iOS
+    Then it opens without browser chrome
+    And it uses the apple-touch-icon
+```
+
 ---
 
 ## Verification record
@@ -563,6 +640,7 @@ Feature: Statistics detail
 | R14 (greetings) | Automated regression suite: four mascots selected, greetings compared; static check over all 30 pools | pass |
 | R15 (nickname) | Automated regression suite: static check for the privacy copy and missing `autocomplete="given-name"`; browser check that a two-word entry is refused | pass |
 | R16 (licence and privacy) | Automated regression suite: static check that the controls and the required statements exist; browser checks for opening, closing and digit suppression | pass |
+| R18 (installable PWA) | Automated regression suite: manifest fields, icon existence, screenshot existence, precache resolution and versioning checked statically; worker activation, cache size of 30+ entries and an offline reload asserted in the browser | pass |
 | R17 (statistics detail) | Automated regression suite: three dialogs opened by real mouse click and asserted for content; one-record-per-session asserted statically and by a 12-answer browser run; the live session row asserted to match the header counter; cookie persistence checked after clearing `localStorage` | pass |
 | Sound toggle | Visibility checked before and after entering the mascot step | pass |
 

@@ -21,6 +21,8 @@ GitHub Pages ou Cloudflare Pages.
 - O nome, o mascote e o progresso ficam também em cookies: o perfil dura
   um ano e o progresso expira ao fim de 24 horas.
 - Tema dia/noite e efeitos sonoros opcionais.
+- Instalável como aplicação (PWA) no Chrome ou Edge do Android, com
+  funcionamento offline depois da primeira visita.
 - Interface Material Design 3, responsiva e com suporte a telemóvel
   (safe areas, alvos táteis e `prefers-reduced-motion`).
 
@@ -43,6 +45,19 @@ personalizado `tabuada12.miguelduarte.eu` aponta para esta publicação.
 **Cloudflare Pages** — ligar o repositório e usar o diretório raiz sem
 comando de build.
 
+## Instalar como aplicação
+
+O site é uma PWA. No Chrome ou Edge do Android, abrir a app e escolher
+**Instalar app** (ou o botão de instalação no cabeçalho, quando aparece). Fica
+no ecrã principal e abre sem barra do browser. No iPhone e iPad, usar
+*Partilhar → Adicionar ao ecrã principal*.
+
+Depois da primeira visita a app funciona sem rede: o service worker guarda a
+interface, os textos e os 30 mascotes.
+
+Ao alterar qualquer ficheiro da lista de cache em `sw.js`, aumentar
+`VERSION` para os browsers descarregarem a versão nova.
+
 ## Estrutura
 
 ```
@@ -54,10 +69,13 @@ content.json          frases de cada mascote (editável)
 CHANGELOG.md          histórico de versões
 AGENTS.md             regras para contribuidores e agentes
 manifest.webmanifest  metadados da app instalável
+sw.js                 service worker (cache offline)
 assets/
   icon.svg            ícone da aplicação
   icon-192.png        ícone para PWA
   icon-512.png        ícone para PWA
+  icon-maskable*.png  ícone adaptável ao launcher Android
+  screenshot-*.png    imagens do convite de instalação
   apple-touch-icon.png
   mascots/fluent/     mascotes SVG + licença de origem
 docs/                 documentação de arquitetura (arc42 + ADRs)

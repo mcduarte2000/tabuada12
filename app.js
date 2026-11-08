@@ -29,6 +29,7 @@
     soundToggle: document.getElementById('soundToggle'),
     editBtn: document.getElementById('editBtn'),
     aboutBtn: document.getElementById('aboutBtn'),
+    installBtn: document.getElementById('installBtn'),
     aboutDialog: document.getElementById('aboutDialog'),
     setup: document.getElementById('setup'),
     nameStep: document.getElementById('nameStep'),
@@ -1438,6 +1439,41 @@
 
   els.aboutBtn.addEventListener('click', openAbout);
 
+  var installPrompt = null;
+
+  function updateInstallButton() {
+    if (!els.installBtn) return;
+    els.installBtn.hidden = installPrompt === null;
+  }
+
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    installPrompt = event;
+    updateInstallButton();
+  });
+
+  window.addEventListener('appinstalled', function () {
+    installPrompt = null;
+    updateInstallButton();
+  });
+
+  if (els.installBtn) {
+    els.installBtn.addEventListener('click', function () {
+      if (!installPrompt) return;
+
+      installPrompt.prompt();
+      installPrompt.userChoice.then(function () {
+        installPrompt = null;
+        updateInstallButton();
+      }).catch(function () {
+        installPrompt = null;
+        updateInstallButton();
+      });
+    });
+  }
+
+  updateInstallButton();
+
   if (els.statCorrectBtn) {
     els.statCorrectBtn.addEventListener('click', function () {
       openDialog(els.correctDialog, renderSessionDialogs);
@@ -1535,7 +1571,7 @@
         (els.missDialog && els.missDialog.open) ||
         (els.bestDialog && els.bestDialog.open)) return;
 
-    var onControl = target && target.closest('#soundToggle, #themeToggle, #editBtn, #aboutBtn, #nextBtn, a');
+    var onControl = target && target.closest('#soundToggle, #themeToggle, #editBtn, #aboutBtn, #installBtn, #nextBtn, a');
 
     if (/^\d$/.test(event.key)) {
       event.preventDefault();
@@ -1605,5 +1641,21 @@
     return loadContent();
   }
 
+  function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) return;
+    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') return;
+
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').then(function (registration) {
+        if (registration.waiting && registration.waiting.postMessage) {
+          registration.waiting.postMessage('skip-waiting');
+        }
+      }).catch(function () {
+        /* offline support is an enhancement: the app works without it */
+      });
+    });
+  }
+
+  registerServiceWorker();
   init();
 })();

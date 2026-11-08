@@ -249,6 +249,81 @@ function staticTests() {
       html.indexOf('autocomplete="given-name"') === -1;
   })(), 'the app must ask for a nickname with examples and never autofill a real name');
 
+  var manifest = JSON.parse(read('manifest.webmanifest'));
+  var sw = read('sw.js');
+
+  check('manifest is installable', (function () {
+    return manifest.name &&
+      manifest.short_name &&
+      manifest.start_url &&
+      manifest.scope &&
+      manifest.display === 'standalone' &&
+      manifest.theme_color &&
+      manifest.background_color &&
+      /^(#|rgb|\.\/)/.test(manifest.start_url);
+  })(), 'name, start_url, scope, display and colours are required to install');
+
+  check('manifest has any and maskable icons', (function () {
+    var any = manifest.icons.filter(function (i) { return (i.purpose || 'any') === 'any'; });
+    var mask = manifest.icons.filter(function (i) { return i.purpose === 'maskable'; });
+    var has192or512 = manifest.icons.some(function (i) { return i.sizes === '192x192' || i.sizes === '512x512'; });
+    return any.length > 0 && mask.length > 0 && has192or512;
+  })(), 'Chrome requires a 192 or 512 icon plus a maskable one');
+
+  check('every manifest icon exists on disk', (function () {
+    var missing = manifest.icons.filter(function (i) {
+      return fs.existsSync(path.join(ROOT, i.src)) === false;
+    });
+    return missing.length === 0;
+  })(), 'a missing icon blocks installation silently');
+
+  check('manifest declares screenshots', (function () {
+    return Object.prototype.toString.call(manifest.screenshots) === '[object Array]' &&
+      manifest.screenshots.length >= 1 &&
+      manifest.screenshots.every(function (s) {
+        return fs.existsSync(path.join(ROOT, s.src));
+      });
+  })(), 'screenshots produce a richer install prompt on Android');
+
+  check('manifest is valid JSON', (function () {
+    try {
+      JSON.parse(read('manifest.webmanifest'));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  })(), 'a malformed manifest is ignored by the browser');
+
+  check('service worker precaches the shell', (function () {
+    var required = ['index.html', 'styles.css', 'app.js', 'mascots.js', 'content.json'];
+    return required.every(function (file) { return sw.indexOf("'" + file + "'") >= 0; }) &&
+      /assets\/mascots\/fluent\//.test(sw);
+  })(), 'the game must start offline');
+
+  check('every precached file exists', (function () {
+    var list = sw.slice(sw.indexOf('SHELL_FILES'), sw.indexOf('];', sw.indexOf('SHELL_FILES')));
+    var files = (list.match(/'([^']+)'/g) || []).map(function (f) { return f.slice(1, -1); });
+    var missing = files.filter(function (f) {
+      return f !== './' && fs.existsSync(path.join(ROOT, f)) === false;
+    });
+    return missing.length === 0;
+  })(), 'cache.addAll rejects the whole install if one file 404s');
+
+  check('service worker is versioned', /var VERSION = 'tabuada12-v\d+'/.test(sw),
+    'a version bump is the only way to retire stale caches');
+
+  check('app registers the service worker', /serviceWorker\.register\('sw\.js'\)/.test(js),
+    'the manifest alone does not make the app offline-capable');
+
+  check('install button is wired', /beforeinstallprompt/.test(js) && /id="installBtn"/.test(html),
+    'the in-app install control depends on the browser prompt event');
+
+  check('iOS standalone metadata present', (function () {
+    return /apple-mobile-web-app-capable/.test(html) &&
+      /apple-touch-icon/.test(html) &&
+      /mobile-web-app-capable/.test(html);
+  })(), 'iOS ignores the manifest for the home-screen experience');
+
   check('privacy and licence reachable', (function () {
     var html = read('index.html');
     return /id="aboutBtn"/.test(html) &&
@@ -654,6 +729,30 @@ async function browserTests(browser) {
     return before === after;
   })(), 'digits must not reach the game behind the dialog');
 
+  check('service worker activates', await (async function () {
+    var active = false;
+    for (var attempt = 0; attempt < 20; attempt += 1) {
+      active = await page.evaluate(function () {
+        return navigator.serviceWorker.getRegistration().then(function (reg) {
+          return !!(reg && reg.active);
+        });
+      });
+      if (active) break;
+      await page.waitForTimeout(200);
+    }
+    return active;
+  })(), 'the worker must reach the active state, otherwise offline never works');
+
+  check('shell is precached', await page.evaluate(async function () {
+    var keys = await caches.keys();
+    var total = 0;
+    for (var i = 0; i < keys.length; i += 1) {
+      var cache = await caches.open(keys[i]);
+      total += (await cache.keys()).length;
+    }
+    return total >= 30;
+  }), 'the 30 mascots plus the shell must be cached');
+
   check('reduced motion still renders the app', await page.evaluate(function () {
     return document.getElementById('game').hidden === false;
   }), 'reduced motion must not break layout');
@@ -684,6 +783,24 @@ async function browserTests(browser) {
   check('no vertical overflow at 320 px', await page.evaluate(function () {
     return document.documentElement.scrollHeight <= window.innerHeight + 1;
   }), 'the game must fit a small phone');
+
+  check('app still loads offline', await (async function () {
+    var before = errors.length;
+    await context.setOffline(true);
+    await page.goto('http://localhost:' + PORT + '/?offline=1', { waitUntil: 'load' });
+    await page.waitForTimeout(700);
+    var state = await page.evaluate(function () {
+      return {
+        setup: !!document.getElementById('setup'),
+        mascots: document.querySelectorAll('#mascotGrid button').length,
+        styled: getComputedStyle(document.body).backgroundColor !== 'rgba(0, 0, 0, 0)'
+      };
+    });
+    await context.setOffline(false);
+    await page.goto('http://localhost:' + PORT + '/', { waitUntil: 'load' });
+    await page.waitForTimeout(500);
+    return state.setup && state.mascots === 30 && state.styled && errors.length === before;
+  })(), 'a cached app must render without network and without new errors');
 
   check('no console errors during the session', errors.length === 0, errors.join(' | '));
 

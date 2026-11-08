@@ -38,7 +38,8 @@ app.js                all game logic (IIFE, no modules, ES5 syntax)
 mascots.js            mascot list and fallback phrases
 content.json          per-mascot phrases, fetched at runtime (editable)
 manifest.webmanifest  PWA metadata
-assets/               icons, mascot SVGs, vendored licence
+sw.js                 service worker: precache shell and mascots
+assets/               icons, screenshots, mascot SVGs, vendored licence
 docs/                 documentation: architecture, requirements, tests
 tests/regression.js   dependency-free regression suite
 CHANGELOG.md          Keep a Changelog + SemVer
@@ -247,6 +248,20 @@ closes, and `CHANGELOG.md` for user-visible changes.
   licence, or incompatible with MIT redistribution. Ask for an ADR first.
 - When adding or removing third-party files, update `LICENSE` in the same
   commit and keep the file list in sync with the disk contents.
+
+## PWA
+
+- The app is installable (ADR-0008). `manifest.webmanifest` and `sw.js` are
+  production files, not build output.
+- **Bump `VERSION` in `sw.js` in the same commit as any change to a precached
+  file.** Otherwise browsers keep serving the old shell.
+- Add every new runtime file to `SHELL_FILES`. `cache.addAll` is atomic: one
+  404 disables offline support entirely, and the regression suite checks it.
+- Icons: keep an `any` icon at 192 or 512 px and a separate maskable icon with
+  the artwork inside the centred 80 % safe zone.
+- Test offline before committing a PWA change: load once online, switch the
+  network off, reload, and confirm the setup screen renders with styles and 30
+  mascots.
 
 ## Tests
 

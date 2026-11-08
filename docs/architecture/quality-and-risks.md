@@ -51,23 +51,25 @@ retained.
 | R1 | Cookie exceeds the 4 KB limit once every fact accumulates high counters. | Progress cookie silently stops being written; the `localStorage` copy still works. | Low. Worst case measured at 3541 bytes for 144 facts with counters at 999. | Compact encoding, `COOKIE_LIMIT` guard, `localStorage` stays the primary source. |
 | R2 | `content.json` is fetched at runtime; opening `index.html` from the file system skips it. | The app falls back to generic phrases, losing mascot personality. | Medium when someone opens the file directly. | Built-in `FALLBACK_CONTENT`, documented local-server requirement. |
 | R3 | Google Fonts is the only external request; it can be blocked or slow. | Roboto falls back to the system font; layout metrics shift slightly. | Medium in restricted networks. | Font stack lists system fallbacks; the app is fully usable without the webfont. |
-| R4 | No service worker, so the app does not work offline after a cold start. | Cannot be used on a plane or without connectivity. | High for offline use cases. | `TODO: confirm` whether offline support is required; the manifest already exists. |
+| R4 | Closed by ADR-0008: the app starts offline after the first visit. | — | — | Kept for traceability; the mitigation is implemented. |
 | R5 | Browser storage is per-origin and can be cleared by the user or by the browser. | Progress and profile are lost. | Medium over long periods. | Cookies survive some cleanups; profile lasts one year, progress 24 hours, and the game is usable from scratch. |
 | R6 | Home-screen installation shows a rounded icon stretched into a maskable safe zone. | Icon may look cropped on Android launchers. | Medium. | `TODO: confirm` a dedicated maskable icon with the 80% safe zone. |
 | R7 | `localStorage` progress never expires on its own; only the timestamp is validated. | Stale data occupies storage indefinitely. | Low. | Read path rejects entries older than 24 hours; a cleanup write happens on the next answer. |
 | R8 | ES5-only, single-IIFE `app.js` grows past 1000 lines. | Cognitive load for contributors. | Medium as features accumulate. | Documented module map in [building-blocks.md](./building-blocks.md); split requires an ADR. |
+| R10 | The service worker serves a stale shell after a deploy, because precached files are only replaced when `VERSION` changes. | Users keep an old interface until the cache is retired. | High if the version is forgotten. | The regression suite asserts that `sw.js` is versioned; bumping the version is documented in ADR-0008. |
+| R11 | A single missing file breaks `cache.addAll`, so the worker never installs and offline silently fails. | No offline support, no visible error. | Medium when adding assets. | The regression suite resolves every precached path against the disk. |
 | R9 | Enlarged system fonts (Android accessibility setting) can break fixed-size layouts. | Header overlap, truncated labels, controls pushed off screen. | Medium on phones with large text. | Unitless line heights, wrapping statistics, two-line subtitle. Verified by simulation only, not on a physical device. |
 
 ### 11.2 Technical debt
 
 | ID | Debt | Reason it exists | Suggested action |
 | --- | --- | --- | --- |
-| D1 | No automated tests of any kind. | No build step and no test runner were allowed by the constraints. | Add a headless smoke test through a browser automation tool, or extract pure functions into a testable file with an ADR. |
+| D1 | Closed: `tests/regression.js` covers static checks and a browser walkthrough. | Removed. | — |
 | D2 | Duplicated priority logic between `PRIORITY` constants and `factWeight()`. | Constants were added first, then the formula grew. | Keep as is while small; document the formula next to the constants. |
 | D3 | UI strings are hard-coded pt-PT, mixed between HTML and JS. | Single-language target. | Extract to a dictionary only if a second language is confirmed. |
 | D4 | Sound effect tuning values (frequencies, volumes) are inline in `app.js`. | They were adjusted by ear. | Move to a `SOUND` constant block if they need further tuning. |
 | D5 | Presentation details live in CSS while some layout decisions depend on timings in JS (advance delays). | Timing and layout evolved together. | Document the timings; extract `TIMING` constants if they change again. |
-| D6 | No service worker and no offline cache. | Music and offline work were deprioritised. | See R4; requires an ADR before implementation. |
+| D6 | Closed by ADR-0008: the service worker now caches the shell and all mascots. | Removed. | — |
 | D7 | The large-font fix was validated with injected CSS, not a real Android font-size setting. | No physical device was available. | Test on a device with the accessibility font setting before the next release. |
 | D8 | Roboto is loaded from Google Fonts instead of being vendored. | Self-hosting was deferred to avoid adding binary font files. | Vendor the woff2 files with the Apache 2.0 licence; requires an ADR. |
 

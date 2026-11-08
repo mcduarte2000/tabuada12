@@ -39,9 +39,12 @@ C4Container
 | `app.js` | Entire game logic in one IIFE, ES5 syntax. |
 | `mascots.js` | `window.MASCOTS` list (30 entries: id, name, image path, background colour) and `window.FALLBACK_CONTENT`. |
 | `content.json` | Per-mascot phrase pools and generic pools, fetched at runtime. |
-| `manifest.webmanifest` | PWA metadata and icon set. |
+| `manifest.webmanifest` | PWA metadata: name, standalone display, five icons (any and maskable), two phone screenshots, one shortcut. |
+| `sw.js` | Service worker: precaches the shell and all mascots, network-first for navigations, cache-first for assets, runtime cache for Google Fonts. |
 | `assets/mascots/fluent/*.svg` | 30 Fluent Emoji mascots plus the upstream MIT licence. |
 | `assets/icon.svg`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` | App icons. |
+| `assets/icon-maskable.svg`, `icon-maskable-192.png`, `icon-maskable-512.png` | Maskable icon with the artwork inside the 80 % safe zone. |
+| `assets/screenshot-setup.png`, `screenshot-game.png` | 780x1688 screenshots used by the Android install prompt. |
 
 ### 5.3 Modules inside `app.js`
 
@@ -57,6 +60,7 @@ C4Container
 | Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `finalizeSession`, `startSessionRecord`, `resetStreak`, `renderSessionDialogs`, `renderRecords`, `openDialog` | Correct count, miss count, streak, record history, elapsed time, and the detail dialogs behind each indicator. |
 | Rendering and feedback | `say`, `react`, `setAvatar`, `applyThemeColors`, `bump`, `restartAnimation`, `burstConfetti`, `spawnRipple` | Bubble text, mascot animation, ripple and confetti effects. |
 | Audio | `ensureAudio`, `beep`, `soundCorrect`, `soundWrong`, `soundReveal` | Synthesised feedback tones, no files. |
+| Install and offline | `registerServiceWorker`, `updateInstallButton`, `beforeinstallprompt`, `appinstalled` | Register the worker, show the install control only when the browser offers it, hide it after installation. |
 | Setup flow | `renderMascotOptions`, `selectMascot`, `ownedHello`, `startGame`, `goToMascotStep`, `resetToSetup`, `applyTheme`, `updateThemeButton`, `updateSoundButton` | Name entry, mascot choice, profile switching, preferences. |
 
 ### 5.4 Data held in memory
@@ -120,7 +124,8 @@ built-in fallback phrases are used and the game continues.
 
 ### 7.1 Current deployment
 
-Static files are served from a Git branch. Two equivalent targets exist.
+Static files are served from a Git branch. Two equivalent targets exist. Both
+must serve HTTPS, which the service worker and the install prompt require.
 
 ```mermaid
 C4Deployment
@@ -151,6 +156,10 @@ C4Deployment
   handle this with defaults.
 - `.nojekyll` on GitHub Pages so asset paths are served verbatim.
 - No rewrite rules. Paths in the app are relative.
+- HTTPS. Required for the service worker, the install prompt and `Secure`
+  cookies.
+- `sw.js` and `manifest.webmanifest` served from the site root, with the
+  correct content types (`text/javascript`, `application/manifest+json`).
 
 ## 8. Cross-cutting concepts
 

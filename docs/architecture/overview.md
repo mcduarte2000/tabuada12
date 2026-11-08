@@ -100,7 +100,7 @@ C4Context
 
 | Interface | Direction | Description |
 | --- | --- | --- |
-| HTTPS GET | host → app | Serves `index.html`, `styles.css`, `app.js`, `mascots.js`, `content.json`, `manifest.webmanifest` and `assets/**`. |
+| HTTPS GET | host → app | Serves `index.html`, `styles.css`, `app.js`, `mascots.js`, `content.json`, `manifest.webmanifest`, `sw.js` and `assets/**`. |
 | HTTPS GET | app → Google Fonts | Roboto CSS and font files. Fails gracefully: the app falls back to system fonts. |
 | `localStorage` | app → browser | Nickname chosen by the child, mascot, record, theme, sound preference and the full per-fact progress with recency. |
 | Cookies | app → browser | Name and mascot (1 year) plus compact progress (24 hours). |
@@ -121,7 +121,7 @@ C4Context
 | --- | --- |
 | Learning effectiveness | Weighted random selection per fact. Failed facts get a weight that grows with the number of failures; mastered facts get a weight that shrinks with each first-try success. Recency dampening avoids repeating a fact answered seconds ago. Implemented in `chooseFact()`/`factWeight()`, documented in [ADR-0004](./adr/0004-adaptive-fact-selection.md). |
 | Child-friendly usability | Single screen, one numeric keypad, no text input during play, large touch targets (48 px minimum), praise instead of scolding, automatic advance after a correct answer. |
-| Zero cost, zero operations | One HTML file, three local scripts, one JSON file and SVG assets. No runtime that can fail. Hosted from a Git branch, documented in [ADR-0001](./adr/0001-static-single-page-app.md). |
+| Zero cost, zero operations | One HTML file, four local scripts, one JSON file and SVG assets. Installed from the browser with no store, no toolchain and no signing. Hosted from a Git branch, documented in [ADR-0001](./adr/0001-static-single-page-app.md) and [ADR-0008](./adr/0008-installable-web-app.md). |
 | Privacy by design | All state in the browser. No network call carries user data. The app asks for a fun nickname and explicitly discourages the real name, and the field disables personal-name autofill. Documented in [ADR-0005](./adr/0005-browser-local-storage-only.md). |
 | Accessibility and reach | Material Design 3 tokens, responsive layout from 320 px, keyboard support, live regions, reduced-motion handling. |
 | Maintainability | Text and mascot data separated from logic in `content.json` and `mascots.js`; magic numbers centralised at the top of `app.js`; no dependencies to upgrade. |
@@ -134,8 +134,9 @@ C4Context
   mascots under MIT without a design dependency.
 - **Web Audio API oscillators** for feedback sound, so no binary assets are
   needed and the app stays fully offline-capable.
-- **Progressive Web App manifest** so the app can be installed to the home
-  screen; a service worker is not implemented yet
-  (`TODO: confirm` whether offline caching is required).
+- **Progressive Web App** with a manifest and a service worker, so the app
+  installs from Chrome or Edge on Android with the built-in prompt and starts
+  offline after the first visit. See
+  [ADR-0008](./adr/0008-installable-web-app.md).
 
 All architectural decisions are listed in the [ADR index](./adr/README.md).
