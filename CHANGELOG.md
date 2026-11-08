@@ -25,6 +25,11 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   64 requisitos EARS e 40 cenários Gherkin, com o âmbito, o registo de
   verificação e as lacunas conhecidas reescritos.
 - `iteration-01.md` assinala os requisitos substituídos pela iteração 2.
+- `quality-and-risks.md` registra o aviso "Unsafe app blocked" do Samsung
+  Internet (R12), o bloqueio regional do Android 13+ (R13) e uma secção nova
+  de limitações de plataforma (P1 a P4), incluindo a ausência do convite de
+  instalação no Firefox e no Safari iOS.
+- A instalação foi confirmada num telemóvel Android real com Chrome.
 
 ## [1.4.0] - 2026-11-08
 

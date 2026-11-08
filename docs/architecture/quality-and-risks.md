@@ -35,6 +35,11 @@ and no error reaches the user.
 **Q3 — Narrow viewport.** At 320x568 the question, keypad and all five stat
 values are visible without horizontal scrolling, and no label is truncated.
 
+**Q3b — Installation.** On a physical Android phone with Chrome, the header
+shows the install control after the browser offers it, the app installs to the
+home screen, opens without browser chrome, and works after the network is
+switched off. Confirmed by the maintainer.
+
 **Q4 — Reduced motion.** With `prefers-reduced-motion: reduce`, confetti and
 ripples are not rendered and animation durations collapse to near zero.
 
@@ -53,14 +58,30 @@ retained.
 | R3 | Google Fonts is the only external request; it can be blocked or slow. | Roboto falls back to the system font; layout metrics shift slightly. | Medium in restricted networks. | Font stack lists system fallbacks; the app is fully usable without the webfont. |
 | R4 | Closed by ADR-0008: the app starts offline after the first visit. | — | — | Kept for traceability; the mitigation is implemented. |
 | R5 | Browser storage is per-origin and can be cleared by the user or by the browser. | Progress and profile are lost. | Medium over long periods. | Cookies survive some cleanups; profile lasts one year, progress 24 hours, and the game is usable from scratch. |
-| R6 | Home-screen installation shows a rounded icon stretched into a maskable safe zone. | Icon may look cropped on Android launchers. | Medium. | `TODO: confirm` a dedicated maskable icon with the 80% safe zone. |
+| R6 | Closed by ADR-0008: a dedicated maskable icon now keeps the artwork inside the 80% safe zone. | — | — | Kept for traceability; the mitigation is implemented. |
 | R7 | `localStorage` progress never expires on its own; only the timestamp is validated. | Stale data occupies storage indefinitely. | Low. | Read path rejects entries older than 24 hours; a cleanup write happens on the next answer. |
 | R8 | ES5-only, single-IIFE `app.js` grows past 1000 lines. | Cognitive load for contributors. | Medium as features accumulate. | Documented module map in [building-blocks.md](./building-blocks.md); split requires an ADR. |
+| R9 | Enlarged system fonts (Android accessibility setting) can break fixed-size layouts. | Header overlap, truncated labels, controls pushed off screen. | Medium on phones with large text. | Unitless line heights, wrapping statistics, a compact icon and title row. Confirmed on the maintainer's physical Android device. |
 | R10 | The service worker serves a stale shell after a deploy, because precached files are only replaced when `VERSION` changes. | Users keep an old interface until the cache is retired. | High if the version is forgotten. | The regression suite asserts that `sw.js` is versioned; bumping the version is documented in ADR-0008. |
 | R11 | A single missing file breaks `cache.addAll`, so the worker never installs and offline silently fails. | No offline support, no visible error. | Medium when adding assets. | The regression suite resolves every precached path against the disk. |
-| R9 | Enlarged system fonts (Android accessibility setting) can break fixed-size layouts. | Header overlap, truncated labels, controls pushed off screen. | Medium on phones with large text. | Unitless line heights, wrapping statistics, two-line subtitle. Verified by simulation only, not on a physical device. |
+| R12 | Installing from Samsung Internet on Android raises "Unsafe app blocked: this app was built for an older version of Android". | The parent cannot install the app from that browser without an extra confirmation step. | High on Samsung Internet. Reproduced in March 2026 and reported by several PWA authors. | Not fixable from the project. Samsung Internet mints a WebAPK with an outdated target SDK, which Google Play Protect flags; no manifest field changes it. The dialog offers "More details" then "Install anyway" in most regions. Chrome, Edge and Opera are unaffected. Documented in the README as a Chrome-first path. |
+| R13 | In some regions Android 13+ enables enhanced fraud protection, which blocks sideloaded packages without an "Install anyway" option. | The Samsung Internet path may be unreachable there, not merely noisy. | Low for EU users, medium elsewhere. | Not fixable from the project. Use Chrome or Edge, where installation goes through the browser rather than a minted APK. |
 
-### 11.2 Technical debt
+### 11.2 Platform limitations
+
+These are upstream behaviours we cannot change. They are recorded so that a
+report of the same symptom does not trigger a fresh investigation.
+
+| ID | Limitation | What the user can do |
+| --- | --- | --- |
+| P1 | Firefox on Android never fires `beforeinstallprompt`. The Mozilla position is that installation must not depend on a browser autoprompt. | Use the browser menu, or install from Chrome. The app still works offline once installed by any route. |
+| P2 | Safari on iOS never fires `beforeinstallprompt` and ignores most of the manifest. | Share, then "Add to Home Screen". The in-app install button stays hidden by design. |
+| P3 | Samsung Internet's WebAPK generator is outdated, triggering the Play Protect warning in R12. | Chrome or Edge. Otherwise "Install anyway". |
+| P4 | Service workers on iOS require 16.4 or later. | On older iOS the app works online only. |
+
+See risk R12 and R13 for the Samsung Internet case.
+
+### 11.3 Technical debt
 
 | ID | Debt | Reason it exists | Suggested action |
 | --- | --- | --- | --- |
@@ -73,7 +94,7 @@ retained.
 | D7 | The large-font fix was validated with injected CSS, not a real Android font-size setting. | No physical device was available. | Test on a device with the accessibility font setting before the next release. |
 | D8 | Roboto is loaded from Google Fonts instead of being vendored. | Self-hosting was deferred to avoid adding binary font files. | Vendor the woff2 files with the Apache 2.0 licence; requires an ADR. |
 
-### 11.3 Accepted trade-offs
+### 11.4 Accepted trade-offs
 
 - **No framework.** Long-term maintainability is traded for zero build tooling
   and zero dependency upgrades. Recorded in

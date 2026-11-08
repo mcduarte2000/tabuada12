@@ -15,6 +15,7 @@
 | Defects found and fixed | 10 |
 | New ADRs | 1 (ADR-0008) |
 | Releases | 3 (v1.3.0, v1.4.0, v1.4.1) |
+| Confirmed on a physical Android phone | Installation via Chrome |
 
 All nine user stories were verified against their acceptance criteria before
 closing. The verification record below names the method used for each group.
@@ -676,11 +677,12 @@ Feature: Installable web app
 
 ## Known gaps at the end of this iteration
 
-- The large-font behaviour was simulated with injected CSS, not a real Android
-  device. `TODO: confirm` on a physical phone with the accessibility font size
-  set above default.
 - The carousel gesture was validated with emulated touch events in Chromium and
   with real mouse input. `TODO: confirm` with a real finger on Android.
+- Installation was confirmed on a physical Android device with Chrome. Samsung
+  Internet raises a Play Protect warning caused by its own WebAPK generator,
+  recorded as risk R12; Firefox and iOS Safari never fire the install prompt,
+  recorded as platform limitations P1 and P2.
 - Roboto is still fetched from Google Fonts. Offline the app falls back to
   system fonts, which changes text metrics slightly. Tracked as debt D8;
   self-hosting is also a prerequisite for F-Droid, see
@@ -688,7 +690,7 @@ Feature: Installable web app
 - The install prompt cannot be triggered in automated tests, so the browser
   check only asserts the worker activation, the cache and the offline load.
   The install button itself is covered by a static check on
-  `beforeinstallprompt`.
+  `beforeinstallprompt`, and manually on a physical Android device.
 - iOS installation uses "Add to Home Screen". The service worker works on iOS
   16.4 and later; older versions fall back to an online-only experience.
 
