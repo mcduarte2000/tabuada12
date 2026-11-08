@@ -17,6 +17,8 @@ hospedada gratuitamente no GitHub Pages ou no Cloudflare Pages.
 - Frases divertidas por mascote, sorteadas sem repetição imediata
   (editáveis em `content.json`).
 - Cronómetro da sessão, acertos, sequência e recorde guardados localmente.
+- O nome, o mascote e o progresso ficam também em cookies: o perfil dura
+  um ano e o progresso expira ao fim de 24 horas.
 - Tema dia/noite e efeitos sonoros opcionais.
 - Interface Material Design 3, responsiva e com suporte a telemóvel
   (safe areas, alvos táteis e `prefers-reduced-motion`).
@@ -61,6 +63,19 @@ assets/
 `content.json` guarda as falas de cada mascote e pode ser editado sem tocar
 no código. Marcadores suportados: `{nome}`, `{produto}`, `{a}`, `{b}`,
 `{interjeicao}` e `{traco}`.
+
+## Dados guardados
+
+O jogo guarda tudo localmente, sem servidores nem contas:
+
+| Dado | Onde | Validade |
+| --- | --- | --- |
+| Nome e mascote | cookie `tabuada12_name`, `tabuada12_mascot` + `localStorage` | 1 ano |
+| Progresso por conta (acertos, acertos à segunda, falhas) | cookie `tabuada12_progress` (formato compacto) + `localStorage` | 24 horas |
+| Recorde, tema e som | `localStorage` | persistente |
+
+O progresso expirado é ignorado ao arrancar. Para apagar tudo, basta limpar
+os dados do site no navegador.
 
 ## Créditos
 

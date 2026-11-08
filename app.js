@@ -10,6 +10,16 @@
     progress: 'tabuada12.progress'
   };
 
+  var COOKIE = {
+    name: 'tabuada12_name',
+    mascot: 'tabuada12_mascot',
+    progress: 'tabuada12_progress'
+  };
+
+  var PROGRESS_TTL = 24 * 60 * 60;
+  var PROFILE_TTL = 365 * 24 * 60 * 60;
+  var COOKIE_LIMIT = 3800;
+
   var els = {
     brandMark: document.getElementById('brandMark'),
     brandSubtitle: document.getElementById('brandSubtitle'),
@@ -103,6 +113,52 @@
     } catch (error) {
       /* armazenamento indisponível: o jogo continua a funcionar */
     }
+  }
+
+  function cookieSecureSuffix() {
+    return window.location.protocol === 'https:' ? '; Secure' : '';
+  }
+
+  function setCookie(nome, valor, maxAge) {
+    try {
+      var encoded = encodeURIComponent(valor);
+      document.cookie = nome + '=' + encoded +
+        '; Max-Age=' + maxAge +
+        '; Path=/' +
+        '; SameSite=Lax' +
+        cookieSecureSuffix();
+    } catch (error) {
+      /* cookies indisponíveis: o jogo continua a funcionar */
+    }
+  }
+
+  function getCookie(nome) {
+    try {
+      var prefixo = nome + '=';
+      var partes = document.cookie ? document.cookie.split('; ') : [];
+
+      for (var i = 0; i < partes.length; i += 1) {
+        if (partes[i].indexOf(prefixo) === 0) {
+          return decodeURIComponent(partes[i].slice(prefixo.length));
+        }
+      }
+    } catch (error) {
+      return '';
+    }
+
+    return '';
+  }
+
+  function setProfileCookies(name, mascotId) {
+    setCookie(COOKIE.name, name, PROFILE_TTL);
+    setCookie(COOKIE.mascot, mascotId, PROFILE_TTL);
+  }
+
+  function readProfileCookies() {
+    return {
+      name: getCookie(COOKIE.name).trim(),
+      mascot: getCookie(COOKIE.mascot)
+    };
   }
 
   function pick(list) {
@@ -272,10 +328,13 @@
   }
 
   function startTimer() {
-    if (state.startedAt) return;
-    state.startedAt = Date.now();
+    if (!state.startedAt) {
+      state.startedAt = Date.now();
+    }
     renderTime();
-    state.timerId = window.setInterval(renderTime, 1000);
+    if (state.timerId === null) {
+      state.timerId = window.setInterval(renderTime, 1000);
+    }
   }
 
   function stopTimer() {
@@ -325,21 +384,132 @@
     return a + 'x' + b;
   }
 
-  function readProgress() {
+  function encodeProgress(fatos, savedAt) {
+    var keys = Object.keys(fatos).sort();
+    var parts = [];
+
+    keys.forEach(function (key) {
+      var entry = fatos[key];
+      var ok = entry.ok || 0;
+      var second = entry.second || 0;
+      var fail = entry.fail || 0;
+      if (!ok && !second && !fail) return;
+      parts.push(key + ':' + ok + ',' + second + ',' + fail);
+    });
+
+    return String(savedAt) + '|' + parts.join(';');
+  }
+
+  function decodeProgress(raw) {
+    if (!raw) return null;
+
+    if (raw.charAt(0) === '{') {
+      try {
+        var legacy = JSON.parse(raw);
+        if (!legacy || typeof legacy !== 'object') return null;
+        if (legacy.fatos && typeof legacy.fatos === 'object') return legacy;
+        return { savedAt: Date.now(), fatos: legacy };
+      } catch (error) {
+        return null;
+      }
+    }
+
+    var split = raw.indexOf('|');
+    if (split <= 0) return null;
+
+    var savedAt = parseInt(raw.slice(0, split), 10);
+    if (!savedAt) return null;
+
+    var fatos = {};
+    var body = raw.slice(split + 1);
+
+    if (body) {
+      body.split(';').forEach(function (chunk) {
+        var colon = chunk.indexOf(':');
+        if (colon <= 0) return;
+
+        var counts = chunk.slice(colon + 1).split(',');
+        var key = chunk.slice(0, colon);
+
+        fatos[key] = {
+          ok: parseInt(counts[0], 10) || 0,
+          second: parseInt(counts[1], 10) || 0,
+          fail: parseInt(counts[2], 10) || 0,
+          last: 0,
+          lastOk: 0
+        };
+      });
+    }
+
+    return { savedAt: savedAt, fatos: fatos };
+  }
+
+  function readLegacyRecency() {
     try {
       var raw = window.localStorage.getItem(STORAGE.progress);
-      var parsed = raw ? JSON.parse(raw) : {};
-      return parsed && typeof parsed === 'object' ? parsed : {};
+      if (!raw) return {};
+      var parsed = JSON.parse(raw);
+      var fatos = parsed && parsed.fatos ? parsed.fatos : parsed;
+      return fatos && typeof fatos === 'object' ? fatos : {};
     } catch (error) {
       return {};
     }
   }
 
-  function saveProgress() {
+  function mergeRecency(fatos) {
+    var recency = readLegacyRecency();
+
+    Object.keys(fatos).forEach(function (key) {
+      var extra = recency[key];
+      if (!extra) return;
+      if (extra.last) fatos[key].last = extra.last;
+      if (extra.lastOk) fatos[key].lastOk = extra.lastOk;
+    });
+
+    return fatos;
+  }
+
+  function readProgress() {
+    var fromCookie = decodeProgress(getCookie(COOKIE.progress));
+    var fromStore = decodeProgress(readStoreProgress());
+
+    var candidates = [fromCookie, fromStore].filter(function (data) {
+      if (!data) return false;
+      var age = (Date.now() - data.savedAt) / 1000;
+      return age >= 0 && age <= PROGRESS_TTL;
+    });
+
+    candidates.sort(function (a, b) {
+      return Object.keys(b.fatos).length - Object.keys(a.fatos).length;
+    });
+
+    if (!candidates.length) return {};
+    return mergeRecency(candidates[0].fatos);
+  }
+
+  function readStoreProgress() {
     try {
-      window.localStorage.setItem(STORAGE.progress, JSON.stringify(state.progress));
+      return window.localStorage.getItem(STORAGE.progress);
     } catch (error) {
-      /* sem armazenamento: a seleção continua só com o histórico da sessão */
+      return '';
+    }
+  }
+
+  function saveProgress() {
+    if (Object.keys(state.progress).length === 0) return;
+
+    var savedAt = Date.now();
+    var compact = encodeProgress(state.progress, savedAt);
+    var full = JSON.stringify({ savedAt: savedAt, fatos: state.progress });
+
+    try {
+      window.localStorage.setItem(STORAGE.progress, full);
+    } catch (error) {
+      /* ignora */
+    }
+
+    if (compact.length <= COOKIE_LIMIT) {
+      setCookie(COOKIE.progress, compact, PROGRESS_TTL);
     }
   }
 
@@ -663,6 +833,7 @@
 
     writeStored(STORAGE.name, state.name);
     writeStored(STORAGE.mascot, state.mascot.id);
+    setProfileCookies(state.name, state.mascot.id);
 
     els.setup.hidden = true;
     els.game.hidden = false;
@@ -676,7 +847,6 @@
 
     els.brandSubtitle.textContent = state.name + ' com ' + state.mascot.name;
 
-    state.startedAt = null;
     renderTime();
     newQuestion();
     startTimer();
@@ -715,16 +885,19 @@
     }
   }
 
-  function resetToSetup(keepValues) {
+  function resetToSetup(keepValues, keepSession) {
     clearAdvance();
     stopTimer();
 
     state.phase = 'answering';
     state.busy = false;
-    state.correctCount = 0;
-    state.streak = 0;
     state.input = '';
-    state.startedAt = null;
+
+    if (!keepSession) {
+      state.correctCount = 0;
+      state.streak = 0;
+      state.startedAt = null;
+    }
 
     els.game.hidden = true;
     els.setup.hidden = false;
@@ -806,7 +979,7 @@
   els.startBtn.addEventListener('click', startGame);
 
   els.editBtn.addEventListener('click', function () {
-    resetToSetup(true);
+    resetToSetup(true, true);
     goToMascotStep();
   });
 
@@ -900,11 +1073,16 @@
     state.sound = readStored(STORAGE.sound, 'on') !== 'off';
     state.progress = readProgress();
 
-    var savedName = readStored(STORAGE.name, '').trim();
-    var savedMascotId = readStored(STORAGE.mascot, '');
+    var profile = readProfileCookies();
+    var savedName = profile.name || readStored(STORAGE.name, '').trim();
+    var savedMascotId = profile.mascot || readStored(STORAGE.mascot, '');
     var savedMascot = window.MASCOTS.filter(function (item) {
       return item.id === savedMascotId;
     })[0];
+
+    if (savedName && savedMascot) {
+      setProfileCookies(savedName, savedMascot.id);
+    }
 
     state.name = savedName;
     renderMascotOptions();
