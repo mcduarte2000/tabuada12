@@ -922,7 +922,6 @@
     els.game.hidden = true;
     els.setup.hidden = false;
     els.editBtn.hidden = true;
-    els.soundToggle.hidden = true;
 
     els.nameStep.hidden = false;
     els.mascotStep.hidden = true;

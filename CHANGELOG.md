@@ -17,6 +17,8 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-08
+
 ### Adicionado
 
 - Documentação de arquitetura em `docs/` (arc42 + ADRs em MADR), com diagramas
@@ -25,20 +27,31 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   build, mascotes Fluent Emoji, seleção adaptativa, armazenamento no browser,
   Material Design 3 e som sintetizado.
 - `AGENTS.md` com as convenções de código, documentação e versionamento.
-- Requisitos da iteração 1 em `docs/requirements/`, com user stories, EARS e
-  critérios de aceitação em Gherkin.
+- Requisitos das iterações 1 e 2 em `docs/requirements/`, com user stories,
+  EARS e critérios de aceitação em Gherkin.
+- Secção **Third-party notices** no `LICENSE`, com origem, ficheiros e licença
+  de todos os conteúdos externos (Fluent Emoji, Roboto e Material Design 3).
 
 ### Alterado
 
-- `LICENSE` passa a incluir a secção **Third-party notices** com origem,
-  ficheiros e licença de todos os conteúdos externos (Fluent Emoji, Roboto e
-  Material Design 3).
+- Escolha de mascote passa de grelha vertical para carrossel horizontal com
+  snap, cabendo a apresentação do mascote e o botão de jogar num só ecrã de
+  telemóvel.
+- Alturas de linha deixam de ser fixas em píxeis, para o texto crescer sem
+  cortar quando o sistema usa fontes grandes.
+- O subtítulo do cabeçalho passa a ocupar até duas linhas em vez de ser cortado.
+- As estatísticas passam a poder distribuir-se em duas linhas em vez de truncar
+  rótulos.
+- O botão de som fica sempre disponível, mesmo ao voltar ao ecrã de escolha do
+  mascote.
 - `README.md` resume os créditos numa tabela e remete para o `LICENSE`.
 
 ### Corrigido
 
 - O cronómetro da sessão deixava de contar enquanto o separador estava oculto;
   agora pausa e retoma sem perder o tempo acumulado.
+- O título "Tabuada 12" ficava sobreposto pelos botões de ação com fontes
+  grandes.
 
 ## [1.2.0] - 2026-11-08
 
@@ -119,7 +132,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/cee4b10...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.3.0...main
+[1.3.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/mcduarte2000/tabuada12/compare/32a6e5e...cee4b10
 [1.1.0]: https://github.com/mcduarte2000/tabuada12/compare/8bb1b47...32a6e5e
 [1.0.1]: https://github.com/mcduarte2000/tabuada12/compare/ec4ea41...8bb1b47

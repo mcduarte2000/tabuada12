@@ -56,6 +56,7 @@ retained.
 | R6 | Home-screen installation shows a rounded icon stretched into a maskable safe zone. | Icon may look cropped on Android launchers. | Medium. | `TODO: confirm` a dedicated maskable icon with the 80% safe zone. |
 | R7 | `localStorage` progress never expires on its own; only the timestamp is validated. | Stale data occupies storage indefinitely. | Low. | Read path rejects entries older than 24 hours; a cleanup write happens on the next answer. |
 | R8 | ES5-only, single-IIFE `app.js` grows past 1000 lines. | Cognitive load for contributors. | Medium as features accumulate. | Documented module map in [building-blocks.md](./building-blocks.md); split requires an ADR. |
+| R9 | Enlarged system fonts (Android accessibility setting) can break fixed-size layouts. | Header overlap, truncated labels, controls pushed off screen. | Medium on phones with large text. | Unitless line heights, wrapping statistics, two-line subtitle. Verified by simulation only, not on a physical device. |
 
 ### 11.2 Technical debt
 
@@ -67,7 +68,8 @@ retained.
 | D4 | Sound effect tuning values (frequencies, volumes) are inline in `app.js`. | They were adjusted by ear. | Move to a `SOUND` constant block if they need further tuning. |
 | D5 | Presentation details live in CSS while some layout decisions depend on timings in JS (advance delays). | Timing and layout evolved together. | Document the timings; extract `TIMING` constants if they change again. |
 | D6 | No service worker and no offline cache. | Music and offline work were deprioritised. | See R4; requires an ADR before implementation. |
-| D7 | Roboto is loaded from Google Fonts instead of being vendored. | Self-hosting was deferred to avoid adding binary font files. | Vendor the woff2 files with the Apache 2.0 licence; requires an ADR. |
+| D7 | The large-font fix was validated with injected CSS, not a real Android font-size setting. | No physical device was available. | Test on a device with the accessibility font setting before the next release. |
+| D8 | Roboto is loaded from Google Fonts instead of being vendored. | Self-hosting was deferred to avoid adding binary font files. | Vendor the woff2 files with the Apache 2.0 licence; requires an ADR. |
 
 ### 11.3 Accepted trade-offs
 
