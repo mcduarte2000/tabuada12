@@ -66,6 +66,13 @@
               <path d="m14.5 5.5 4 4"/>
             </svg>
           </button>
+          <button id="aboutBtn" class="icon-button" type="button" aria-label="Licença e privacidade" title="Licença e privacidade" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 11v5.5"/>
+              <circle cx="12" cy="7.8" r="1.1" fill="currentColor" stroke="none"/>
+            </svg>
+          </button>
         </div>
       </div>
     </header>
@@ -78,13 +85,12 @@
 
       <div id="nameStep">
         <h2 class="setup-title">Como te queremos chamar?</h2>
-        <p class="setup-text">Escolhe um nome divertido para jogar. Não escrevas o teu nome verdadeiro.</p>
+        <p class="setup-text">Escolhe um nome divertido para jogar (ex: um animal, o teu super-herói preferido). Não escrevas o teu nome verdadeiro.</p>
         <form id="nameForm" novalidate>
           <div class="field">
-            <input id="nameInput" class="field-input" type="text" name="alcunha" placeholder=" " maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="next" aria-describedby="nameError nameHint">
+            <input id="nameInput" class="field-input" type="text" name="alcunha" placeholder=" " maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="next" aria-describedby="nameError">
             <label class="field-label" for="nameInput">Nome de jogo</label>
           </div>
-          <p class="field-hint" id="nameHint">Podes usar um animal, um super-herói ou uma palavra inventada.</p>
           <p class="field-error" id="nameError" role="alert" hidden>Escreve um nome de jogo para continuar.</p>
           <button class="next-button spaced" type="submit">Continuar</button>
         </form>
@@ -183,11 +189,74 @@
         <button class="next-button spaced" id="nextBtn" type="button" hidden>Próxima conta</button>
       </section>
 
-      <p class="footnote">Duas tentativas em cada conta.</p>
+      <p class="footnote">
+        <button class="link-btn" id="aboutLink" type="button">Licença e privacidade</button>
+      </p>
     </section>
   </main>
 
   <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <dialog class="sheet" id="aboutDialog" aria-labelledby="aboutTitle">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="aboutTitle">Sobre esta aplicação</h2>
+
+    <div class="sheet-body">
+      <section class="about-block">
+        <h3 class="about-heading">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3 4.5 6v6c0 4.4 3.2 7.9 7.5 9 4.3-1.1 7.5-4.6 7.5-9V6Z"/>
+          </svg>
+          Privacidade
+        </h3>
+        <p>Nada do que escreves ou respondes sai deste dispositivo.</p>
+        <ul>
+          <li>Não há contas, nem servidores, nem base de dados.</li>
+          <li>O nome de jogo, o mascote e o progresso ficam guardados no teu navegador.</li>
+          <li>Não há análises, publicidade, rastreadores nem scripts de terceiros.</li>
+          <li>O único pedido externo é a tipografia Roboto, ao Google Fonts, que não recebe dados teus.</li>
+        </ul>
+        <p class="about-note">
+          O nome de jogo e o mascote ficam guardados durante 1 ano; o progresso
+          expira ao fim de 24 horas. Podes apagar tudo limpando os dados do site
+          no navegador.
+        </p>
+      </section>
+
+      <section class="about-block">
+        <h3 class="about-heading">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v18M5 8h9a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h9"/>
+          </svg>
+          Licença
+        </h3>
+        <p>
+          A aplicação é software livre, distribuída sob a
+          <strong>licença MIT</strong>.
+        </p>
+        <ul class="about-list">
+          <li>
+            <strong>Fluent Emoji</strong> — mascotes da Microsoft, licença MIT.
+          </li>
+          <li>
+            <strong>Roboto</strong> — tipografia da Google, licença Apache 2.0.
+          </li>
+          <li>
+            <strong>Material Design 3</strong> — sistema visual da Google,
+            licença Apache 2.0.
+          </li>
+        </ul>
+        <p class="about-note">
+          O texto integral das licenças está no ficheiro
+          <code>LICENSE</code> do projeto.
+        </p>
+      </section>
+    </div>
+
+    <form method="dialog" class="sheet-actions">
+      <button class="next-button" type="submit">Fechar</button>
+    </form>
+  </dialog>
 
   <noscript>
     <p style="text-align:center;font-family:system-ui,sans-serif;padding:24px">Esta aplicação precisa de JavaScript ativado para funcionar.</p>

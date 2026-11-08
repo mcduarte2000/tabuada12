@@ -216,8 +216,18 @@ function staticTests() {
   check('does not ask for the real name', (function () {
     var html = read('index.html');
     return html.indexOf('Não escrevas o teu nome verdadeiro') >= 0 &&
+      html.indexOf('super-herói preferido') >= 0 &&
       html.indexOf('autocomplete="given-name"') === -1;
-  })(), 'the app must ask for a nickname and never autofill a real name');
+  })(), 'the app must ask for a nickname with examples and never autofill a real name');
+
+  check('privacy and licence reachable', (function () {
+    var html = read('index.html');
+    return /id="aboutBtn"/.test(html) &&
+      /id="aboutDialog"/.test(html) &&
+      html.indexOf('sai deste dispositivo') >= 0 &&
+      html.indexOf('licença MIT') >= 0 &&
+      html.indexOf('Apache 2.0') >= 0;
+  })(), 'the app must expose its licence and local-only storage policy');
 
   check('required files exist', missing.length === 0, 'missing: ' + missing.join(', '));
 
@@ -456,6 +466,34 @@ async function browserTests(browser) {
   await page.evaluate(function () {
     window.dispatchEvent(new Event('resize'));
   });
+
+  check('about dialog opens with privacy and licence', await page.evaluate(async function () {
+    document.getElementById('aboutBtn').click();
+    await new Promise(function (r) { setTimeout(r, 120); });
+    var dialog = document.getElementById('aboutDialog');
+    var text = dialog ? dialog.textContent : '';
+    return !!dialog && dialog.open === true &&
+      text.indexOf('sai deste dispositivo') >= 0 &&
+      text.indexOf('licença MIT') >= 0 &&
+      text.indexOf('Apache 2.0') >= 0;
+  }), 'the dialog must state local-only storage and list licences');
+
+  check('about dialog closes', await page.evaluate(async function () {
+    document.querySelector('.sheet-actions button').click();
+    await new Promise(function (r) { setTimeout(r, 120); });
+    return document.getElementById('aboutDialog').open === false;
+  }), 'the close button must dismiss the dialog');
+
+  check('keypad disabled while the dialog is open', await page.evaluate(async function () {
+    document.getElementById('aboutBtn').click();
+    await new Promise(function (r) { setTimeout(r, 120); });
+    var before = document.getElementById('answerBox').textContent;
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: '5', bubbles: true }));
+    var after = document.getElementById('answerBox').textContent;
+    document.querySelector('.sheet-actions button').click();
+    await new Promise(function (r) { setTimeout(r, 120); });
+    return before === after;
+  }), 'digits must not reach the game behind the dialog');
 
   check('reduced motion still renders the app', await page.evaluate(function () {
     return document.getElementById('game').hidden === false;

@@ -54,6 +54,7 @@ defect from returning unnoticed.
 | Failures weigh more than successes | Adaptive selection lost its purpose |
 | Storage access wrapped | Storage failures must never break the game |
 | The app asks for a nickname | Personal data must not be requested |
+| Licence and privacy dialog exists | The information must stay reachable in the app |
 | Required files exist | Broken links and missing assets |
 | Licence lists third-party content | MIT attribution is a legal obligation |
 | Every mascot file credited | Same reason |
@@ -77,6 +78,8 @@ Run with Playwright or system Chrome at 360x640.
   wrong attempt reveals the answer, hides the keypad and shows Continue.
 - Changing mascot preserves counters, keeps the clock running, keeps the sound
   toggle visible and updates the header image.
+- The licence and privacy dialog opens, states the local-only policy and the
+  licences, closes on its button, and does not forward digits to the game.
 - Reduced motion does not break layout.
 - At 320x568: title fits, subtitle is not clipped, no vertical overflow.
 

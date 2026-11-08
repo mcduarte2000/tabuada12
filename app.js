@@ -26,6 +26,9 @@
     themeToggle: document.getElementById('themeToggle'),
     soundToggle: document.getElementById('soundToggle'),
     editBtn: document.getElementById('editBtn'),
+    aboutBtn: document.getElementById('aboutBtn'),
+    aboutLink: document.getElementById('aboutLink'),
+    aboutDialog: document.getElementById('aboutDialog'),
     setup: document.getElementById('setup'),
     nameStep: document.getElementById('nameStep'),
     mascotStep: document.getElementById('mascotStep'),
@@ -1038,7 +1041,7 @@
     setAvatar(els.gameAvatar, state.mascot);
     applyThemeColors(state.mascot);
 
-    els.brandSubtitle.textContent = state.name + ' com ' + state.mascot.name;
+    els.brandSubtitle.textContent = state.mascot.name;
 
     renderTime();
     newQuestion();
@@ -1188,6 +1191,22 @@
 
   els.startBtn.addEventListener('click', startGame);
 
+  function openAbout() {
+    if (!els.aboutDialog) return;
+    if (typeof els.aboutDialog.showModal === 'function') {
+      els.aboutDialog.showModal();
+    } else {
+      els.aboutDialog.setAttribute('open', '');
+    }
+  }
+
+  els.aboutBtn.addEventListener('click', openAbout);
+  if (els.aboutLink) els.aboutLink.addEventListener('click', openAbout);
+
+  els.aboutDialog.addEventListener('click', function (event) {
+    if (event.target === els.aboutDialog) els.aboutDialog.close();
+  });
+
   attachMascotDrag();
 
   window.addEventListener('resize', function () {
@@ -1252,7 +1271,9 @@
     if (els.game.hidden) return;
 
     var target = event.target instanceof Element ? event.target : null;
-    var onControl = target && target.closest('#soundToggle, #themeToggle, #editBtn, #nextBtn, a');
+    if (els.aboutDialog && els.aboutDialog.open) return;
+
+    var onControl = target && target.closest('#soundToggle, #themeToggle, #editBtn, #aboutBtn, #nextBtn, a');
 
     if (/^\d$/.test(event.key)) {
       event.preventDefault();

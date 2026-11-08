@@ -34,7 +34,7 @@ C4Container
 
 | File | Role |
 | --- | --- |
-| `index.html` | Document shell, setup form, game screen, stat panel, keypad, inline SVG icons. |
+| `index.html` | Document shell, setup form, game screen, stat panel, keypad, licence and privacy dialog, inline SVG icons. |
 | `styles.css` | Material Design 3 tokens, light and dark palettes, layout, components, motion. Mascot picker is a horizontal snap carousel with a progress thumb and a scroll hint; line heights are unitless so text scales with the system font size; the header stacks the title above the mascot row. |
 | `app.js` | Entire game logic in one IIFE, ES5 syntax. |
 | `mascots.js` | `window.MASCOTS` list (30 entries: id, name, image path, background colour) and `window.FALLBACK_CONTENT`. |
@@ -158,4 +158,5 @@ C4Deployment
 | Error tolerance | Every storage read and write is wrapped in `try`/`catch`. Corrupt cookies, expired progress and failed fetches all degrade to a working game. |
 | Accessibility | Semantic headings, `<button>` for every control, `aria-pressed` on toggles, `aria-live` on the mascot bubble and the screen-reader question, focus-visible outlines, `prefers-reduced-motion` disables animation. Layout tolerates enlarged system fonts: unitless line heights, wrapping statistic items and a two-line header subtitle. |
 | Motion | Short durations (90-560 ms), standard and emphasised easing curves; all motion is decorative and optional. The carousel hint pulses with a 1.6 s nudge animation and stops when disabled by reduced-motion. |
+| Transparency | A dialog reachable from every screen states the licence and the local-only storage policy. Its text is static HTML, so it cannot drift from the code by rendering user data. |
 | Security | No `innerHTML` with user input. The only dynamic HTML is a fixed icon table. No eval, no remote scripts. Cookies are `SameSite=Lax`, `Secure` on HTTPS, and hold no identifiers. |

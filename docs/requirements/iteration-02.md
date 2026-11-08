@@ -246,6 +246,10 @@ subtitle before a mascot is chosen, and the chosen mascot afterwards.
 **R13.4 (state-driven)** While the header subtitle does not fit on one line, the
 system shall wrap it to at most two lines.
 
+**R13.5 (state-driven)** While the game is running, the header subtitle shall
+show only the mascot name, because the icon already identifies it and the
+remaining width is needed by the action buttons.
+
 ### Acceptance criteria
 
 ```gherkin
@@ -326,8 +330,9 @@ Feature: Individual mascot greetings
 
 ### Requirements
 
-**R15.1 (ubiquitous)** The system shall ask for a fun game name and shall state
-that the real name must not be used.
+**R15.1 (ubiquitous)** The system shall ask for a fun game name, give examples
+(a favourite animal or superhero) and state that the real name must not be
+used, all in a single sentence.
 
 **R15.2 (ubiquitous)** The system shall label the field as a game name, not as a
 first name.
@@ -366,6 +371,72 @@ Feature: Nickname instead of a real name
     And the mascot uses "Foguetão" in its greeting
 ```
 
+## US-16 — Read the licence and privacy policy in the app
+
+**User story**
+
+> As a parent, I want to see, inside the app, which licence it uses and what
+> happens to my child's data, so that I can trust it without reading the
+> repository.
+
+### Requirements
+
+**R16.1 (ubiquitous)** The system shall provide an information control in the
+header, available on every screen.
+
+**R16.2 (event-driven)** When the parent activates the information control, the
+system shall open a dialog titled "Sobre esta aplicação".
+
+**R16.3 (ubiquitous)** The dialog shall state that data stays on the device,
+that there are no accounts, servers, analytics, advertising or third-party
+scripts, and that the only external request is the Roboto typeface.
+
+**R16.4 (ubiquitous)** The dialog shall state the retention periods: one year
+for the nickname and mascot, 24 hours for progress.
+
+**R16.5 (ubiquitous)** The dialog shall name the project licence (MIT) and each
+third-party item with its licence: Fluent Emoji (MIT), Roboto (Apache 2.0) and
+Material Design 3 (Apache 2.0).
+
+**R16.6 (event-driven)** When the dialog is dismissed by its button, the backdrop
+or Escape, the system shall return focus to the page without losing game state.
+
+**R16.7 (unwanted behaviour)** If a digit or Enter is pressed while the dialog is
+open, then the system shall not forward it to the game.
+
+**R16.8 (optional feature)** Where the viewport is tall enough to show the
+footnote, the system shall also expose a "Licença e privacidade" link there.
+
+### Acceptance criteria
+
+```gherkin
+Feature: Licence and privacy information
+
+  Scenario: Opening the information dialog
+    Given the game is running
+    When the parent presses the information button
+    Then a dialog titled "Sobre esta aplicação" opens
+    And it states that nothing leaves the device
+    And it states the MIT licence and the Apache 2.0 items
+
+  Scenario: Keyboard does not leak into the game
+    Given the dialog is open on the game screen
+    When the parent presses the digit 5
+    Then the answer box does not change
+
+  Scenario: Closing the dialog
+    Given the dialog is open
+    When the parent presses "Fechar"
+    Then the dialog closes
+    And the game is still on the same question
+
+  Scenario: Dialog fits a small phone
+    Given a 320x568 viewport
+    When the dialog opens
+    Then it fits the viewport
+    And its body scrolls internally
+```
+
 ---
 
 ## Verification record
@@ -380,6 +451,7 @@ Feature: Nickname instead of a real name
 | R12.4a-12.9 (carousel) | Automated regression suite, touch emulation with `Input.dispatchTouchEvent`; scroll delta and active dot asserted | pass |
 | R14 (greetings) | Automated regression suite: four mascots selected, greetings compared; static check over all 30 pools | pass |
 | R15 (nickname) | Automated regression suite: static check for the privacy copy and missing `autocomplete="given-name"`; browser check that a two-word entry is refused | pass |
+| R16 (licence and privacy) | Automated regression suite: static check that the controls and the required statements exist; browser checks for opening, closing and digit suppression | pass |
 | Sound toggle | Visibility checked before and after entering the mascot step | pass |
 
 ## Known gaps at the end of this iteration

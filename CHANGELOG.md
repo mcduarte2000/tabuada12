@@ -63,10 +63,21 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 - Cada mascote tem agora cinco frases de apresentação próprias, sorteadas de
   forma diferente quando é escolhido.
 
+### Adicionado
+
+- Botão de informação no cabeçalho, presente em todos os ecrãs, que abre um
+  diálogo "Sobre esta aplicação" com a licença MIT, a lista de conteúdos de
+  terceiros e a política de privacidade.
+- O diálogo explica que nada sai do dispositivo, que não há contas, servidores,
+  análises nem publicidade, e indica os prazos de conservação dos dados.
+- Ligação "Licença e privacidade" no rodapé, quando o ecrã tem altura para o
+  mostrar.
+
 ### Alterado
 
 - O ecrã inicial passa a pedir um nome de jogo em vez do nome real, com o aviso
-  "Escolhe um nome divertido para jogar. Não escrevas o teu nome verdadeiro."
+  "Escolhe um nome divertido para jogar (ex: um animal, o teu super-herói
+  preferido). Não escrevas o teu nome verdadeiro."
 - Entradas com várias palavras são recusadas, porque têm a forma de um nome
   completo; o campo também deixa de pedir preenchimento automático de nomes.
 
