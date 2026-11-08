@@ -57,6 +57,7 @@
     next: document.getElementById('nextBtn'),
     statTime: document.getElementById('statTime'),
     statCorrect: document.getElementById('statCorrect'),
+    statMiss: document.getElementById('statMiss'),
     statStreak: document.getElementById('statStreak'),
     statBest: document.getElementById('statBest'),
     confetti: document.getElementById('confetti')
@@ -80,6 +81,7 @@
     phase: 'answering',
     busy: false,
     correctCount: 0,
+    missCount: 0,
     streak: 0,
     best: 0,
     sound: true,
@@ -308,6 +310,7 @@
 
   function renderStats() {
     els.statCorrect.textContent = String(state.correctCount);
+    els.statMiss.textContent = String(state.missCount);
     els.statStreak.textContent = String(state.streak);
     els.statBest.textContent = String(state.best);
   }
@@ -690,10 +693,14 @@
       return;
     }
 
+    state.missCount += 1;
+
     if (state.attempt === 1) {
       state.attempt = 2;
       state.input = '';
       resetStreak();
+      renderStats();
+      bump(els.statMiss);
       say(mascotPhrases('errou'), 'err', 'error');
       react('oops');
       soundWrong();
@@ -708,6 +715,7 @@
     state.busy = false;
     recordResult(state.a, state.b, 'fail');
     resetStreak();
+    bump(els.statMiss);
     els.card.classList.add('is-revealed');
     restartAnimation(els.answer, 'pop');
     say(mascotPhrases('revelou'), 'info', 'bulb');
@@ -895,6 +903,7 @@
 
     if (!keepSession) {
       state.correctCount = 0;
+      state.missCount = 0;
       state.streak = 0;
       state.startedAt = null;
     }

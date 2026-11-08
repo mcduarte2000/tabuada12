@@ -16,7 +16,7 @@ hospedada gratuitamente no GitHub Pages ou no Cloudflare Pages.
 - Escolha de nome e de mascote (30 animais do Fluent Emoji) no primeiro uso.
 - Frases divertidas por mascote, sorteadas sem repetição imediata
   (editáveis em `content.json`).
-- Cronómetro da sessão, acertos, sequência e recorde guardados localmente.
+- Cronómetro da sessão, acertos, falhas, série e recorde guardados localmente.
 - O nome, o mascote e o progresso ficam também em cookies: o perfil dura
   um ano e o progresso expira ao fim de 24 horas.
 - Tema dia/noite e efeitos sonoros opcionais.
