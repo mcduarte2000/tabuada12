@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Calculadora sorridente">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8577ff"/>
+      <stop offset="1" stop-color="#5b4bf0"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect x="15.5" y="7.5" width="33" height="49" rx="8.5" fill="#fff"/>
+  <rect x="20.5" y="12.5" width="23" height="13" rx="4" fill="#eaddff"/>
+  <g stroke="#6750a4" stroke-width="2.6" stroke-linecap="round">
+    <path d="M27 16.5l10 5M37 16.5l-10 5"/>
+  </g>
+  <circle cx="26.5" cy="33" r="2.5" fill="#1d1b20"/>
+  <circle cx="37.5" cy="33" r="2.5" fill="#1d1b20"/>
+  <path d="M26 39.5c1.8 2.4 4 3.4 6 3.4s4.2-1 6-3.4" stroke="#1d1b20" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  <g fill="#6750a4" opacity=".42">
+    <circle cx="24" cy="49" r="2.1"/>
+    <circle cx="32" cy="49" r="2.1"/>
+    <circle cx="40" cy="49" r="2.1"/>
+  </g>
+  <g fill="#6750a4" opacity=".24">
+    <circle cx="24" cy="54.5" r="2.1"/>
+    <circle cx="32" cy="54.5" r="2.1"/>
+    <circle cx="40" cy="54.5" r="2.1"/>
+  </g>
+  <g fill="#fff" opacity=".9">
+    <path d="M55 17l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1Z"/>
+    <path d="M9 41l.8 1.9 1.9.8-1.9.8L9 46.4l-.8-1.9-1.9-.8 1.9-.8Z"/>
+  </g>
+</svg>

@@ -1,0 +1,1201 @@
+{
+  "_descricao": "Frases de cada mascote. Edita livremente. Marcadores: {nome}, {produto}, {a}, {b}, {interjeicao}, {traco}.",
+  "_licenca_imagens": "Mascotes do Fluent Emoji (Microsoft), licença MIT — assets/mascots/fluent/.",
+  "mascotes": [
+    {
+      "id": "gato",
+      "nome": "Bigodes",
+      "ola": "Olá! Eu sou o Bigodes. Miau! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "cao",
+      "nome": "Bolota",
+      "ola": "Olá! Eu sou o Bolota. Au-au! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "raposa",
+      "nome": "Fofuxa",
+      "ola": "Olá! Eu sou a Fofuxa. Yip! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "tigre",
+      "nome": "Risquinho",
+      "ola": "Olá! Eu sou o Risquinho. Grrr! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "leao",
+      "nome": "Jubas",
+      "ola": "Olá! Eu sou o Jubas. Roar! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "macaco",
+      "nome": "Bananinha",
+      "ola": "Olá! Eu sou o Bananinha. U-u-u! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "urso",
+      "nome": "Mel",
+      "ola": "Olá! Eu sou o Mel. Grr! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "panda",
+      "nome": "Bambu",
+      "ola": "Olá! Eu sou o Bambu. Pff! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "coelho",
+      "nome": "Cenourinha",
+      "ola": "Olá! Eu sou o Cenourinha. Boing! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "hamster",
+      "nome": "Bolachinha",
+      "ola": "Olá! Eu sou o Bolachinha. Squeak! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "koala",
+      "nome": "Eucalipto",
+      "ola": "Olá! Eu sou o Eucalipto. Hmm! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "guaxinim",
+      "nome": "Mascarilha",
+      "ola": "Olá! Eu sou o Mascarilha. Tsk! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "preguica",
+      "nome": "Soneca",
+      "ola": "Olá! Eu sou a Soneca. Zzz! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "lontra",
+      "nome": "Ondinha",
+      "ola": "Olá! Eu sou a Ondinha. Aaaah! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "ourico",
+      "nome": "Espinho",
+      "ola": "Olá! Eu sou o Espinho. Ufa! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "coruja",
+      "nome": "Sabichona",
+      "ola": "Olá! Eu sou a Sabichona. Uh-uh! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "pinguim",
+      "nome": "Gelado",
+      "ola": "Olá! Eu sou o Gelado. Brrr! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "pato",
+      "nome": "Pato-Rico",
+      "ola": "Olá! Eu sou o Pato-Rico. Quack! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "tartaruga",
+      "nome": "Casquinha",
+      "ola": "Olá! Eu sou a Casquinha. Lento e certo! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "sapo",
+      "nome": "Saltitão",
+      "ola": "Olá! Eu sou o Saltitão. Croac! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "dinossauro",
+      "nome": "Dino",
+      "ola": "Olá! Eu sou o Dino. Raaawr! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "dragao",
+      "nome": "Fumacinha",
+      "ola": "Olá! Eu sou o Fumacinha. Fuuu! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "unicornio",
+      "nome": "Estrelinha",
+      "ola": "Olá! Eu sou a Estrelinha. Shhh! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "polvo",
+      "nome": "Polvinho",
+      "ola": "Olá! Eu sou o Polvinho. Blub! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "borboleta",
+      "nome": "Colorida",
+      "ola": "Olá! Eu sou a Colorida. Flap! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "joaninha",
+      "nome": "Pintinhas",
+      "ola": "Olá! Eu sou a Pintinhas. Bzz! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "caranguejo",
+      "nome": "Pinças",
+      "ola": "Olá! Eu sou o Pinças. Clic-clic! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "caracol",
+      "nome": "Devagarinho",
+      "ola": "Olá! Eu sou o Devagarinho. Devagar! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "baleia",
+      "nome": "Jorjinha",
+      "ola": "Olá! Eu sou a Jorjinha. Fuuush! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    },
+    {
+      "id": "golfinho",
+      "nome": "Bolhinha",
+      "ola": "Olá! Eu sou o Bolhinha. Iiii! Vamos treinar a tabuada juntos?",
+      "perguntar": [
+        "{interjeicao}! Qual é o resultado, {nome}?",
+        "{interjeicao}! Diz-me quanto é: {a} × {b}.",
+        "Aqui vai, {nome}: quanto é?",
+        "{interjeicao}, {nome}! Desafio novo na mesa.",
+        "Pensa bem, {nome}. Quanto é {a} × {b}?"
+      ],
+      "acertou": [
+        "{interjeicao}! Acertaste, {nome}!",
+        "Boa, {nome}! E {traco}.",
+        "É isso, {nome}! {produto} certinho.",
+        "{interjeicao} de alegria! Boa, {nome}.",
+        "Mais uma certa, {nome}!",
+        "{interjeicao}! Nem eu estava à espera. Muito bem!"
+      ],
+      "acertouSegunda": [
+        "{interjeicao}! À segunda também conta, {nome}.",
+        "Boa, {nome}! Tentaste outra vez e conseguiste.",
+        "Certo! Errar e corrigir é que é aprender.",
+        "{interjeicao}! Sabia que ias conseguir, {nome}."
+      ],
+      "errou": [
+        "{interjeicao}... ainda não. Tenta outra vez, {nome}!",
+        "Quase, {nome}! Pensa no {a} × {b}.",
+        "Não é essa. Respira e tenta de novo.",
+        "{interjeicao}! Essa não. Tens mais uma tentativa.",
+        "Hmm... vamos lá outra vez, {nome}."
+      ],
+      "revelou": [
+        "A resposta certa é {produto}. {interjeicao}!",
+        "Era {produto}, {nome}. Fica guardado na memória!",
+        "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
+        "A resposta é {produto}. Da próxima acertas!"
+      ]
+    }
+  ],
+  "geral": {
+    "perguntar": [
+      "Qual é o resultado?",
+      "Tenta esta, {nome}!",
+      "Quanto é?",
+      "Diz-me o resultado!"
+    ],
+    "acertou": [
+      "Boa, {nome}! Acertaste.",
+      "É isso mesmo!",
+      "Excelente!"
+    ],
+    "acertouSegunda": [
+      "Boa! Acertaste à segunda.",
+      "Certo! Para a próxima vais conseguir à primeira."
+    ],
+    "errou": [
+      "Ainda não. Tenta outra vez.",
+      "Quase! Pensa um bocadinho mais."
+    ],
+    "revelou": [
+      "A resposta certa é {produto}.",
+      "Era {produto}!"
+    ]
+  }
+}
