@@ -37,6 +37,9 @@
     mascotTitle: document.getElementById('mascotTitle'),
     mascotText: document.getElementById('mascotText'),
     mascotGrid: document.getElementById('mascotGrid'),
+    mascotScroller: document.getElementById('mascotScroller'),
+    mascotHint: document.getElementById('mascotHint'),
+    mascotProgressBar: document.getElementById('mascotProgressBar'),
     coachPreview: document.getElementById('coachPreview'),
     setupAvatar: document.getElementById('setupAvatar'),
     setupBubbleText: document.getElementById('setupBubbleText'),
@@ -293,7 +296,17 @@
 
   function setAvatar(container, mascot) {
     container.innerHTML = '';
-    if (!mascot) return;
+
+    if (!mascot) {
+      var icon = document.createElement('img');
+      icon.src = 'assets/icon.svg';
+      icon.alt = '';
+      icon.width = 44;
+      icon.height = 44;
+      icon.decoding = 'async';
+      container.appendChild(icon);
+      return;
+    }
 
     var img = document.createElement('img');
     img.src = mascot.img;
@@ -818,6 +831,32 @@
 
       els.mascotGrid.appendChild(button);
     });
+
+    updateScrollHint();
+  }
+
+  function updateScrollHint() {
+    if (!els.mascotScroller || !els.mascotGrid) return;
+
+    var grid = els.mascotGrid;
+    var max = grid.scrollWidth - grid.clientWidth;
+    var canScroll = max > 4;
+    var atEnd = grid.scrollLeft >= max - 4;
+
+    els.mascotScroller.classList.toggle('can-scroll-right', canScroll && !atEnd);
+
+    if (els.mascotProgressBar) {
+      var visible = grid.clientWidth / grid.scrollWidth;
+      var ratio = canScroll ? Math.min(1, Math.max(0, grid.scrollLeft / max)) : 0;
+      var width = Math.min(100, Math.max(14, visible * 100));
+      var travel = (100 - width) * ratio;
+      els.mascotProgressBar.style.width = width + '%';
+      els.mascotProgressBar.style.transform = 'translateX(' + (travel / width * 100) + '%)';
+    }
+
+    if (els.mascotHint) {
+      els.mascotHint.hidden = !canScroll || atEnd;
+    }
   }
 
   function selectMascot(id) {
@@ -834,9 +873,29 @@
       els.startBtn.disabled = false;
       els.coachPreview.hidden = false;
       els.setupBubbleText.textContent = fill(ownedHello(state.mascot), {});
+      scrollMascotIntoView(id);
     } else {
       els.startBtn.disabled = true;
       els.coachPreview.hidden = true;
+    }
+
+    updateScrollHint();
+  }
+
+  function scrollMascotIntoView(id) {
+    var grid = els.mascotGrid;
+    var button = grid.querySelector('button[data-mascot="' + id + '"]');
+    if (!button) return;
+
+    var left = button.offsetLeft - grid.offsetLeft;
+    var right = left + button.offsetWidth;
+    var viewLeft = grid.scrollLeft;
+    var viewRight = viewLeft + grid.clientWidth;
+
+    if (left < viewLeft) {
+      grid.scrollLeft = left - 4;
+    } else if (right > viewRight) {
+      grid.scrollLeft = right - grid.clientWidth + 4;
     }
   }
 
@@ -894,6 +953,7 @@
 
     els.startBtn.textContent = 'Vamos jogar, ' + state.name + '!';
     els.startBtn.disabled = !state.mascot;
+    updateScrollHint();
 
     if (state.mascot) {
       els.coachPreview.hidden = false;
@@ -943,7 +1003,7 @@
     }
 
     els.brandMark.classList.remove('is-animal');
-    els.brandMark.textContent = '×';
+    setAvatar(els.brandMark, null);
     els.brandSubtitle.textContent = 'Treina a tabuada do 1 ao 12';
     applyThemeColors(state.mascot);
     renderStats();
@@ -996,6 +1056,10 @@
   });
 
   els.startBtn.addEventListener('click', startGame);
+
+  els.mascotGrid.addEventListener('scroll', updateScrollHint, { passive: true });
+
+  window.addEventListener('resize', updateScrollHint);
 
   els.editBtn.addEventListener('click', function () {
     resetToSetup(true, true);

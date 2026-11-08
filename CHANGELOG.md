@@ -44,6 +44,13 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   rótulos.
 - O botão de som fica sempre disponível, mesmo ao voltar ao ecrã de escolha do
   mascote.
+- O título da aplicação passa para uma linha própria, acima do mascote e dos
+  botões, e deixa de ser cortado em ecrãs estreitos.
+- O ícone da aplicação substitui o "×" no cabeçalho antes de escolher um
+  mascote.
+- A fila de mascotes ganha indicador de deslize: barra de progresso, chip
+  "Desliza para ver mais" e gradiente na margem direita, que desaparecem ao
+  chegar ao fim.
 - `README.md` resume os créditos numa tabela e remete para o `LICENSE`.
 - Documentação passa a indicar o endereço público
   <https://tabuada12.miguelduarte.eu/>.
