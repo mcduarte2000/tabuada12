@@ -82,12 +82,17 @@ os dados do site no navegador.
 
 ## Créditos
 
-- **Mascotes** — [Fluent Emoji](https://github.com/microsoft/fluentui-emoji)
-  da Microsoft, licença MIT. Cópia da licença em
-  `assets/mascots/fluent/LICENSE-fluentui-emoji.md`.
-- **Tipografia** — [Roboto](https://fonts.google.com/specimen/Roboto),
-  licença Apache 2.0, servida pelo Google Fonts.
-- **Design system** — [Material Design 3](https://m3.material.io/).
+A lista completa de conteúdos de terceiros, com origem, ficheiros abrangidos e
+licença de cada um, está em [`LICENSE`](LICENSE), na secção
+**Third-party notices**.
+
+Resumo:
+
+| Conteúdo | Autor | Licença | Onde |
+| --- | --- | --- | --- |
+| [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) | Microsoft | MIT | `assets/mascots/fluent/` |
+| [Roboto](https://fonts.google.com/specimen/Roboto) | Google | Apache 2.0 | carregada em runtime do Google Fonts |
+| [Material Design 3](https://m3.material.io/) | Google | Apache 2.0 | tokens de cor em `styles.css` |
 
 Não são usados ficheiros de música nem áudio de terceiros. Os efeitos
 sonoros são gerados em tempo real pela Web Audio API.

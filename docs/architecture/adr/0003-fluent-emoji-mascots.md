@@ -48,8 +48,10 @@ goal for this project; clarity and breadth are.
 ### Consequences
 
 * Positive: 30 mascots with a uniform visual weight, each an SVG under 100 KB.
-* Positive: credit and licence are trivially documented in
-  `assets/mascots/fluent/LICENSE-fluentui-emoji.md`.
+* Positive: credit and licence are documented twice: the upstream file stays
+  next to the assets in `assets/mascots/fluent/LICENSE-fluentui-emoji.md`, and
+  the root `LICENSE` lists origin, covered files and licence terms under
+  **Third-party notices**.
 * Positive: adding a mascot is copying a file and one line in `mascots.js`.
 * Negative / risks: the app looks like Fluent Emoji; differentiating would
   require custom art later.

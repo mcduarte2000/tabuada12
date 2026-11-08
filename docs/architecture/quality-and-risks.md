@@ -67,6 +67,7 @@ retained.
 | D4 | Sound effect tuning values (frequencies, volumes) are inline in `app.js`. | They were adjusted by ear. | Move to a `SOUND` constant block if they need further tuning. |
 | D5 | Presentation details live in CSS while some layout decisions depend on timings in JS (advance delays). | Timing and layout evolved together. | Document the timings; extract `TIMING` constants if they change again. |
 | D6 | No service worker and no offline cache. | Music and offline work were deprioritised. | See R4; requires an ADR before implementation. |
+| D7 | Roboto is loaded from Google Fonts instead of being vendored. | Self-hosting was deferred to avoid adding binary font files. | Vendor the woff2 files with the Apache 2.0 licence; requires an ADR. |
 
 ### 11.3 Accepted trade-offs
 

@@ -19,3 +19,89 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+# Third-party notices
+
+This project includes third-party content. Each item below lists its origin,
+the files it covers and the licence that applies to it. Those licences apply
+to the listed items only; the rest of the project remains under the MIT
+licence above.
+
+## 1. Mascot images
+
+- **Work:** Fluent Emoji
+- **Author:** Microsoft Corporation
+- **Source:** https://github.com/microsoft/fluentui-emoji
+- **Licence:** MIT (full text in
+  `assets/mascots/fluent/LICENSE-fluentui-emoji.md`)
+- **Files:** the 30 SVG files in `assets/mascots/fluent/`:
+
+  | File | Mascot name in the app |
+  | --- | --- |
+  | `gato.svg` | Bigodes |
+  | `cao.svg` | Bolota |
+  | `raposa.svg` | Fofuxa |
+  | `tigre.svg` | Risquinho |
+  | `leao.svg` | Jubas |
+  | `macaco.svg` | Bananinha |
+  | `urso.svg` | Mel |
+  | `panda.svg` | Bambu |
+  | `coelho.svg` | Cenourinha |
+  | `hamster.svg` | Bolachinha |
+  | `koala.svg` | Eucalipto |
+  | `guaxinim.svg` | Mascarilha |
+  | `preguica.svg` | Soneca |
+  | `lontra.svg` | Ondinha |
+  | `ourico.svg` | Espinho |
+  | `coruja.svg` | Sabichona |
+  | `pinguim.svg` | Gelado |
+  | `pato.svg` | Pato-Rico |
+  | `tartaruga.svg` | Casquinha |
+  | `sapo.svg` | Saltitão |
+  | `dinossauro.svg` | Dino |
+  | `dragao.svg` | Fumacinha |
+  | `unicornio.svg` | Estrelinha |
+  | `polvo.svg` | Polvinho |
+  | `borboleta.svg` | Colorida |
+  | `joaninha.svg` | Pintinhas |
+  | `caranguejo.svg` | Pinças |
+  | `caracol.svg` | Devagarinho |
+  | `baleia.svg` | Jorjinha |
+  | `golfinho.svg` | Bolhinha |
+
+  The files were renamed to Portuguese slugs and copied into this repository.
+  The artwork itself was not modified.
+
+- **Modification statement:** file names were changed. No other modification
+  was made to the artwork.
+
+## 2. Typeface Roboto
+
+- **Work:** Roboto
+- **Author:** Google LLC
+- **Source:** https://fonts.google.com/specimen/Roboto
+- **Licence:** Apache License 2.0
+  (https://www.apache.org/licenses/LICENSE-2.0)
+- **Usage:** not redistributed with this project. It is requested at runtime
+  from Google Fonts, which serves it under the same licence. If the request
+  fails, the app falls back to system fonts.
+- **Files:** none in this repository.
+
+## 3. Material Design 3 colour tokens
+
+- **Work:** Material Design 3 design system, colour roles and elevation values
+- **Author:** Google LLC
+- **Source:** https://m3.material.io/
+- **Licence:** Apache License 2.0
+  (https://www.apache.org/licenses/LICENSE-2.0)
+- **Usage:** colour role names and palette values were transcribed into CSS
+  custom properties in `styles.css`. No Material code or component library is
+  bundled.
+
+## 4. Nothing else
+
+No other third-party content is included. There are no audio files, no
+analytics, no icon fonts and no JavaScript libraries. Sound effects are
+generated at runtime by the Web Audio API inside `app.js`.

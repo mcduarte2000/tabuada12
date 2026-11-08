@@ -28,6 +28,13 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 - Requisitos da iteração 1 em `docs/requirements/`, com user stories, EARS e
   critérios de aceitação em Gherkin.
 
+### Alterado
+
+- `LICENSE` passa a incluir a secção **Third-party notices** com origem,
+  ficheiros e licença de todos os conteúdos externos (Fluent Emoji, Roboto e
+  Material Design 3).
+- `README.md` resume os créditos numa tabela e remete para o `LICENSE`.
+
 ### Corrigido
 
 - O cronómetro da sessão deixava de contar enquanto o separador estava oculto;

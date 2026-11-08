@@ -225,6 +225,20 @@ when risks or debt appear or close, a new ADR for a new architectural
 decision, a new iteration file in `docs/requirements/` when an iteration
 closes, and `CHANGELOG.md` for user-visible changes.
 
+## Third-party content and licensing
+
+- The project is MIT. The root `LICENSE` file holds the MIT text for the
+  project, followed by a **Third-party notices** section.
+- Every external asset, font, design system or code fragment must be listed
+  there with: work title, author, source URL, licence name, licence URL and
+  the files it covers.
+- Vendored assets also keep their upstream licence file next to them, for
+  example `assets/mascots/fluent/LICENSE-fluentui-emoji.md`.
+- Never add content whose licence is unclear, "free to use" without a named
+  licence, or incompatible with MIT redistribution. Ask for an ADR first.
+- When adding or removing third-party files, update `LICENSE` in the same
+  commit and keep the file list in sync with the disk contents.
+
 ## Versioning and changelog
 
 - `CHANGELOG.md` follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
