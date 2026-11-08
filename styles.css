@@ -389,6 +389,14 @@ body {
   color: var(--md-error);
 }
 
+.field-hint {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.28;
+  font-weight: 400;
+  color: var(--md-on-surface-variant);
+}
+
 .mascot-scroller {
   position: relative;
   margin: 12px -4px 0;

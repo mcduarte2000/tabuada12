@@ -213,6 +213,12 @@ function staticTests() {
   var missing = requiredFiles.filter(function (file) {
     return fs.existsSync(path.join(ROOT, file)) === false;
   });
+  check('does not ask for the real name', (function () {
+    var html = read('index.html');
+    return html.indexOf('Não escrevas o teu nome verdadeiro') >= 0 &&
+      html.indexOf('autocomplete="given-name"') === -1;
+  })(), 'the app must ask for a nickname and never autofill a real name');
+
   check('required files exist', missing.length === 0, 'missing: ' + missing.join(', '));
 
   var licence = read('LICENSE');
@@ -263,7 +269,17 @@ async function browserTests(browser) {
     return document.documentElement.scrollHeight <= window.innerHeight + 1;
   }), 'all setup content must fit one screen');
 
-  await page.fill('#nameInput', 'Maria');
+  check('full name rejected as a nickname', await page.evaluate(async function () {
+    var input = document.getElementById('nameInput');
+    input.value = 'Maria Silva';
+    document.getElementById('nameForm').dispatchEvent(new Event('submit', { cancelable: true }));
+    await new Promise(function (r) { setTimeout(r, 50); });
+    var shown = document.getElementById('nameError').hidden === false;
+    input.value = 'Foguetão';
+    return shown;
+  }), 'a first and last name must be refused, to discourage real names');
+
+  await page.fill('#nameInput', 'Foguetão');
   await page.click('#nameForm button[type="submit"]');
   await page.waitForTimeout(300);
 
@@ -367,7 +383,7 @@ async function browserTests(browser) {
   }), 'compact progress must also reach the cookie');
 
   check('profile cookies written', await page.evaluate(function () {
-    return /tabuada12_name=Maria/.test(document.cookie) &&
+    return /tabuada12_name=Foguet/.test(document.cookie) &&
       /tabuada12_mascot=/.test(document.cookie);
   }), 'name and mascot must persist across visits');
 

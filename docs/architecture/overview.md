@@ -102,7 +102,7 @@ C4Context
 | --- | --- | --- |
 | HTTPS GET | host → app | Serves `index.html`, `styles.css`, `app.js`, `mascots.js`, `content.json`, `manifest.webmanifest` and `assets/**`. |
 | HTTPS GET | app → Google Fonts | Roboto CSS and font files. Fails gracefully: the app falls back to system fonts. |
-| `localStorage` | app → browser | Record, theme, sound preference and the full per-fact progress with recency. |
+| `localStorage` | app → browser | Nickname chosen by the child, mascot, record, theme, sound preference and the full per-fact progress with recency. |
 | Cookies | app → browser | Name and mascot (1 year) plus compact progress (24 hours). |
 | Web Audio API | app → browser | Synthesises feedback sounds; no audio files are downloaded. |
 
@@ -122,7 +122,7 @@ C4Context
 | Learning effectiveness | Weighted random selection per fact. Failed facts get a weight that grows with the number of failures; mastered facts get a weight that shrinks with each first-try success. Recency dampening avoids repeating a fact answered seconds ago. Implemented in `chooseFact()`/`factWeight()`, documented in [ADR-0004](./adr/0004-adaptive-fact-selection.md). |
 | Child-friendly usability | Single screen, one numeric keypad, no text input during play, large touch targets (48 px minimum), praise instead of scolding, automatic advance after a correct answer. |
 | Zero cost, zero operations | One HTML file, three local scripts, one JSON file and SVG assets. No runtime that can fail. Hosted from a Git branch, documented in [ADR-0001](./adr/0001-static-single-page-app.md). |
-| Privacy by design | All state in the browser. No network call carries user data. Documented in [ADR-0005](./adr/0005-browser-local-storage-only.md). |
+| Privacy by design | All state in the browser. No network call carries user data. The app asks for a fun nickname and explicitly discourages the real name, and the field disables personal-name autofill. Documented in [ADR-0005](./adr/0005-browser-local-storage-only.md). |
 | Accessibility and reach | Material Design 3 tokens, responsive layout from 320 px, keyboard support, live regions, reduced-motion handling. |
 | Maintainability | Text and mascot data separated from logic in `content.json` and `mascots.js`; magic numbers centralised at the top of `app.js`; no dependencies to upgrade. |
 

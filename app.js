@@ -1155,14 +1155,24 @@
       });
   }
 
+  function showNameError(message) {
+    els.nameError.textContent = message;
+    els.nameError.hidden = false;
+    els.nameInput.focus();
+  }
+
   els.nameForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
     var value = els.nameInput.value.replace(/\s+/g, ' ').trim();
 
     if (value.length < 2) {
-      els.nameError.hidden = false;
-      els.nameInput.focus();
+      showNameError('Escreve um nome de jogo para continuar.');
+      return;
+    }
+
+    if (/\s/.test(value)) {
+      showNameError('Usa só uma palavra, como um apelido divertido.');
       return;
     }
 

@@ -317,6 +317,55 @@ Feature: Individual mascot greetings
     And no raw placeholder is displayed
 ```
 
+## US-15 — Choose a fun name instead of a real one
+
+**User story**
+
+> As a parent, I want the app to ask for a nickname instead of a real name, so
+> that my child does not type personal data into it.
+
+### Requirements
+
+**R15.1 (ubiquitous)** The system shall ask for a fun game name and shall state
+that the real name must not be used.
+
+**R15.2 (ubiquitous)** The system shall label the field as a game name, not as a
+first name.
+
+**R15.3 (unwanted behaviour)** If the entry contains a space, then the system
+shall refuse it and explain that only one word is allowed, because a first and
+last name is the shape of a real name.
+
+**R15.4 (ubiquitous)** The system shall disable browser autofill for personal
+names on the field.
+
+**R15.5 (event-driven)** When a valid game name is submitted, the system shall
+use it in the mascot dialogue and store it as before.
+
+### Acceptance criteria
+
+```gherkin
+Feature: Nickname instead of a real name
+
+  Scenario: The field asks for a game name
+    Given the app loads with no saved profile
+    Then the text "Não escrevas o teu nome verdadeiro" is visible
+    And the field label is "Nome de jogo"
+    And the field does not request autofill of a personal name
+
+  Scenario: A two-word entry is refused
+    Given the name step is visible
+    When the child submits "Maria Silva"
+    Then an error explains that only one word is allowed
+    And the app stays on the name step
+
+  Scenario: A nickname is accepted
+    Given the name step is visible
+    When the child submits "Foguetão"
+    Then the mascot step is shown
+    And the mascot uses "Foguetão" in its greeting
+```
+
 ---
 
 ## Verification record
@@ -330,6 +379,7 @@ Feature: Individual mascot greetings
 | R13 (header) | Browser test at 360x640 and 320x568; title overflow and subtitle line count measured | pass |
 | R12.4a-12.9 (carousel) | Automated regression suite, touch emulation with `Input.dispatchTouchEvent`; scroll delta and active dot asserted | pass |
 | R14 (greetings) | Automated regression suite: four mascots selected, greetings compared; static check over all 30 pools | pass |
+| R15 (nickname) | Automated regression suite: static check for the privacy copy and missing `autocomplete="given-name"`; browser check that a two-word entry is refused | pass |
 | Sound toggle | Visibility checked before and after entering the mascot step | pass |
 
 ## Known gaps at the end of this iteration

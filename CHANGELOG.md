@@ -63,6 +63,13 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 - Cada mascote tem agora cinco frases de apresentação próprias, sorteadas de
   forma diferente quando é escolhido.
 
+### Alterado
+
+- O ecrã inicial passa a pedir um nome de jogo em vez do nome real, com o aviso
+  "Escolhe um nome divertido para jogar. Não escrevas o teu nome verdadeiro."
+- Entradas com várias palavras são recusadas, porque têm a forma de um nome
+  completo; o campo também deixa de pedir preenchimento automático de nomes.
+
 ### Corrigido
 
 - O cronómetro da sessão deixava de contar enquanto o separador estava oculto;

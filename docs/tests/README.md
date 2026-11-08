@@ -53,6 +53,7 @@ defect from returning unnoticed.
 | Cookie write is size-checked | The compact progress could exceed 4 KB |
 | Failures weigh more than successes | Adaptive selection lost its purpose |
 | Storage access wrapped | Storage failures must never break the game |
+| The app asks for a nickname | Personal data must not be requested |
 | Required files exist | Broken links and missing assets |
 | Licence lists third-party content | MIT attribution is a legal obligation |
 | Every mascot file credited | Same reason |
@@ -65,6 +66,7 @@ Run with Playwright or system Chrome at 360x640.
 - No console errors on load or during a full session.
 - Header: title fully visible, app icon before a game, mascot after.
 - Setup fits one screen before and after entering a name; play button visible.
+- A two-word entry is refused as a nickname.
 - Carousel: overflows, dots render after images load, active dot follows the
   scroll, hint hides at the end, and each mascot shows a different greeting.
 - Game: question appears, five statistics, no truncated labels.

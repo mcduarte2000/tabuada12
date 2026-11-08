@@ -77,14 +77,15 @@
       </div>
 
       <div id="nameStep">
-        <h2 class="setup-title">Olá! Como te chamas?</h2>
-        <p class="setup-text">Escreve o teu primeiro nome para começarmos a jogar.</p>
+        <h2 class="setup-title">Como te queremos chamar?</h2>
+        <p class="setup-text">Escolhe um nome divertido para jogar. Não escrevas o teu nome verdadeiro.</p>
         <form id="nameForm" novalidate>
           <div class="field">
-            <input id="nameInput" class="field-input" type="text" name="nome" placeholder=" " maxlength="20" autocomplete="given-name" enterkeyhint="next" aria-describedby="nameError">
-            <label class="field-label" for="nameInput">Primeiro nome</label>
+            <input id="nameInput" class="field-input" type="text" name="alcunha" placeholder=" " maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="next" aria-describedby="nameError nameHint">
+            <label class="field-label" for="nameInput">Nome de jogo</label>
           </div>
-          <p class="field-error" id="nameError" role="alert" hidden>Escreve o teu nome para continuar.</p>
+          <p class="field-hint" id="nameHint">Podes usar um animal, um super-herói ou uma palavra inventada.</p>
+          <p class="field-error" id="nameError" role="alert" hidden>Escreve um nome de jogo para continuar.</p>
           <button class="next-button spaced" type="submit">Continuar</button>
         </form>
       </div>
