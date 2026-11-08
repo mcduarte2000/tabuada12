@@ -58,8 +58,7 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 ### Adicionado
 
 - Suite de testes de regressão em `tests/regression.js`, sem dependências
-  obrigatórias: 25 verificações estáticas e 32 de browser, com catálogo em
-  `docs/tests/README.md`.
+  obrigatórias, com catálogo em `docs/tests/README.md`.
 - Cada mascote tem agora cinco frases de apresentação próprias, sorteadas de
   forma diferente quando é escolhido.
 

@@ -139,6 +139,11 @@ function staticTests() {
   check('mascot name sits under the speaker', /class="coach-face"[\s\S]{0,200}?class="coach-name"/.test(html),
     'each speaking mascot is labelled underneath');
 
+  check('clickable stats expose pointer affordance',
+    /\.stat\s*\{[^}]*cursor:\s*pointer/.test(css) &&
+      /\.stat--static\s*\{[^}]*cursor:\s*default/.test(css),
+    'clickable indicators must look clickable and static ones must not');
+
   check('correct and miss stats are coloured',
     /\.stat--correct[^}]*var\(--success\)/.test(css) && /\.stat--miss[^}]*var\(--md-error\)/.test(css),
     'Acertos must read green and Falhas red');
@@ -282,6 +287,15 @@ function staticTests() {
 async function browserTests(browser) {
   var context = await browser.newContext({ viewport: { width: 360, height: 640 } });
   var page = await context.newPage();
+
+  async function realClick(selector) {
+    var box = await page.locator(selector).first().boundingBox();
+    if (!box) throw new Error('element not visible: ' + selector);
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.up();
+    await page.waitForTimeout(160);
+  }
   var errors = [];
   page.on('pageerror', function (error) { errors.push(String(error)); });
   page.on('console', function (msg) {
@@ -418,45 +432,71 @@ async function browserTests(browser) {
     return /tabuada12_progress=/.test(document.cookie);
   }), 'compact progress must also reach the cookie');
 
-  check('statistics open detail dialogs', await page.evaluate(async function () {
-    function openClose(id, dialogId) {
-      document.getElementById(id).click();
-      var open = document.getElementById(dialogId).open;
-      document.querySelector('#' + dialogId + ' .sheet-actions button').click();
-      return open;
-    }
+  var statPairs = [
+    ['#statCorrectBtn', 'correctDialog'],
+    ['#statMissBtn', 'missDialog'],
+    ['#statBestBtn', 'bestDialog']
+  ];
+  var mouseOpened = [];
 
-    var correct = openClose('statCorrectBtn', 'correctDialog');
-    var miss = openClose('statMissBtn', 'missDialog');
-    var best = openClose('statBestBtn', 'bestDialog');
-    return correct && miss && best;
-  }), 'Acertos, Falhas and Recorde must each open their dialog');
+  for (var pair = 0; pair < statPairs.length; pair += 1) {
+    var sel = statPairs[pair][0];
+    var dlg = statPairs[pair][1];
+    await realClick(sel);
+    mouseOpened.push(await page.evaluate(function (d) {
+      return document.getElementById(d).open === true;
+    }, dlg));
+    await realClick('#' + dlg + ' .sheet-actions button');
+  }
 
-  check('correct dialog reports the session split', await page.evaluate(async function () {
-    document.getElementById('statCorrectBtn').click();
-    await new Promise(function (r) { setTimeout(r, 100); });
-    var lead = document.getElementById('correctLead').textContent;
-    var split = document.getElementById('correctSplit').textContent;
-    document.querySelector('#correctDialog .sheet-actions button').click();
-    return /acerto/.test(lead) && /à primeira/.test(split) && /à segunda/.test(split);
-  }), 'the dialog must break successes into first and second attempt');
+  check('mouse clicks open the statistic dialogs', mouseOpened.every(Boolean),
+    'a real pointer click must open Acertos, Falhas and Recorde: ' + JSON.stringify(mouseOpened));
 
-  check('miss dialog reports the session split', await page.evaluate(async function () {
-    document.getElementById('statMissBtn').click();
-    await new Promise(function (r) { setTimeout(r, 100); });
-    var lead = document.getElementById('missLead').textContent;
-    var split = document.getElementById('missSplit').textContent;
-    document.querySelector('#missDialog .sheet-actions button').click();
-    return /falha/.test(lead) && /primeira tentativa/.test(split) && /segunda/.test(split);
-  }), 'the dialog must break misses by attempt');
+  check('stat indicators are real buttons', await page.evaluate(function () {
+    return ['statCorrectBtn', 'statMissBtn', 'statBestBtn'].every(function (id) {
+      return document.getElementById(id).tagName === 'BUTTON';
+    }) && ['statTime', 'statStreak'].every(function (id) {
+      var stat = document.getElementById(id).closest('.stat');
+      return stat.tagName !== 'BUTTON';
+    });
+  }), 'only indicators with detail are clickable');
 
-  check('record dialog lists records newest first', await page.evaluate(async function () {
-    document.getElementById('statBestBtn').click();
-    await new Promise(function (r) { setTimeout(r, 120); });
-    var rows = document.querySelectorAll('#recordList li');
-    var first = rows[0] ? rows[0].textContent : '';
-    document.querySelector('#bestDialog .sheet-actions button').click();
-    return rows.length > 0 && /\d/.test(first);
+  check('correct dialog reports the session split', await (async function () {
+    await realClick('#statCorrectBtn');
+    var text = await page.evaluate(function () {
+      return {
+        lead: document.getElementById('correctLead').textContent,
+        split: document.getElementById('correctSplit').textContent
+      };
+    });
+    await realClick('#correctDialog .sheet-actions button');
+    return /acerto/.test(text.lead) && /à primeira/.test(text.split) && /à segunda/.test(text.split);
+  })(), 'the dialog must break successes into first and second attempt');
+
+  check('miss dialog reports the session split', await (async function () {
+    await realClick('#statMissBtn');
+    var text = await page.evaluate(function () {
+      return {
+        lead: document.getElementById('missLead').textContent,
+        split: document.getElementById('missSplit').textContent
+      };
+    });
+    await realClick('#missDialog .sheet-actions button');
+    return /falha/.test(text.lead) && /primeira tentativa/.test(text.split) && /segunda/.test(text.split);
+  })(), 'the dialog must break misses by attempt');
+
+  check('record dialog lists records with date', await (async function () {
+    await realClick('#statBestBtn');
+    var info = await page.evaluate(function () {
+      var rows = document.querySelectorAll('#recordList li');
+      return {
+        count: rows.length,
+        first: rows[0] ? rows[0].textContent : '',
+        hasDate: rows[0] ? /\d{2}\/\d{2}\/\d{4}/.test(rows[0].textContent) : false
+      };
+    });
+    await realClick('#bestDialog .sheet-actions button');
+    return info.count > 0 && /\d/.test(info.first) && info.hasDate;
   }), 'the top-10 list must render with streak and date');
 
   check('profile cookies written', await page.evaluate(function () {
@@ -540,43 +580,52 @@ async function browserTests(browser) {
     window.dispatchEvent(new Event('resize'));
   });
 
-  check('about dialog opens at the top', await page.evaluate(async function () {
-    document.getElementById('aboutBtn').click();
-    await new Promise(function (r) { setTimeout(r, 160); });
-    var body = document.querySelector('#aboutDialog .sheet-body');
-    var scrolled = body.scrollTop;
-    document.querySelector('#aboutDialog .sheet-actions button').click();
-    await new Promise(function (r) { setTimeout(r, 120); });
+  check('about dialog opens at the top by mouse', await (async function () {
+    await realClick('#aboutBtn');
+    var scrolled = await page.evaluate(function () {
+      return document.querySelector('#aboutDialog .sheet-body').scrollTop;
+    });
+    await realClick('#aboutDialog .sheet-actions button');
     return scrolled === 0;
-  }), 'the dialog must open on Privacidade, not scrolled to the GitHub link');
+  })(), 'the dialog must open on Privacidade, not scrolled to the GitHub link');
 
-  check('about dialog opens with privacy and licence', await page.evaluate(async function () {
-    document.getElementById('aboutBtn').click();
-    await new Promise(function (r) { setTimeout(r, 120); });
-    var dialog = document.getElementById('aboutDialog');
-    var text = dialog ? dialog.textContent : '';
-    return !!dialog && dialog.open === true &&
-      text.indexOf('sai deste dispositivo') >= 0 &&
-      text.indexOf('licença MIT') >= 0 &&
-      text.indexOf('Apache 2.0') >= 0;
+  check('about dialog opens with privacy and licence', await (async function () {
+    await realClick('#aboutBtn');
+    var state = await page.evaluate(function () {
+      var dialog = document.getElementById('aboutDialog');
+      var text = dialog ? dialog.textContent : '';
+      return {
+        open: !!dialog && dialog.open === true,
+        privacy: text.indexOf('sai deste dispositivo') >= 0,
+        mit: text.indexOf('licença MIT') >= 0,
+        apache: text.indexOf('Apache 2.0') >= 0
+      };
+    });
+    await realClick('#aboutDialog .sheet-actions button');
+    return state.open && state.privacy && state.mit && state.apache;
   }), 'the dialog must state local-only storage and list licences');
 
-  check('about dialog closes', await page.evaluate(async function () {
-    document.querySelector('#aboutDialog .sheet-actions button').click();
-    await new Promise(function (r) { setTimeout(r, 120); });
-    return document.getElementById('aboutDialog').open === false;
+  check('about dialog closes by mouse', await (async function () {
+    await realClick('#aboutBtn');
+    await realClick('#aboutDialog .sheet-actions button');
+    return await page.evaluate(function () {
+      return document.getElementById('aboutDialog').open === false;
+    });
   }), 'the close button must dismiss the dialog');
 
-  check('keypad disabled while the dialog is open', await page.evaluate(async function () {
-    document.getElementById('aboutBtn').click();
-    await new Promise(function (r) { setTimeout(r, 120); });
-    var before = document.getElementById('answerBox').textContent;
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: '5', bubbles: true }));
-    var after = document.getElementById('answerBox').textContent;
-    document.querySelector('#aboutDialog .sheet-actions button').click();
-    await new Promise(function (r) { setTimeout(r, 120); });
+  check('keypad disabled while the dialog is open', await (async function () {
+    await realClick('#aboutBtn');
+    var before = await page.evaluate(function () {
+      return document.getElementById('answerBox').textContent;
+    });
+    await page.keyboard.press('5');
+    await page.waitForTimeout(120);
+    var after = await page.evaluate(function () {
+      return document.getElementById('answerBox').textContent;
+    });
+    await realClick('#aboutDialog .sheet-actions button');
     return before === after;
-  }), 'digits must not reach the game behind the dialog');
+  })(), 'digits must not reach the game behind the dialog');
 
   check('reduced motion still renders the app', await page.evaluate(function () {
     return document.getElementById('game').hidden === false;

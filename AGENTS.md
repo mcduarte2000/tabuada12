@@ -256,6 +256,11 @@ closes, and `CHANGELOG.md` for user-visible changes.
   otherwise the system Chrome.
 - When a defect is found, add a failing check first, then fix it. Name the check
   after the behaviour it protects.
+- Prefer real pointer input for anything a person clicks. `element.click()` in
+  page context bypasses hit testing, overlays, `pointer-events` and layout, so
+  it can pass while the app is unclickable. Use `page.mouse` and assert the
+  resulting DOM state. Reserve scripted clicks for cases where the click is
+  itself programmatic.
 - Never delete a check to make the suite pass. If a requirement changed, update
   the check and the requirement together.
 - The catalogue of covered defects lives in `docs/tests/README.md`; update it

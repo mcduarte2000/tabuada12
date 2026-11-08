@@ -85,10 +85,23 @@ Run with Playwright or system Chrome at 360x640.
   policy and the licences, closes on its button, and does not forward digits to
   the game.
 - Acertos renders green and Falhas red, on both the number and the label.
-- Acertos, Falhas and Recorde each open a dialog; the first two report the
-  first/second attempt split, the third lists the top ten with dates.
+- Acertos, Falhas and Recorde each open a dialog **by real mouse click**; only
+  those three are buttons, while Tempo and Série are not; the first two report
+  the first/second attempt split, the third lists the top ten with dates.
 - Reduced motion does not break layout.
 - At 320x568: title fits, subtitle is not clipped, no vertical overflow.
+
+## Input quality
+
+Clickable behaviour is exercised with real pointer input (`page.mouse.move`,
+`mouse.down`, `mouse.up`), not with `element.click()` in page context. A
+scripted click fires the handler directly and skips hit testing, so it passes
+even when an overlay, a `pointer-events` rule or a layout bug makes the element
+unclickable for a person.
+
+Static checks also assert the affordance: `.stat` sets `cursor: pointer` and
+`.stat--static` resets it, so a clickable-looking element is always a real
+button and a static one never looks tappable.
 
 ## Adding a case
 
