@@ -72,6 +72,8 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   análises nem publicidade, e indica os prazos de conservação dos dados.
 - Ligação "Licença e privacidade" no rodapé, quando o ecrã tem altura para o
   mostrar.
+- Ligação "Ver o código no GitHub" no fim da secção de licença, a abrir numa
+  nova aba.
 
 ### Alterado
 

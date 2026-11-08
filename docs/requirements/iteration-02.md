@@ -398,6 +398,9 @@ for the nickname and mascot, 24 hours for progress.
 third-party item with its licence: Fluent Emoji (MIT), Roboto (Apache 2.0) and
 Material Design 3 (Apache 2.0).
 
+**R16.9 (ubiquitous)** The licence section shall end with a link to the source
+repository, opened in a new tab with `rel="noopener noreferrer"`.
+
 **R16.6 (event-driven)** When the dialog is dismissed by its button, the backdrop
 or Escape, the system shall return focus to the page without losing game state.
 
@@ -429,6 +432,13 @@ Feature: Licence and privacy information
     When the parent presses "Fechar"
     Then the dialog closes
     And the game is still on the same question
+
+  Scenario: Source code is reachable
+    Given the information dialog is open
+    When the parent scrolls the licence section to the end
+    Then a link labelled "Ver o código no GitHub" is visible
+    And it points at the repository
+    And it opens in a new tab without opener access
 
   Scenario: Dialog fits a small phone
     Given a 320x568 viewport

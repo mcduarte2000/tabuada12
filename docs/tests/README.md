@@ -55,6 +55,7 @@ defect from returning unnoticed.
 | Storage access wrapped | Storage failures must never break the game |
 | The app asks for a nickname | Personal data must not be requested |
 | Licence and privacy dialog exists | The information must stay reachable in the app |
+| Licence dialog links to the repository | The source must stay discoverable and open safely |
 | Required files exist | Broken links and missing assets |
 | Licence lists third-party content | MIT attribution is a legal obligation |
 | Every mascot file credited | Same reason |
