@@ -32,14 +32,7 @@
   <main class="app">
     <header class="top-app-bar">
       <h1 class="brand-title">Tabuada 12</h1>
-      <div class="top-row">
-        <div class="brand">
-          <div class="brand-mark" id="brandMark" aria-hidden="true">
-            <img src="assets/icon.svg" alt="" width="44" height="44">
-          </div>
-          <p class="brand-subtitle" id="brandSubtitle">Treina a tabuada do 1 ao 12</p>
-        </div>
-        <div class="top-actions">
+      <div class="top-actions">
           <button id="soundToggle" class="icon-button" type="button" aria-pressed="true" aria-label="Desativar efeitos sonoros" title="Efeitos sonoros">
             <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
@@ -74,7 +67,6 @@
             </svg>
           </button>
         </div>
-      </div>
     </header>
 
     <section class="card" id="setup" aria-label="Configuração do jogo">
@@ -84,7 +76,7 @@
       </div>
 
       <div id="nameStep">
-        <h2 class="setup-title">Como te queremos chamar?</h2>
+        <h2 class="setup-title">Como te queres chamar?</h2>
         <p class="setup-text">Escolhe um nome divertido para jogar (ex: um animal, o teu super-herói preferido). Não escrevas o teu nome verdadeiro.</p>
         <form id="nameForm" novalidate>
           <div class="field">
@@ -111,7 +103,10 @@
           </svg>
         </p>
         <div class="coach" id="coachPreview" hidden>
-          <div class="avatar" id="setupAvatar" aria-hidden="true"></div>
+          <div class="coach-face">
+            <div class="avatar" id="setupAvatar" aria-hidden="true"></div>
+            <span class="coach-name" id="setupName">Mascote</span>
+          </div>
           <p class="bubble" data-tone="info">
             <span class="bubble-text" id="setupBubbleText"></span>
           </p>
@@ -126,7 +121,7 @@
           <span class="stat-value" id="statTime" aria-label="Tempo de jogo">0:00</span>
           <span class="stat-label">Tempo</span>
         </div>
-        <div class="stat">
+        <div class="stat stat--correct">
           <span class="stat-value" id="statCorrect">0</span>
           <span class="stat-label">Acertos</span>
         </div>
@@ -146,7 +141,10 @@
 
       <section class="card" id="card" aria-label="Jogo da tabuada">
         <div class="coach">
-          <div class="avatar" id="gameAvatar" aria-hidden="true"></div>
+          <div class="coach-face">
+            <div class="avatar" id="gameAvatar" aria-hidden="true"></div>
+            <span class="coach-name" id="gameName">Mascote</span>
+          </div>
           <p class="bubble" id="bubble" data-tone="neutral" aria-live="polite">
             <span class="bubble-icon" id="bubbleIcon" aria-hidden="true" hidden></span>
             <span class="bubble-text" id="bubbleText"></span>
@@ -199,7 +197,7 @@
 
   <dialog class="sheet" id="aboutDialog" aria-labelledby="aboutTitle">
     <div class="sheet-handle" aria-hidden="true"></div>
-    <h2 class="sheet-title" id="aboutTitle">Sobre esta aplicação</h2>
+    <h2 class="sheet-title" id="aboutTitle" tabindex="-1">Sobre esta aplicação</h2>
 
     <div class="sheet-body">
       <section class="about-block">

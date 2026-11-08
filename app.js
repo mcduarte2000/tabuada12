@@ -21,8 +21,8 @@
   var COOKIE_LIMIT = 3800;
 
   var els = {
-    brandMark: document.getElementById('brandMark'),
-    brandSubtitle: document.getElementById('brandSubtitle'),
+    gameName: document.getElementById('gameName'),
+    setupName: document.getElementById('setupName'),
     themeToggle: document.getElementById('themeToggle'),
     soundToggle: document.getElementById('soundToggle'),
     editBtn: document.getElementById('editBtn'),
@@ -298,18 +298,10 @@
   }
 
   function setAvatar(container, mascot) {
+    if (!container) return;
     container.innerHTML = '';
 
-    if (!mascot) {
-      var icon = document.createElement('img');
-      icon.src = 'assets/icon.svg';
-      icon.alt = '';
-      icon.width = 44;
-      icon.height = 44;
-      icon.decoding = 'async';
-      container.appendChild(icon);
-      return;
-    }
+    if (!mascot) return;
 
     var img = document.createElement('img');
     img.src = mascot.img;
@@ -985,6 +977,7 @@
       els.startBtn.disabled = false;
       els.coachPreview.hidden = false;
       els.setupBubbleText.textContent = fill(ownedHello(state.mascot), {});
+      if (els.setupName) els.setupName.textContent = state.mascot.name;
       scrollMascotIntoView(id);
     } else {
       els.startBtn.disabled = true;
@@ -1036,12 +1029,9 @@
     els.editBtn.hidden = false;
     els.soundToggle.hidden = false;
 
-    els.brandMark.classList.add('is-animal');
-    setAvatar(els.brandMark, state.mascot);
     setAvatar(els.gameAvatar, state.mascot);
+    if (els.gameName) els.gameName.textContent = state.mascot.name;
     applyThemeColors(state.mascot);
-
-    els.brandSubtitle.textContent = state.mascot.name;
 
     renderTime();
     newQuestion();
@@ -1126,9 +1116,6 @@
       els.nameInput.value = state.name;
     }
 
-    els.brandMark.classList.remove('is-animal');
-    setAvatar(els.brandMark, null);
-    els.brandSubtitle.textContent = 'Treina a tabuada do 1 ao 12';
     applyThemeColors(state.mascot);
     renderStats();
   }
@@ -1193,11 +1180,18 @@
 
   function openAbout() {
     if (!els.aboutDialog) return;
+
     if (typeof els.aboutDialog.showModal === 'function') {
       els.aboutDialog.showModal();
     } else {
       els.aboutDialog.setAttribute('open', '');
     }
+
+    var body = els.aboutDialog.querySelector('.sheet-body');
+    if (body) body.scrollTop = 0;
+
+    var title = els.aboutDialog.querySelector('.sheet-title');
+    if (title && title.focus) title.focus({ preventScroll: true });
   }
 
   els.aboutBtn.addEventListener('click', openAbout);

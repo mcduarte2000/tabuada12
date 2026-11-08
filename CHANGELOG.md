@@ -77,6 +77,13 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ### Alterado
 
+- O cabeçalho fica só com o título e os botões; o mascote passou para junto da
+  fala, com o nome por baixo da imagem.
+- "Acertos" e o respetivo número aparecem a verde; "Falhas" e o número a
+  vermelho.
+- O diálogo de licença e privacidade abre no topo, em "Privacidade", em vez de
+  aparecer deslocado até ao link do GitHub.
+- O título do ecrã inicial passa a "Como te queres chamar?".
 - O ecrã inicial passa a pedir um nome de jogo em vez do nome real, com o aviso
   "Escolhe um nome divertido para jogar (ex: um animal, o teu super-herói
   preferido). Não escrevas o teu nome verdadeiro."

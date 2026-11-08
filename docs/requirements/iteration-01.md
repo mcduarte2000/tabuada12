@@ -50,7 +50,8 @@ Test results are recorded at the end of the document.
 ### Requirements
 
 **R1.1 (event-driven)** When the app starts and no saved profile exists, the
-system shall ask for the child's first name before showing any question.
+system shall ask, in second person ("Como te queres chamar?"), for a game name
+before showing any question.
 
 **R1.2 (unwanted behaviour)** If the submitted name is shorter than two
 characters after trimming and collapsing whitespace, then the system shall show

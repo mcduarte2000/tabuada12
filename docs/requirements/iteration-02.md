@@ -246,9 +246,12 @@ subtitle before a mascot is chosen, and the chosen mascot afterwards.
 **R13.4 (state-driven)** While the header subtitle does not fit on one line, the
 system shall wrap it to at most two lines.
 
-**R13.5 (state-driven)** While the game is running, the header subtitle shall
-show only the mascot name, because the icon already identifies it and the
-remaining width is needed by the action buttons.
+**R13.5 (state-driven)** While the game is running, the header shall show only
+the app title and the action buttons; the mascot and its name live beside the
+speech bubble instead.
+
+**R13.6 (ubiquitous)** The system shall show the speaking mascot's name directly
+under its image, in both the setup preview and the game.
 
 ### Acceptance criteria
 
@@ -385,7 +388,8 @@ Feature: Nickname instead of a real name
 header, available on every screen.
 
 **R16.2 (event-driven)** When the parent activates the information control, the
-system shall open a dialog titled "Sobre esta aplicação".
+system shall open a dialog titled "Sobre esta aplicação", scrolled to the top
+so that the Privacidade section is the first thing shown.
 
 **R16.3 (ubiquitous)** The dialog shall state that data stays on the device,
 that there are no accounts, servers, analytics, advertising or third-party

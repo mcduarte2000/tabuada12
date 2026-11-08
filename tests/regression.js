@@ -121,14 +121,19 @@ function staticTests() {
   check('no pixel line-heights', /line-height:\s*\d+px/.test(css) === false,
     'fixed px line-height clips text when the OS scales fonts');
 
-  check('title is its own row', /class="brand-title"[\s\S]{0,400}?class="top-row"/.test(html),
-    'the title must sit above mascot and buttons so it never truncates');
+  check('header keeps the title beside the actions',
+    /class="top-app-bar"[\s\S]{0,120}?class="brand-title"[\s\S]{0,200}?class="top-actions"/.test(html),
+    'the title and the buttons share the header row');
 
-  check('title has no nowrap ellipsis', /\.brand-title\s*\{[^}]*text-overflow:\s*ellipsis/.test(css) === false,
-    'the app name must never be shortened to "Tabuada..."');
+  check('header has no mascot or subtitle', /\.brand-mark|\.brand-subtitle|id="brandMark"|id="brandSubtitle"/.test(html + css) === false,
+    'the mascot moved below the dialogue and the subtitle was removed');
 
-  check('header uses the app icon', /class="brand-mark"[\s\S]{0,200}?assets\/icon\.svg/.test(html),
-    'the placeholder cross was replaced by the application icon');
+  check('mascot name sits under the speaker', /class="coach-face"[\s\S]{0,200}?class="coach-name"/.test(html),
+    'each speaking mascot is labelled underneath');
+
+  check('correct and miss stats are coloured',
+    /\.stat--correct[^}]*var\(--success\)/.test(css) && /\.stat--miss[^}]*var\(--md-error\)/.test(css),
+    'Acertos must read green and Falhas red');
 
   check('carousel has no mandatory snap', /scroll-snap-type/.test(css) === false,
     'mandatory snapping made short Android swipes spring back');
@@ -279,10 +284,9 @@ async function browserTests(browser) {
     return t.scrollWidth <= t.clientWidth + 1;
   }), 'the header must render the whole app name');
 
-  check('app icon shown before a mascot is chosen', await page.evaluate(function () {
-    var img = document.querySelector('#brandMark img');
-    return img && img.getAttribute('src').indexOf('assets/icon.svg') >= 0;
-  }), 'placeholder cross must not appear');
+  check('name step wording is second person', await page.evaluate(function () {
+    return document.querySelector('#nameStep .setup-title').textContent.trim() === 'Como te queres chamar?';
+  }), 'the heading must address the child directly');
 
   check('page does not scroll vertically on setup', await page.evaluate(function () {
     return document.documentElement.scrollHeight <= window.innerHeight + 1;
@@ -466,15 +470,31 @@ async function browserTests(browser) {
     return t !== '0:00';
   }), 'elapsed time must not restart');
 
-  check('header shows the chosen mascot', await page.evaluate(function () {
-    var img = document.querySelector('#brandMark img');
-    return img && img.getAttribute('src').indexOf('coruja') >= 0;
-  }), 'the header reflects the current mascot');
+  check('mascot name shown under the speaker', await page.evaluate(function () {
+    return document.getElementById('gameName').textContent === 'Sabichona';
+  }), 'the speaker is labelled with the chosen mascot name');
+
+  check('Acertos green and Falhas red', await page.evaluate(function () {
+    var green = getComputedStyle(document.querySelector('.stat--correct .stat-value')).color;
+    var red = getComputedStyle(document.querySelector('.stat--miss .stat-value')).color;
+    var labels = getComputedStyle(document.querySelector('.stat--correct .stat-label')).color;
+    return green === labels && green !== red;
+  }), 'both the number and the label must carry the colour');
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.evaluate(function () {
     window.dispatchEvent(new Event('resize'));
   });
+
+  check('about dialog opens at the top', await page.evaluate(async function () {
+    document.getElementById('aboutBtn').click();
+    await new Promise(function (r) { setTimeout(r, 160); });
+    var body = document.querySelector('.sheet-body');
+    var scrolled = body.scrollTop;
+    document.querySelector('.sheet-actions button').click();
+    await new Promise(function (r) { setTimeout(r, 120); });
+    return scrolled === 0;
+  }), 'the dialog must open on Privacidade, not scrolled to the GitHub link');
 
   check('about dialog opens with privacy and licence', await page.evaluate(async function () {
     document.getElementById('aboutBtn').click();
@@ -519,10 +539,14 @@ async function browserTests(browser) {
     return t.scrollWidth <= t.clientWidth + 1;
   }), 'the app name must survive the narrowest viewport');
 
-  check('subtitle not clipped at 320 px', await page.evaluate(function () {
-    var s = document.querySelector('.brand-subtitle');
-    return s.scrollHeight <= s.clientHeight + 1;
-  }), 'the subtitle wraps to two lines instead of truncating');
+  check('header stays on one row at 320 px', await page.evaluate(function () {
+    var bar = document.querySelector('.top-app-bar');
+    var actions = document.querySelector('.top-actions');
+    var title = document.querySelector('.brand-title');
+    return bar.getBoundingClientRect().height < 60 &&
+      actions.getBoundingClientRect().bottom <= bar.getBoundingClientRect().bottom + 1 &&
+      title.getBoundingClientRect().height > 0;
+  }), 'title and four buttons must share one compact row');
 
   check('no vertical overflow at 320 px', await page.evaluate(function () {
     return document.documentElement.scrollHeight <= window.innerHeight + 1;

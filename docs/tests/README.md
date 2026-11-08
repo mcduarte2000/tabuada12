@@ -38,7 +38,7 @@ defect from returning unnoticed.
 | No pixel `line-height` | Enlarged Android fonts clipped every text box |
 | Title on its own row | "Tabuada 12" was truncated to "Tabuada..." by the buttons |
 | Title has no ellipsis | The app name must never be abbreviated |
-| Header uses the app icon | A placeholder "x" was shown instead of the icon |
+| Header has no mascot or subtitle | The mascot belongs beside the speech bubble |
 | No mandatory scroll snap | Short swipes on Android sprang back to the start |
 | `touch-action: pan-x` on the row | Native horizontal scroll was blocked |
 | Page dots present | The row did not look scrollable |
@@ -79,8 +79,10 @@ Run with Playwright or system Chrome at 360x640.
   wrong attempt reveals the answer, hides the keypad and shows Continue.
 - Changing mascot preserves counters, keeps the clock running, keeps the sound
   toggle visible and updates the header image.
-- The licence and privacy dialog opens, states the local-only policy and the
-  licences, closes on its button, and does not forward digits to the game.
+- The licence and privacy dialog opens at the top, states the local-only
+  policy and the licences, closes on its button, and does not forward digits to
+  the game.
+- Acertos renders green and Falhas red, on both the number and the label.
 - Reduced motion does not break layout.
 - At 320x568: title fits, subtitle is not clipped, no vertical overflow.
 
