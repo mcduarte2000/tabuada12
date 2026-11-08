@@ -7,10 +7,11 @@ satisfy all of that.
 ## 1. Introduction and goals
 
 Tabuada 12 is a free web app where a child practises the multiplication tables
-from 1 to 12. A mascot animal chosen by the child asks random questions. The
-child has two attempts; after a second mistake the correct answer is shown and
-the game moves on. Questions the child failed come back more often than ones
-already mastered.
+from 1 to 12. It is published at <https://tabuada12.miguelduarte.eu/>.
+
+A mascot animal chosen by the child asks random questions. The child has two
+attempts; after a second mistake the correct answer is shown and the game moves
+on. Questions the child failed come back more often than ones already mastered.
 
 There is no account, no server and no cost to host. Everything runs in the
 browser and everything the game learns about the child stays on the device.
@@ -87,7 +88,7 @@ C4Context
   title System Context diagram for Tabuada 12
   Person(child, "Child", "Plays the multiplication game on phone, tablet or desktop")
   System(app, "Tabuada 12", "Static single-page web app with mascots and adaptive questions")
-  System_Ext(host, "Static host", "GitHub Pages or Cloudflare Pages, serves HTML, CSS, JS and SVG over HTTPS")
+  System_Ext(host, "Static host", "GitHub Pages or Cloudflare Pages at tabuada12.miguelduarte.eu, serves HTML, CSS, JS and SVG over HTTPS")
   System_Ext(fonts, "Google Fonts", "Serves the Roboto webfont over HTTPS")
 
   Rel(child, app, "Plays", "Browser, HTTPS")

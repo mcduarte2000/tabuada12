@@ -2,6 +2,9 @@
 
 Documentation for **Tabuada 12**, versioned with the code (docs-as-code).
 
+- Live app: <https://tabuada12.miguelduarte.eu/>
+- Repository: <https://github.com/mcduarte2000/tabuada12>
+
 ## Index
 
 - [Architecture](./architecture/README.md) — context, building blocks, quality,

@@ -45,6 +45,8 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 - O botão de som fica sempre disponível, mesmo ao voltar ao ecrã de escolha do
   mascote.
 - `README.md` resume os créditos numa tabela e remete para o `LICENSE`.
+- Documentação passa a indicar o endereço público
+  <https://tabuada12.miguelduarte.eu/>.
 
 ### Corrigido
 

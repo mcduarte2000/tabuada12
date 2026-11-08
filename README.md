@@ -3,8 +3,9 @@
 Jogo educativo para crianças treinarem a tabuada do 1 ao 12, com mascotes
 divertidos que fazem as perguntas e reagem aos acertos e erros.
 
-Aplicação 100% estática (HTML, CSS e JavaScript puros), pensada para ser
-hospedada gratuitamente no GitHub Pages ou no Cloudflare Pages.
+Aplicação 100% estática (HTML, CSS e JavaScript puros), hospedada em
+<https://tabuada12.miguelduarte.eu/> e pensada para correr gratuitamente em
+GitHub Pages ou Cloudflare Pages.
 
 ## Funcionalidades
 
@@ -36,7 +37,8 @@ python3 -m http.server 8000
 ## Publicar
 
 **GitHub Pages** — enviar os ficheiros para um repositório e ativar em
-*Settings → Pages → Deploy from a branch* (`main` / `/root`).
+*Settings → Pages → Deploy from a branch* (`main` / `/root`). O domínio
+personalizado `tabuada12.miguelduarte.eu` aponta para esta publicação.
 
 **Cloudflare Pages** — ligar o repositório e usar o diretório raiz sem
 comando de build.

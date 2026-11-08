@@ -9,7 +9,8 @@ multiplication tables from 1 to 12. A chosen animal mascot asks random
 questions, the child gets two attempts, and wrong answers are revisited more
 often.
 
-- Live app: <https://mcduarte2000.github.io/tabuada12/>
+- Live app: <https://tabuada12.miguelduarte.eu/>
+- Repository: <https://github.com/mcduarte2000/tabuada12>
 - Licence: MIT (see `LICENSE`)
 - Language of the UI: European Portuguese (pt-PT)
 - Language of code, comments-free identifiers, docs and ADRs: English
