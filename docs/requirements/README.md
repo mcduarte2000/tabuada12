@@ -10,6 +10,7 @@ iteration, written when the iteration closes.
 | 1 | Playable multiplication game | completed | [iteration-01.md](./iteration-01.md) |
 | 2 | Phone polish, privacy, statistics and installability | completed | [iteration-02.md](./iteration-02.md) |
 | 3 | Levels, per-question countdown and mascot-change fix | completed | [iteration-03.md](./iteration-03.md) |
+| 4 | Accessibility fixes and self-hosted typeface | completed | [iteration-04.md](./iteration-04.md) |
 
 ## Why this folder exists
 

@@ -71,6 +71,11 @@ defect from returning unnoticed.
 | Service worker is versioned | Stale shells survive forever |
 | Service worker activates and caches the shell | Offline support that never engages |
 | App loads offline | The main promise of the PWA route |
+| Time label says remaining | The markup said elapsed while the value counted down |
+| Name error announced once | `role=alert` plus `aria-describedby` duplicates the announcement |
+| Level badge is silent | The overlay already announces assertively |
+| Font is self-hosted | A runtime Google Fonts request broke offline and leaked a visit |
+| Roboto licence is OFL | The notice said Apache, inherited from the static v2 family |
 | CI runs tests and validator | A convention CI does not check is not enforced |
 | AGENTS.md answers four questions | A new agent must learn install, layout, conventions and prohibitions |
 | AGENTS.md stays under the length limit | A bloated file is skipped by readers |

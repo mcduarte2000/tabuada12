@@ -55,7 +55,7 @@ retained.
 | --- | --- | --- | --- | --- |
 | R1 | Cookie exceeds the 4 KB limit once every fact accumulates high counters. | Progress cookie silently stops being written; the `localStorage` copy still works. | Low. Worst case measured at 3541 bytes for 144 facts with counters at 999. | Compact encoding, `COOKIE_LIMIT` guard, `localStorage` stays the primary source. |
 | R2 | `content.json` is fetched at runtime; opening `index.html` from the file system skips it. | The app falls back to generic phrases, losing mascot personality. | Medium when someone opens the file directly. | Built-in `FALLBACK_CONTENT`, documented local-server requirement. |
-| R3 | Google Fonts is the only external request; it can be blocked or slow. | Roboto falls back to the system font; layout metrics shift slightly. | Medium in restricted networks. | Font stack lists system fallbacks; the app is fully usable without the webfont. |
+| R3 | Closed by iteration 4: Roboto is now vendored under `assets/fonts/` and precached. There is no external request at runtime. | — | — | Kept for traceability. |
 | R4 | Closed by ADR-0008: the app starts offline after the first visit. | — | — | Kept for traceability; the mitigation is implemented. |
 | R5 | Browser storage is per-origin and can be cleared by the user or by the browser. | Progress and profile are lost. | Medium over long periods. | Cookies survive some cleanups; profile lasts one year, progress 24 hours, and the game is usable from scratch. |
 | R6 | Closed by ADR-0008: a dedicated maskable icon now keeps the artwork inside the 80% safe zone. | — | — | Kept for traceability; the mitigation is implemented. |
@@ -80,6 +80,7 @@ report of the same symptom does not trigger a fresh investigation.
 | P2 | Safari on iOS never fires `beforeinstallprompt` and ignores most of the manifest. | Share, then "Add to Home Screen". The in-app install button stays hidden by design. |
 | P3 | Samsung Internet's WebAPK generator is outdated, triggering the Play Protect warning in R12. | Chrome or Edge. Otherwise "Install anyway". |
 | P4 | Service workers on iOS require 16.4 or later. | On older iOS the app works online only. |
+| P6 | Font licences change between versions. Roboto v2 was Apache 2.0; the Roboto Variable family is OFL 1.1. Copying a licence from an old tutorial states the wrong one. | A project can ship a font under the wrong notice. | Record the licence from the exact upstream release of the file being vendored, and assert it in the suite. |
 | P5 | There is no manifest member for the initial desktop window size. The proposal to add one was closed in 2020. | An installed desktop app opens at the browser's default size. | The app calls `window.resizeTo` once after load when running installed on a desktop-sized screen; browsers may ignore it. |
 
 See risk R12 and R13 for the Samsung Internet case.
@@ -95,7 +96,8 @@ See risk R12 and R13 for the Samsung Internet case.
 | D5 | Presentation details live in CSS while some layout decisions depend on timings in JS (advance delays). | Timing and layout evolved together. | Document the timings; extract `TIMING` constants if they change again. |
 | D6 | Closed by ADR-0008: the service worker now caches the shell and all mascots. | Removed. | — |
 | D7 | The large-font fix was validated with injected CSS, not a real Android font-size setting. | No physical device was available. | Test on a device with the accessibility font setting before the next release. |
-| D8 | Roboto is loaded from Google Fonts instead of being vendored. | Self-hosting was deferred to avoid adding binary font files. | Vendor the woff2 files with the Apache 2.0 licence; requires an ADR. |
+| D9 | Open core: a dependency that reserves data grids or dashboards for paid tiers. Not present today, no code dependencies at all. | — | Check before adding any dependency; see the UI stack decisions reference. |
+| D8 | Closed by iteration 4: the Roboto Variable latin subset is vendored with its OFL 1.1 licence. | Removed. | — |
 
 ### 11.4 Accepted trade-offs
 

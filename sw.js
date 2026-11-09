@@ -2,9 +2,8 @@
  * Service worker for Tabuada 12.
  *
  * Precaches the app shell so the game starts offline and loads instantly on
- * repeat visits. Everything is same-origin except the Roboto stylesheet and
- * font files from Google Fonts, which are cached at runtime after the first
- * successful load. If they are unavailable, the app falls back to system fonts.
+ * repeat visits. Everything is same-origin: the Roboto font is vendored under
+ * assets/fonts and precached with the rest, so there is no third-party request.
  *
  * Strategy:
  *   - navigation requests: network first, cache fallback, so a deploy is picked
@@ -15,9 +14,8 @@
  */
 'use strict';
 
-var VERSION = 'tabuada12-v7';
+var VERSION = 'tabuada12-v8';
 var SHELL = VERSION + '-shell';
-var FONTS = VERSION + '-fonts';
 
 var SHELL_FILES = [
   './',
@@ -35,7 +33,9 @@ var SHELL_FILES = [
   'assets/icon-maskable-512.png',
   'assets/apple-touch-icon.png',
   'assets/screenshot-setup.png',
-  'assets/screenshot-game.png'
+  'assets/screenshot-game.png',
+  'assets/fonts/roboto-latin.woff2',
+  'assets/fonts/LICENSE-roboto.txt'
 ];
 
 var MASCOTS = [
@@ -49,10 +49,6 @@ var MASCOTS = [
 MASCOTS.forEach(function (id) {
   SHELL_FILES.push('assets/mascots/fluent/' + id + '.svg');
 });
-
-function isFontRequest(url) {
-  return url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com';
-}
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
@@ -68,7 +64,7 @@ self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
       return Promise.all(keys.filter(function (key) {
-        return key !== SHELL && key !== FONTS;
+        return key !== SHELL;
       }).map(function (key) {
         return caches.delete(key);
       }));
@@ -84,38 +80,6 @@ self.addEventListener('fetch', function (event) {
   if (request.method !== 'GET') return;
 
   var url = new URL(request.url);
-
-  if (isFontRequest(url)) {
-    event.respondWith(
-      caches.open(FONTS).then(function (cache) {
-        return cache.match(request).then(function (hit) {
-          if (hit) return hit;
-
-          return fetch(request).then(function (response) {
-            if (response && response.status === 200) cache.put(request, response.clone());
-            return response;
-          }).catch(function () {
-            var isFont = request.url.indexOf('.woff') >= 0 ||
-              request.url.indexOf('.ttf') >= 0 ||
-              request.destination === 'font';
-
-            if (isFont) {
-              return new Response(new ArrayBuffer(0), {
-                status: 200,
-                headers: { 'Content-Type': 'font/woff2' }
-              });
-            }
-
-            return new Response('/* offline */', {
-              status: 200,
-              headers: { 'Content-Type': 'text/css' }
-            });
-          });
-        });
-      })
-    );
-    return;
-  }
 
   if (url.origin !== self.location.origin) return;
 

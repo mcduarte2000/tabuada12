@@ -17,6 +17,26 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-09
+
+### Adicionado
+
+- Tipografia Roboto servida pelo próprio site, em `assets/fonts/`, com
+  pré-carregamento e cache no service worker. A aplicação deixa de fazer
+  qualquer pedido a serviços externos.
+
+### Corrigido
+
+- O indicador de tempo anunciava "Tempo de jogo" enquanto contava ao contrário;
+  passa a anunciar o tempo restante.
+- O erro do nome era anunciado duas vezes: pela região `role="alert"` e pela
+  descrição do campo. Fica só a descrição.
+- O nível era anunciado duas vezes: pelo emblema com `aria-live` e pelo ecrã de
+  subida de nível. O emblema deixa de ser região viva.
+- **A licença da Roboto estava errada.** O aviso dizia Apache 2.0, herdado da
+  Roboto v2 estática. A família variável usada é SIL Open Font License 1.1. O
+  aviso e o ficheiro de licença foram substituídos.
+
 ## [1.6.1] - 2026-11-09
 
 ### Alterado
@@ -287,7 +307,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.1...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.7.0...main
+[1.7.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.1...v1.5.0

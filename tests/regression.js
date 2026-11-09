@@ -288,7 +288,9 @@ function staticTests() {
     'docs/architecture/building-blocks.md', 'docs/architecture/quality-and-risks.md',
     'docs/architecture/adr/README.md', 'docs/requirements/README.md',
     'docs/requirements/iteration-01.md', 'docs/requirements/iteration-02.md',
-    'docs/requirements/iteration-03.md', 'docs/levels.md',
+    'docs/requirements/iteration-03.md', 'docs/requirements/iteration-04.md',
+    'docs/levels.md', 'assets/fonts/roboto-latin.woff2',
+    'assets/fonts/LICENSE-roboto.txt',
     'tests/validate-docs.py', '.github/workflows/ci.yml'
   ];
   var missing = requiredFiles.filter(function (file) {
@@ -410,6 +412,65 @@ function staticTests() {
   })(), 'the source must be reachable, opened safely in a new tab');
 
   check('required files exist', missing.length === 0, 'missing: ' + missing.join(', '));
+
+  check('time stat labels the remaining time, not elapsed', (function () {
+    var html = read('index.html');
+    return /id="statTime"[^>]*aria-label="Tempo restante"/.test(html);
+  })(), 'the markup said Tempo de jogo while the value counts down');
+
+  check('name error is announced once, not twice', (function () {
+    var html = read('index.html');
+    var field = html.match(/<p class="field-error" id="nameError"[^>]*>/);
+    if (!field) return false;
+    var hasAlert = /role="alert"/.test(field[0]);
+    var input = html.match(/<input id="nameInput"[^>]*>/);
+    var hasDescribedBy = input && /aria-describedby="[^"]*nameError/.test(input[0]);
+    return !(hasAlert && hasDescribedBy);
+  })(), 'role=alert plus aria-describedby announces the same error twice');
+
+  check('level badge is not a second live region', (function () {
+    var html = read('index.html');
+    var badge = html.match(/<span class="level-badge"[^>]*>/);
+    return !!badge && /aria-live/.test(badge[0]) === false;
+  })(), 'the level-up overlay already announces the change assertively');
+
+  check('font is self-hosted, not fetched from Google', (function () {
+    var html = read('index.html');
+    var css = read('styles.css');
+    var remote = /fonts\.googleapis\.com|fonts\.gstatic\.com/.test(html);
+    var local = /assets\/fonts\/roboto/.test(css);
+    return !remote && local;
+  })(), 'a runtime third-party font request breaks offline and leaks a visit');
+
+  check('Roboto licence field is OFL, not Apache', (function () {
+    var licence = read('LICENSE');
+    var block = licence.slice(licence.indexOf('## 2. Typeface Roboto'));
+    block = block.slice(0, block.indexOf('## 3.'));
+    var field = block.match(/- \*\*Licence:\*\* ([^\n]+(?:\n  [^\n]+)*)/);
+    return !!field && /SIL Open Font License 1\.1/.test(field[1]) &&
+      /Apache/.test(field[1]) === false;
+  })(), 'the static Roboto was Apache; the variable family is OFL. Copying the old notice is the trap');
+
+  check('the vendored licence file is the OFL text', (function () {
+    var text = read('assets/fonts/LICENSE-roboto.txt');
+    return /SIL OPEN FONT LICENSE Version 1\.1/.test(text) &&
+      /Apache License/.test(text) === false;
+  })(), 'a mismatched licence file does not satisfy the OFL condition of shipping the licence');
+
+  check('the dialog no longer claims a Google Fonts request', (function () {
+    var html = read('index.html');
+    return /Google Fonts/.test(html) === false &&
+      /Open Font License/.test(html);
+  })(), 'the privacy copy must match what the app actually does');
+
+  check('font files and licence exist', (function () {
+    return fs.existsSync(path.join(ROOT, 'assets/fonts/roboto-latin.woff2')) &&
+      fs.existsSync(path.join(ROOT, 'assets/fonts/LICENSE-roboto.txt'));
+  })(), 'a vendored font needs its licence beside it');
+
+  check('font is precached for offline', (function () {
+    return /assets\/fonts\/roboto-latin\.woff2/.test(read('sw.js'));
+  })(), 'an uncached font means a flash of fallback text offline');
 
   check('CI runs the tests and the validator', (function () {
     var workflow = read('.github/workflows/ci.yml');

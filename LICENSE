@@ -79,15 +79,20 @@ licence above.
 
 ## 2. Typeface Roboto
 
-- **Work:** Roboto
-- **Author:** Google LLC
-- **Source:** https://fonts.google.com/specimen/Roboto
-- **Licence:** Apache License 2.0
-  (https://www.apache.org/licenses/LICENSE-2.0)
-- **Usage:** not redistributed with this project. It is requested at runtime
-  from Google Fonts, which serves it under the same licence. If the request
-  fails, the app falls back to system fonts.
-- **Files:** none in this repository.
+- **Work:** Roboto Variable (v51), latin subset
+- **Author:** The Roboto Project Authors, commissioned by Google Fonts
+- **Source:** https://github.com/googlefonts/roboto-3-classic
+- **File origin:** served by fonts.gstatic.com for the Google Fonts CSS API
+- **Licence:** SIL Open Font License 1.1
+  (https://openfontlicense.org), full text in
+  `assets/fonts/LICENSE-roboto.txt`
+- **Files:** `assets/fonts/roboto-latin.woff2`
+- **Modification statement:** none. The file is redistributed byte-identical as
+  served by Google Fonts, so the reserved name Roboto still applies.
+
+Licence history, recorded because it is a trap: Roboto v2, the static family,
+was published under Apache 2.0. The variable family used here is OFL 1.1. A
+project that copies the licence from an old tutorial will state the wrong one.
 
 ## 3. Material Design 3 colour tokens
 

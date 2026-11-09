@@ -22,12 +22,9 @@ C4Container
     ContainerDb(storage, "Browser storage", "localStorage and cookies", "Profile, preferences and per-fact progress")
   }
 
-  System_Ext(fonts, "Google Fonts", "Roboto webfont")
-
   Rel(child, app, "Plays", "Browser UI, touch or keyboard")
   Rel(host, app, "Delivers files", "HTTPS GET")
   Rel(app, storage, "Reads and writes", "Web Storage / cookies")
-  Rel(app, fonts, "Requests typeface", "HTTPS")
 ```
 
 ### 5.2 Static assets
@@ -40,11 +37,13 @@ C4Container
 | `mascots.js` | `window.MASCOTS` list (30 entries: id, name, image path, background colour) and `window.FALLBACK_CONTENT`. |
 | `content.json` | Per-mascot phrase pools and generic pools, fetched at runtime. |
 | `manifest.webmanifest` | PWA metadata: name, standalone display, five icons (any and maskable), two phone screenshots, one shortcut. |
-| `sw.js` | Service worker: precaches the shell and all mascots, network-first for navigations, cache-first for assets, runtime cache for Google Fonts. |
+| `sw.js` | Service worker: precaches the shell, all mascots and the font, network-first for navigations, cache-first for same-origin assets. No third-party handling. |
 | `assets/mascots/fluent/*.svg` | 30 Fluent Emoji mascots plus the upstream MIT licence. |
 | `assets/icon.svg`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` | App icons. |
 | `assets/icon-maskable.svg`, `icon-maskable-192.png`, `icon-maskable-512.png` | Maskable icon with the artwork inside the 80 % safe zone. |
 | `assets/screenshot-setup.png`, `screenshot-game.png` | 780x1688 screenshots used by the Android install prompt. |
+| `assets/fonts/roboto-latin.woff2` | Roboto Variable, latin subset, 37 KB, serving weights 100-900 from one file. Precached, declared with `@font-face` in `styles.css`. |
+| `assets/fonts/LICENSE-roboto.txt` | The SIL Open Font License 1.1 text for the vendored font. |
 
 ### 5.3 Modules inside `app.js`
 

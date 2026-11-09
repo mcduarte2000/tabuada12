@@ -49,8 +49,8 @@ Ranked by importance. Each goal has a short scenario that makes it testable.
 - **ES5 syntax** in `app.js`, inside a single IIFE, so the file runs as-is in
   any browser without tooling.
 - **Browser storage only** for state: `localStorage` and cookies.
-- **One external request at runtime**: Google Fonts (Roboto). Everything else
-  is local.
+- **No external request at runtime.** Roboto is vendored and precached. The app
+  works fully offline from the first visit.
 
 ### Organisational constraints
 
@@ -89,11 +89,11 @@ C4Context
   Person(child, "Child", "Plays the multiplication game on phone, tablet or desktop")
   System(app, "Tabuada 12", "Static single-page web app with mascots and adaptive questions")
   System_Ext(host, "Static host", "GitHub Pages or Cloudflare Pages at tabuada12.miguelduarte.eu, serves HTML, CSS, JS and SVG over HTTPS")
-  System_Ext(fonts, "Google Fonts", "Serves the Roboto webfont over HTTPS")
+
 
   Rel(child, app, "Plays", "Browser, HTTPS")
   Rel(app, host, "Is served by", "HTTPS")
-  Rel(app, fonts, "Requests typeface", "HTTPS")
+
 ```
 
 ### 3.3 Interfaces
@@ -101,7 +101,7 @@ C4Context
 | Interface | Direction | Description |
 | --- | --- | --- |
 | HTTPS GET | host → app | Serves `index.html`, `styles.css`, `app.js`, `mascots.js`, `content.json`, `manifest.webmanifest`, `sw.js` and `assets/**`. |
-| HTTPS GET | app → Google Fonts | Roboto CSS and font files. Fails gracefully: the app falls back to system fonts. |
+| HTTPS GET | none | The app makes no external request. Roboto is served from `assets/fonts/`. |
 | `localStorage` | app → browser | Nickname chosen by the child, mascot, record, theme, sound preference and the full per-fact progress with recency. |
 | Cookies | app → browser | Name and mascot (1 year) plus compact progress (24 hours). |
 | Web Audio API | app → browser | Synthesises feedback sounds; no audio files are downloaded. |

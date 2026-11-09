@@ -14,9 +14,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Tabuada 12">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/roboto-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script>
     (function () {
@@ -40,7 +38,7 @@
           <img src="assets/icon.svg" alt="" width="30" height="30">
         </div>
         <h1 class="brand-title">Tabuada 12</h1>
-        <span class="level-badge" id="levelBadge" aria-live="polite">
+        <span class="level-badge" id="levelBadge">
           <span class="level-emoji" id="levelEmoji" aria-hidden="true">🐣</span>
           <span class="level-text" id="levelText">Nível 1</span>
         </span>
@@ -103,7 +101,7 @@
             <input id="nameInput" class="field-input" type="text" name="alcunha" placeholder=" " maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="next" aria-describedby="nameError">
             <label class="field-label" for="nameInput">Nome de jogo</label>
           </div>
-          <p class="field-error" id="nameError" role="alert" hidden>Escreve um nome de jogo para continuar.</p>
+          <p class="field-error" id="nameError" hidden>Escreve um nome de jogo para continuar.</p>
           <button class="next-button spaced" type="submit">Continuar</button>
         </form>
       </div>
@@ -138,7 +136,7 @@
     <section id="game" hidden>
       <section class="stats" aria-label="Estatísticas da sessão">
         <div class="stat stat--time stat--static">
-          <span class="stat-value" id="statTime" aria-label="Tempo de jogo">0:00</span>
+          <span class="stat-value" id="statTime" aria-label="Tempo restante">0:00</span>
           <span class="stat-label">Tempo</span>
         </div>
         <button class="stat stat--correct" id="statCorrectBtn" type="button" aria-haspopup="dialog">
@@ -261,7 +259,7 @@
       <p class="about-note" id="bestNote" hidden>
         Cada sessão conta uma vez, com a melhor série que alcançaste nela.
         A série são os acertos seguidos à primeira tentativa. A linha marcada
-        "agora" é a sessão em curso.
+        “agora” é a sessão em curso.
       </p>
     </div>
     <form method="dialog" class="sheet-actions">
@@ -286,7 +284,8 @@
           <li>Não há contas, nem servidores, nem base de dados.</li>
           <li>O nome de jogo, o mascote e o progresso ficam guardados no teu navegador.</li>
           <li>Não há análises, publicidade, rastreadores nem scripts de terceiros.</li>
-          <li>O único pedido externo é a tipografia Roboto, ao Google Fonts, que não recebe dados teus.</li>
+          <li>A tipografia Roboto é servida pelo próprio site, não pelo Google.</li>
+          <li>Não há qualquer pedido a serviços externos.</li>
         </ul>
         <p class="about-note">
           O nome de jogo e o mascote ficam guardados durante 1 ano; o progresso
@@ -311,7 +310,8 @@
             <strong>Fluent Emoji</strong> — mascotes da Microsoft, licença MIT.
           </li>
           <li>
-            <strong>Roboto</strong> — tipografia da Google, licença Apache 2.0.
+            <strong>Roboto</strong> — tipografia do Roboto Project Authors,
+            licença SIL Open Font License 1.1.
           </li>
           <li>
             <strong>Material Design 3</strong> — sistema visual da Google,
