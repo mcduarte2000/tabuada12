@@ -287,7 +287,9 @@ function staticTests() {
     'docs/README.md', 'docs/architecture/overview.md',
     'docs/architecture/building-blocks.md', 'docs/architecture/quality-and-risks.md',
     'docs/architecture/adr/README.md', 'docs/requirements/README.md',
-    'docs/requirements/iteration-01.md', 'docs/requirements/iteration-02.md'
+    'docs/requirements/iteration-01.md', 'docs/requirements/iteration-02.md',
+    'docs/requirements/iteration-03.md', 'docs/levels.md',
+    'tests/validate-docs.py', '.github/workflows/ci.yml'
   ];
   var missing = requiredFiles.filter(function (file) {
     return fs.existsSync(path.join(ROOT, file)) === false;
@@ -408,6 +410,33 @@ function staticTests() {
   })(), 'the source must be reachable, opened safely in a new tab');
 
   check('required files exist', missing.length === 0, 'missing: ' + missing.join(', '));
+
+  check('CI runs the tests and the validator', (function () {
+    var workflow = read('.github/workflows/ci.yml');
+    return /node tests\/regression\.js/.test(workflow) &&
+      /validate-docs\.py/.test(workflow) &&
+      /node --check/.test(workflow);
+  })(), 'a convention that CI does not check is not enforced');
+
+  check('AGENTS.md answers the four contract questions', (function () {
+    var agents = read('AGENTS.md');
+    var lines = agents.split('\n').length;
+    return lines <= 140 &&
+      /## Install, run, test, build/.test(agents) &&
+      /## Where things live/.test(agents) &&
+      /## Conventions/.test(agents) &&
+      /## Do not touch/.test(agents);
+  })(), 'a new agent must learn install, layout, conventions and prohibitions');
+
+  check('AGENTS.md stays within the contract length', (function () {
+    return read('AGENTS.md').split('\n').length <= 140;
+  })(), 'a bloated instruction file is skipped by readers');
+
+  check('CONTRIBUTING.md holds the moved detail', (function () {
+    var text = read('CONTRIBUTING.md');
+    return /## Code/.test(text) && /## Documentation/.test(text) &&
+      /## Third-party content/.test(text) && /## Tests/.test(text);
+  })(), 'detail must move, not disappear');
 
   var licence = read('LICENSE');
   check('licence lists third-party content',

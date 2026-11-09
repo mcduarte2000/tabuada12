@@ -71,7 +71,8 @@ app.js                lógica do jogo
 mascots.js            lista de mascotes e frases de recurso
 content.json          frases de cada mascote (editável)
 CHANGELOG.md          histórico de versões
-AGENTS.md             regras para contribuidores e agentes
+AGENTS.md             contrato: instalar, correr, testar, convenções
+CONTRIBUTING.md       regras detalhadas de código, docs e licenças
 manifest.webmanifest  metadados da app instalável
 sw.js                 service worker (cache offline)
 assets/

@@ -6,8 +6,11 @@ found or to a documented requirement.
 ## Running
 
 ```sh
-node tests/regression.js
+node tests/regression.js       # behaviour
+python3 tests/validate-docs.py .   # documentation conventions
 ```
+
+Both run in CI on every push (`.github/workflows/ci.yml`).
 
 The script starts its own static server on port 8912 and needs nothing else for
 the static checks. Browser checks run when Playwright is resolvable:
@@ -68,6 +71,10 @@ defect from returning unnoticed.
 | Service worker is versioned | Stale shells survive forever |
 | Service worker activates and caches the shell | Offline support that never engages |
 | App loads offline | The main promise of the PWA route |
+| CI runs tests and validator | A convention CI does not check is not enforced |
+| AGENTS.md answers four questions | A new agent must learn install, layout, conventions and prohibitions |
+| AGENTS.md stays under the length limit | A bloated file is skipped by readers |
+| CONTRIBUTING.md holds the moved detail | Detail must move, not disappear |
 | Desktop window fits content when installed | An installed app opened at the browser default size |
 | Window size is not forced back | A resize loop would fight the user |
 | Live session row matches the header | The list hid the current record while the header showed it |

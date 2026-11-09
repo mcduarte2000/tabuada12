@@ -21,7 +21,8 @@ Documentation for **Tabuada 12**, versioned with the code (docs-as-code).
 
 ## Conventions
 
-All documents follow the rules in [AGENTS.md](../AGENTS.md):
+All documents follow the rules in [CONTRIBUTING.md](../CONTRIBUTING.md), whose
+short contract is [AGENTS.md](../AGENTS.md):
 
 - English content, short sentences, active voice.
 - Lowercase, kebab-case, ASCII file names.

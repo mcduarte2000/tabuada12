@@ -17,6 +17,17 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-11-09
+
+### Alterado
+
+- `AGENTS.md` passa a ser um contrato curto, com instalar, correr, testar, mapa do
+  repositório, convenções e proibições. O detalhe passou para `CONTRIBUTING.md`.
+- Adicionado `tests/validate-docs.py`, adaptado do validador do skill, com os
+  valores por omissão deste projeto.
+- CI em `.github/workflows/ci.yml`: verificação de sintaxe, suite de regressão e
+  validador da documentação em cada push.
+
 ## [1.6.0] - 2026-11-09
 
 ### Adicionado
@@ -276,7 +287,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.0...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.1...main
+[1.6.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.0...v1.4.1

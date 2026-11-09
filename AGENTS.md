@@ -1,328 +1,103 @@
 # AGENTS.md
 
-Instructions for contributors and AI agents working on this repository.
+Instructions for contributors and AI agents. This file is the contract: it says
+how to work here and where everything lives. Detail lives in
+[`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/`](docs/README.md).
 
 ## Project
 
 **Tabuada 12** is a free, static web app that helps children practise
-multiplication tables from 1 to 12. A chosen animal mascot asks random
-questions, the child gets two attempts, and wrong answers are revisited more
-often.
+multiplication tables from 1 to 12. A chosen animal mascot asks random questions,
+the child gets two attempts, and wrong answers are revisited more often.
 
 - Live app: <https://tabuada12.miguelduarte.eu/>
 - Repository: <https://github.com/mcduarte2000/tabuada12>
 - Licence: MIT (see `LICENSE`)
-- Language of the UI: European Portuguese (pt-PT)
-- Language of code, comments-free identifiers, docs and ADRs: English
-- Docs language: English, except `README.md`/`CHANGELOG.md` which stay in
-  Portuguese because they are the public project page
+- UI language: European Portuguese. Code, docs and ADRs: English.
+- Exception: `README.md` and `CHANGELOG.md` stay in Portuguese, because they are
+  the public project page.
 
-## Stack and constraints
+## Install, run, test, build
 
-- Plain HTML, CSS and JavaScript. No framework, no bundler, no build step, no
-  `package.json`.
-- All state lives in the browser (cookies and `localStorage`). There is no
-  backend and there must not be one.
-- Target: free static hosting (GitHub Pages, Cloudflare Pages/Workers assets).
-- Must work from a 320 px wide viewport, with touch, keyboard and dark mode.
-- No analytics, no tracking, no third-party scripts at runtime. The only
-  external request is Google Fonts (Roboto).
-- Do not add dependencies without an ADR.
+There is no build step and no `package.json`. Plain files, served statically.
 
-## Files and folders
-
-```
-index.html            single page shell
-styles.css            Material Design 3 tokens, layout, components
-app.js                all game logic (IIFE, no modules, ES5 syntax)
-mascots.js            mascot list and fallback phrases
-content.json          per-mascot phrases, fetched at runtime (editable)
-manifest.webmanifest  PWA metadata
-sw.js                 service worker: precache shell and mascots
-assets/               icons, screenshots, mascot SVGs, vendored licence
-docs/                 documentation: architecture, requirements, tests
-tests/regression.js   dependency-free regression suite
-CHANGELOG.md          Keep a Changelog + SemVer
+```sh
+# run locally
+python3 -m http.server 8000
+# then open http://localhost:8000/
 ```
 
-Editing `content.json` requires an HTTP server (`python3 -m http.server`),
-because `fetch` is blocked on `file://`.
+```sh
+# tests: static checks always, browser checks when Playwright or system Chrome is present
+node tests/regression.js
 
-## Levels
-
-- `docs/levels.md` is the specification of the six levels: fact range, time
-  limit, equation mix and unlock threshold. Change the document and `LEVELS` in
-  `app.js` in the same commit; the regression suite compares them.
-- The level is persisted in `localStorage` and a one-year cookie, like the
-  profile. A level is never lost.
-- Only a first-try correct answer extends the streak that unlocks levels.
-  Second-try successes and timeouts reset it.
-- Running out of time is a wrong answer, not a free pass.
-- The level badge is always visible, right aligned in the header, with an
-  emoji per level.
-
-## Code conventions
-
-- ES5 syntax (`var`, `function`) and one IIFE in `app.js`. Keep it that way so
-  the file runs without transpiling.
-- No comments in code. Comments are only acceptable when they explain a
-  non-obvious browser quirk or licensing fact.
-- Keep the single source of truth for magic numbers at the top of `app.js`
-  (`STORAGE`, `COOKIE`, `PRIORITY`, TTL constants).
-- Text in the UI is pt-PT and child-facing: short, active voice, no jargon.
-- Accessibility is not optional: every interactive element is a `<button>`
-  with an accessible name, live regions for feedback, `prefers-reduced-motion`
-  honoured, contrast inherited from M3 tokens.
-- Verify changes in a browser at 320x568, 390x844 and desktop, light and dark,
-  before committing.
-
-## Documentation rules
-
-All architecture documentation lives in `docs/` and is versioned with the code
-(docs-as-code). The following rules are mandatory.
-
-### 1. File and folder structure
-
-```
-docs/
-├── README.md                        # general documentation index
-├── architecture/
-│   ├── README.md                    # architecture section index
-│   ├── overview.md                  # arc42 sections 1-4
-│   ├── building-blocks.md           # arc42 sections 5-8
-│   ├── quality-and-risks.md         # arc42 sections 10-11
-│   └── adr/
-│       ├── README.md                # ADR index
-│       └── NNNN-slug.md             # one ADR per decision
-├── requirements/
-│   ├── README.md                    # requirements index and format rules
-│   └── iteration-NN.md              # one file per closed iteration
-├── tests/
-│   └── README.md                    # what the regression suite covers
-└── backlog.md                       # investigated, unscheduled ideas
+# documentation validator
+python3 tests/validate-docs.py .
 ```
 
-Justification for `backlog.md`: research that rules an idea out is expensive to
-repeat. A single file at the docs root keeps unscheduled work out of
-`requirements/`, which must only describe implemented iterations.
-
-Justification for `tests/`: the test runner lives in `tests/regression.js` and
-its catalogue is documentation, so it belongs under `docs/tests/`. Keeping the
-catalogue next to the architecture and requirements means a defect fix must
-update all three in the same commit.
-
-Justification for `requirements/`: architecture says *how* the system is built,
-requirements say *what* was asked and *how it was verified*. Keeping them apart
-prevents product intent from being mixed with design rationale.
-
-Do not invent new folders beyond these without justifying it in the pull
-request.
-
-### 2. File naming
-
-- Folder and file names: lowercase, kebab-case, ASCII only.
-  `building-blocks.md`, never `Building_Blocks.md`.
-- Forbidden: spaces, accents, camelCase, snake_case.
-- ADRs: `NNNN-short-slug.md`, sequential monotonic numbering
-  (`0002-use-postgresql.md`). Never renumber; gaps are acceptable.
-- Conventional root exceptions: `README.md`, `CHANGELOG.md`,
-  `CONTRIBUTING.md`, `AGENTS.md`, `SECURITY.md`, `LICENSE`.
-- Every folder has a `README.md` acting as an index with relative links to the
-  documents it contains.
-
-### 3. Diagrams: C4 model with Mermaid
-
-- Use the C4 model (context, container, component) in Mermaid blocks embedded
-  in Markdown.
-- One diagram per `mermaid` block, complete and self-contained. Never leave a
-  block half-written or mix grammars.
-- Each diagram has a Markdown heading and a caption sentence before the fence,
-  outside the block.
-- Notation: `Person` and `System_Ext` for people and external systems, the
-  system under study as `System`. Label arrows with protocol/technology.
-- Do not draw level 4 (code) unless explicitly requested. Default maximum
-  detail: context and container.
-- Always start with the context diagram. Move to containers only when the
-  system has more than one.
-- If a diagram has more than ~10 elements, split it.
-
-Example of level 1:
-
-````markdown
-### System context
-
-The child and the optional supervising adult interact only with the web app.
-
-```mermaid
-C4Context
-  title System Context diagram for {PROJECT_NAME}
-  Person(user, "User")
-  System(sys, "{PROJECT_NAME}", "Short description")
-  System_Ext(ext, "External service", "What it provides")
-  Rel(user, sys, "Uses")
-  Rel(sys, ext, "Calls", "HTTPS/JSON")
-```
-````
-
-### 4. Decisions: ADRs in MADR format
-
-One file per decision:
-
-```markdown
-# NNNN. Imperative title of the decision
-
-* Status: accepted (or proposed / superseded by ADR-MMMM)
-* Date: YYYY-MM-DD
-
-## Context and problem statement
-
-{Why this decision was needed}
-
-## Considered options
-
-### Option A
-Pros: ... / Cons: ...
-
-### Option B
-Pros: ... / Cons: ...
-
-## Decision outcome
-
-We chose option X, because {decisive reason}.
-
-### Consequences
-
-* Positive: ...
-* Negative / risks: ...
+```sh
+# "build" is a copy of the repository root; nothing is compiled or bundled
+# deploy: push to main (GitHub Pages) or let Cloudflare Pages read the branch
 ```
 
-Rules: record only hard-to-reverse decisions with real alternatives.
-Formatting conventions and trivial choices do not get an ADR. When an ADR
-replaces another, mark the old one `superseded by ADR-MMMM` and link them.
-The newest ADR uses the next free number.
+An HTTP server is required, not optional: `content.json` is loaded with `fetch`,
+which is blocked on `file://`.
 
-### 5. Main document content (arc42-inspired)
+CI runs both suites on every push: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
-- `overview.md` covers, in this order: introduction and quality goals,
-  constraints, context and scope (with the context diagram), solution
-  strategy.
-- `building-blocks.md` describes the module/container decomposition with the
-  container diagram.
-- `quality-and-risks.md` covers quality requirements, risks and technical
-  debt.
-- Write a section only when it has real content. Write `n/a` instead of
-  filling it with empty text.
+## Where things live
 
-### 6. Writing style
+| Path | What it is |
+| --- | --- |
+| `index.html`, `styles.css` | the single page and its Material Design 3 styles |
+| `app.js` | all game logic, one IIFE, ES5 |
+| `mascots.js` | mascot list and fallback phrases |
+| `content.json` | per-mascot phrases, editable, fetched at runtime |
+| `sw.js`, `manifest.webmanifest` | PWA shell and metadata |
+| `assets/` | icons, screenshots, mascot SVGs, vendored licences |
+| `tests/regression.js` | regression suite |
+| `tests/validate-docs.py` | documentation validator |
+| `docs/architecture/overview.md` | goals, constraints, context, strategy |
+| `docs/architecture/building-blocks.md` | module map, runtime, deployment |
+| `docs/architecture/quality-and-risks.md` | quality, risks, debt |
+| `docs/architecture/adr/` | one file per hard-to-reverse decision |
+| `docs/requirements/iteration-NN.md` | one file per closed iteration |
+| `docs/levels.md` | the six levels: facts, time limits, equations |
+| `docs/tests/README.md` | every check, and the defect it prevents |
+| `docs/backlog.md` | investigated, deliberately unscheduled |
+| `CONTRIBUTING.md` | code, documentation and licensing rules |
 
-- Short sentences, active voice, no marketing words ("blazing fast",
-  "powerful").
-- Do not invent details. When something is unknown, write
-  `TODO: confirm` instead of guessing.
-- Relative links between documents (`./adr/0002-use-postgresql.md`), never
-  absolute.
-- English for document content, unless stated otherwise.
+## Conventions in one screen
 
-### 7. Requirements per iteration
+- **ES5 only** in `app.js`: `var`, `function`, one IIFE, no modules. No comments
+  except for a non-obvious browser quirk or a licensing fact.
+- **One source of truth for numbers** at the top of `app.js`: `STORAGE`,
+  `COOKIE`, `PRIORITY`, `LEVELS`, TTL constants.
+- **UI text** is pt-PT, short, active voice, child-facing.
+- **Accessibility is a gate**: every control is a `<button>` with an accessible
+  name, feedback uses live regions, `prefers-reduced-motion` is honoured.
+- **Tests first for defects**: write the failing check, watch it fail, then fix.
+- **`docs/levels.md` and `LEVELS` change together**; the suite compares them.
+- **Bump `VERSION` in `sw.js`** in the same commit as any precached file change.
 
-- One file per **closed** iteration: `docs/requirements/iteration-NN.md`,
-  zero-padded, lowercase, kebab-case.
-- Every requirement has three layers, all in English:
-  1. **User story** — `US-n`, in the form "As a ..., I want ..., so that ...".
-  2. **EARS requirements** — `R<iteration>.<n>`, tagged with the EARS pattern
-     in parentheses: Ubiquitous ("shall"), Event-driven ("When ..."), 
-     State-driven ("While ..."), Optional feature ("Where ..."), Unwanted
-     behaviour ("If ... then ...").
-  3. **Acceptance criteria** — Gherkin `Feature` and `Scenario` blocks with
-     `Given`/`When`/`Then` that a tester can run without reading the code.
-- Record only behaviour that is implemented and verified. If a criterion
-  disagrees with the code, fix one of them before marking the iteration
-  `completed`.
-- Add a **Verification record** table with the method used per requirement
-  group, and a **Known gaps** list.
-- Never renumber requirements. Mark removed ones as removed.
-- Update the index table in `docs/requirements/README.md` and `CHANGELOG.md`
-  in the same commit.
+Full rules: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-### 8. Backlog
+## Do not touch without an ADR
 
-- `docs/backlog.md` holds investigated ideas that are deliberately not
-  scheduled. It is not a promise and not a roadmap.
-- Each entry states why it is deferred, what would be needed, and which
-  decisions it would force.
-- Nothing enters the backlog without having been checked against the real
-  upstream policy or documentation. Cite the sources.
-- When an item is scheduled, promote it to an iteration file and delete it from
-  the backlog. When it is dropped, delete it and record the reason in an ADR or
-  in `quality-and-risks.md`.
+- **No dependencies, no build step, no framework.** Adding one requires an ADR.
+- **No backend, no analytics, no tracking.** State stays in the browser.
+- **No third-party runtime script.** The only external request is Google Fonts.
+- **Generated or vendored files**: `assets/mascots/fluent/` and its licence file.
+  Replace them only as a whole set, and update `LICENSE` in the same commit.
+- **Published git tags.** Never rewrite one; cut a patch version instead.
 
-### 9. Update discipline
+## Before you commit
 
-Every development iteration must update the whole documentation set to match
-the code: `overview.md` when constraints, goals or context change,
-`building-blocks.md` when the decomposition changes, `quality-and-risks.md`
-when risks or debt appear or close, a new ADR for a new architectural
-decision, a new iteration file in `docs/requirements/` when an iteration
-closes, and `CHANGELOG.md` for user-visible changes.
+```sh
+node tests/regression.js
+python3 tests/validate-docs.py .
+git status --porcelain     # confirm only intended files are staged
+```
 
-## Third-party content and licensing
-
-- The project is MIT. The root `LICENSE` file holds the MIT text for the
-  project, followed by a **Third-party notices** section.
-- Every external asset, font, design system or code fragment must be listed
-  there with: work title, author, source URL, licence name, licence URL and
-  the files it covers.
-- Vendored assets also keep their upstream licence file next to them, for
-  example `assets/mascots/fluent/LICENSE-fluentui-emoji.md`.
-- Never add content whose licence is unclear, "free to use" without a named
-  licence, or incompatible with MIT redistribution. Ask for an ADR first.
-- When adding or removing third-party files, update `LICENSE` in the same
-  commit and keep the file list in sync with the disk contents.
-
-## PWA
-
-- The app is installable (ADR-0008). `manifest.webmanifest` and `sw.js` are
-  production files, not build output.
-- **Bump `VERSION` in `sw.js` in the same commit as any change to a precached
-  file.** Otherwise browsers keep serving the old shell.
-- Add every new runtime file to `SHELL_FILES`. `cache.addAll` is atomic: one
-  404 disables offline support entirely, and the regression suite checks it.
-- Icons: keep an `any` icon at 192 or 512 px and a separate maskable icon with
-  the artwork inside the centred 80 % safe zone.
-- Test offline before committing a PWA change: load once online, switch the
-  network off, reload, and confirm the setup screen renders with styles and 30
-  mascots.
-
-## Tests
-
-- `node tests/regression.js` must pass before any commit that changes
-  behaviour. It exits non-zero on failure.
-- Static checks need no browser. Browser checks use Playwright when available,
-  otherwise the system Chrome.
-- When a defect is found, add a failing check first, then fix it. Name the check
-  after the behaviour it protects.
-- Prefer real pointer input for anything a person clicks. `element.click()` in
-  page context bypasses hit testing, overlays, `pointer-events` and layout, so
-  it can pass while the app is unclickable. Use `page.mouse` and assert the
-  resulting DOM state. Reserve scripted clicks for cases where the click is
-  itself programmatic.
-- Never delete a check to make the suite pass. If a requirement changed, update
-  the check and the requirement together.
-- The catalogue of covered defects lives in `docs/tests/README.md`; update it
-  in the same commit as the test.
-
-## Versioning and changelog
-
-- `CHANGELOG.md` follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
-  and [Semantic Versioning](https://semver.org/).
-- New user-visible work goes under `[Unreleased]` and is promoted to a version
-  on release, with an annotated git tag `vX.Y.Z`.
-- Breaking the stored-data format in a way that loses old data is a MAJOR
-  change.
-
-## Git
-
-- Commits are imperative and describe the change, not the file touched.
-- Do not commit `.DS_Store`, editor folders, or build output.
-- Do not commit secrets. There are none in this project today, and the
-  architecture does not need any.
+Both suites must pass. If a document and the code disagree, fix one before
+closing: the suite checks the pairs that matter, not the prose.
