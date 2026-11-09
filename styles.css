@@ -135,8 +135,8 @@ body {
   align-items: center;
   gap: 7px;
   min-width: 0;
-  max-width: 100%;
-  flex-wrap: wrap;
+  width: 100%;
+  flex-wrap: nowrap;
 }
 
 .brand-mark {
@@ -166,10 +166,6 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.brand { justify-content: flex-start; }
-
-.level-badge { margin-left: auto; }
 
 .top-actions {
   display: flex;
@@ -1143,6 +1139,8 @@ input:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  flex: 0 0 auto;
+  margin-left: auto;
   padding: 3px 9px 3px 7px;
   border-radius: 999px;
   background: var(--md-secondary-container);

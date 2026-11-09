@@ -862,9 +862,19 @@ async function browserTests(browser) {
 
   check('level badge is right aligned', await page.evaluate(function () {
     var badge = document.getElementById('levelBadge').getBoundingClientRect();
-    var brand = document.querySelector('.brand').getBoundingClientRect();
-    return brand.right - badge.right < 8 && badge.left > brand.left + 60;
-  }), 'the badge belongs on the right edge of the header row');
+    var bar = document.querySelector('.top-app-bar').getBoundingClientRect();
+    var title = document.querySelector('.brand-title').getBoundingClientRect();
+    return bar.right - badge.right < 8 &&
+      badge.left > title.right + 40;
+  }), 'the badge must hug the right edge of the header, not the title');
+
+  check('badge alignment rule is not defeated by the flex parent', (function () {
+    var css = read('styles.css');
+    var brandBlock = css.match(/\.brand\s*\{([^}]*)\}/);
+    var badgeBlock = css.match(/\.level-badge\s*\{([^}]*)\}/);
+    return !!brandBlock && /width:\s*100%/.test(brandBlock[1]) &&
+      !!badgeBlock && /margin-left:\s*auto/.test(badgeBlock[1]);
+  })(), 'margin-left auto does nothing unless the flex row fills the width');
 
   check('reduced motion still renders the app', await page.evaluate(function () {
     return document.getElementById('game').hidden === false;

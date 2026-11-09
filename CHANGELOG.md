@@ -37,6 +37,9 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ### Corrigido
 
+- O emblema do nível continuava encostado ao título em vez de ficar à direita:
+  a linha do cabeçalho encolhia ao conteúdo, por isso `margin-left: auto` não
+  tinha espaço para empurrar.
 - Trocar de mascote durante o jogo trocava a conta em curso, o que permitia à
   criança escapar a uma conta difícil. A conta, o que já estava escrito, a
   tentativa e o tempo restante são agora preservados.

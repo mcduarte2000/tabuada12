@@ -242,7 +242,8 @@ Feature: Missing-factor equations
 **R22.1 (ubiquitous)** The system shall show the current level on every screen
 as a badge with an emoji and the level number.
 
-**R22.2 (ubiquitous)** The badge shall sit at the right edge of the header row.
+**R22.2 (ubiquitous)** The badge shall sit at the right edge of the header row,
+regardless of the title length, so that it does not read as part of the title.
 
 **R22.3 (event-driven)** When a level is unlocked, the system shall show an
 overlay with the level number, its name and its emoji for about two and a half
@@ -299,6 +300,7 @@ Feature: Level badge and celebration
 | Changing mascot replaced the current question, allowing the child to dodge a hard fact | `startGame` always called `newQuestion()` | Snapshot the question, partial input, attempt and remaining time on leaving; restore them on return |
 | The countdown kept running while the child was choosing a mascot | Only the interval was cleared, not the deadline | Pause records the remaining time and cancels the deadline timer |
 | The product of an equation was drawn as `?`, indistinguishable from the unknown | A single `answerBox` element was reused for both roles | The question is three slots; the answer slot moves to the unknown position |
+| The level badge stayed next to the title instead of moving right | The header row shrank to its content, so `margin-left: auto` had nothing to push against | The row takes the full width and the badge never shrinks |
 
 ## Verification record
 

@@ -59,7 +59,8 @@ defect from returning unnoticed.
 | Equations only from level 4 | Equations leaked into early levels |
 | Timeout counts as a wrong answer | Expiry was free, so waiting beat guessing |
 | Changing mascot keeps the question | The child could re-roll a hard fact |
-| Level badge right aligned | The badge drifted into the middle of the header |
+| Level badge right aligned | The badge sat next to the title, because the flex row shrank to its content |
+| Badge rule is not defeated by its parent | A correct `margin-left: auto` with a content-sized parent does nothing |
 | Timeout phrases are full sentences | A bare "Tempo!" is not usable Portuguese |
 | Manifest is installable with icons and screenshots | Chrome silently refuses installation |
 | Every manifest icon exists on disk | A 404 blocks install with no visible reason |
