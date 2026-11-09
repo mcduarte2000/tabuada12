@@ -2,7 +2,7 @@
 
 * Status: completed
 * Period: 2026-11-09
-* Shipped in: v1.5.0
+* Shipped in: v1.5.0 and v1.6.0
 
 This iteration turned a single endless mode into six progressive levels, each
 with its own fact set and time limit, and fixed a cheat: changing mascot
@@ -12,18 +12,20 @@ mid-game used to produce a fresh question, letting the child dodge a hard fact.
 
 | Metric | Value |
 | --- | --- |
-| User stories | 4 (US-19 to US-22) |
-| EARS requirements | 28 |
-| Gherkin scenarios | 18 |
-| Automated checks | 103 |
-| Defects found and fixed | 3 |
+| User stories | 5 (US-19 to US-23) |
+| EARS requirements | 32 |
+| Gherkin scenarios | 21 |
+| Automated checks | 106 |
+| Defects found and fixed | 4 |
 | New documents | `docs/levels.md` |
-| Releases | 1 (v1.5.0) |
+| Releases | 2 (v1.5.0, v1.6.0) |
 
 ## Scope
 
 ### In scope
 
+- The installed desktop window opens at a size that fits the content, instead
+  of the browser default.
 - Six levels with their own fact range, time limit and equation mix, specified
   in [levels.md](../levels.md).
 - A per-question countdown replacing the old elapsed clock.
@@ -293,6 +295,56 @@ Feature: Level badge and celebration
 
 ---
 
+## US-23 — Open at a sensible size on a desktop
+
+**User story**
+
+> As a parent installing the app on a computer, I want the window to open at the
+> size of the game, not stretched across the whole screen.
+
+### Requirements
+
+**R23.1 (state-driven)** While the app runs as an installed app on a
+desktop-sized screen, the system shall resize its window once to a size that
+fits the content and centre it when the screen has spare room.
+
+**R23.2 (unwanted behaviour)** If the page runs in a browser tab, then the
+system shall not resize or move the window.
+
+**R23.3 (unwanted behaviour)** If the screen is phone-sized, then the system
+shall not resize or move the window even when installed.
+
+**R23.4 (state-driven)** While the window is already close to the target size,
+the system shall not resize it again, so a user-set size is respected on the
+next launch.
+
+### Acceptance criteria
+
+```gherkin
+Feature: Desktop window size
+
+  Scenario: Installed app opens at content size
+    Given the app is installed and launched as its own window on a desktop
+    When the window finishes loading
+    Then the window is resized once to about 460 by 760 pixels
+    And it is centred when the screen allows it
+
+  Scenario: A tab is left alone
+    Given the site is open in a regular browser tab
+    Then the window size and position are unchanged
+
+  Scenario: A phone is left alone
+    Given the app is installed on a phone
+    Then the window is not resized
+
+  Scenario: The user's size is respected
+    Given the user resized the app window to 800 by 900
+    When the app is launched again
+    Then the window stays at about 800 by 900
+```
+
+---
+
 ## Defects found and fixed
 
 | Defect | Cause | Fix |
@@ -311,6 +363,7 @@ Feature: Level badge and celebration
 | R21 (equations) | Browser run of ten questions at level 4: 3 equations, both shapes, correct factor accepted and product rejected | pass |
 | R22 (badge, celebration) | Browser run to the level-2 overlay: title, name, emoji, 54 confetti pieces, congratulation by name; badge alignment measured at 0 px gap | pass |
 | Mascot-change fix | Browser run: same fact before and after, countdown frozen at `0:22` for 1.5 s in setup, resumed at the same value | pass |
+| R23 (desktop window) | Static checks on the three guards and the tolerance; manual launch of the installed app on macOS | pass, with the caveat that browsers may ignore `resizeTo` |
 
 ## Known gaps at the end of this iteration
 

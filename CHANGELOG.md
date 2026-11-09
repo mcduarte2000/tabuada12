@@ -17,7 +17,7 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
-## [1.5.0] - 2026-11-09
+## [1.6.0] - 2026-11-09
 
 ### Adicionado
 
@@ -25,6 +25,17 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
   conteúdo (cerca de 460×760), centrada, em vez de ocupar o ecrã inteiro. Só
   acontece na app instalada em ecrãs grandes e uma única vez, para não contrariar
   quem redimensiona a janela.
+
+### Corrigido
+
+- O emblema do nível continuava encostado ao título em vez de ficar à direita:
+  a linha do cabeçalho encolhia ao conteúdo, por isso `margin-left: auto` não
+  tinha espaço para empurrar.
+
+## [1.5.0] - 2026-11-09
+
+### Adicionado
+
 - Seis níveis progressivos: Iniciante, Aprendiz, Esperto, Mestre, Génio e
   Einstein. Cada nível define as tabuadas, o tempo por questão e se há
   equações. Especificação em `docs/levels.md`.
@@ -41,9 +52,6 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ### Corrigido
 
-- O emblema do nível continuava encostado ao título em vez de ficar à direita:
-  a linha do cabeçalho encolhia ao conteúdo, por isso `margin-left: auto` não
-  tinha espaço para empurrar.
 - Trocar de mascote durante o jogo trocava a conta em curso, o que permitia à
   criança escapar a uma conta difícil. A conta, o que já estava escrito, a
   tentativa e o tempo restante são agora preservados.
@@ -268,7 +276,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.5.0...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.0...main
+[1.6.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.3.0...v1.4.0
