@@ -80,6 +80,7 @@ report of the same symptom does not trigger a fresh investigation.
 | P2 | Safari on iOS never fires `beforeinstallprompt` and ignores most of the manifest. | Share, then "Add to Home Screen". The in-app install button stays hidden by design. |
 | P3 | Samsung Internet's WebAPK generator is outdated, triggering the Play Protect warning in R12. | Chrome or Edge. Otherwise "Install anyway". |
 | P4 | Service workers on iOS require 16.4 or later. | On older iOS the app works online only. |
+| P5 | There is no manifest member for the initial desktop window size. The proposal to add one was closed in 2020. | An installed desktop app opens at the browser's default size. | The app calls `window.resizeTo` once after load when running installed on a desktop-sized screen; browsers may ignore it. |
 
 See risk R12 and R13 for the Samsung Internet case.
 

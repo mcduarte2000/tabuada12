@@ -68,6 +68,8 @@ defect from returning unnoticed.
 | Service worker is versioned | Stale shells survive forever |
 | Service worker activates and caches the shell | Offline support that never engages |
 | App loads offline | The main promise of the PWA route |
+| Desktop window fits content when installed | An installed app opened at the browser default size |
+| Window size is not forced back | A resize loop would fight the user |
 | Live session row matches the header | The list hid the current record while the header showed it |
 | Cookie write is size-checked | The compact progress could exceed 4 KB |
 | Failures weigh more than successes | Adaptive selection lost its purpose |

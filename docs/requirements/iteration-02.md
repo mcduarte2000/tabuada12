@@ -617,6 +617,14 @@ of the worker shall fail loudly rather than leave a partial cache.
 (`apple-mobile-web-app-capable`, `apple-touch-icon`) because iOS ignores the
 manifest for the home-screen experience.
 
+**R18.10 (state-driven)** While running as an installed app on a desktop-sized
+screen, the system shall resize its window once to the content width and a
+comfortable height, and centre it, without repeating the resize if the user
+changes the size afterwards.
+
+**R18.11 (unwanted behaviour)** If the page is running in a browser tab, or on a
+phone-sized screen, then the system shall not resize or move the window.
+
 ### Acceptance criteria
 
 ```gherkin
@@ -649,6 +657,20 @@ Feature: Installable web app
     Given one file listed in the service worker is absent
     Then the worker does not activate
     And the regression suite fails on that file
+
+  Scenario: Installed desktop window fits the content
+    Given the app is installed and opened as its own window on a desktop
+    When the window finishes loading
+    Then the window is resized once to about 460 by 760 pixels
+    And the window is centred when the screen allows it
+    When the user resizes the window afterwards
+    Then the app does not force the size back
+
+  Scenario: No resizing in a tab or on a phone
+    Given the site is open in a normal browser tab
+    Then no resize or move call is made
+    Given the app is installed on a phone
+    Then no resize or move call is made
 
   Scenario: iOS home screen
     Given the site is added to the home screen on iOS

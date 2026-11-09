@@ -365,6 +365,20 @@ function staticTests() {
   check('app registers the service worker', /serviceWorker\.register\('sw\.js'\)/.test(js),
     'the manifest alone does not make the app offline-capable');
 
+  check('desktop window fits the content when installed', (function () {
+    var js = read('app.js');
+    return /function fitDesktopWindow/.test(js) &&
+      /display-mode: standalone/.test(js) &&
+      /window\.resizeTo\(width, height\)/.test(js) &&
+      /screen\.availWidth/.test(js) &&
+      /if \(!isInstalledApp\(\) \|\| !isDesktopScreen\(\)\) return;/.test(js);
+  })(), 'resizing must never fire in a browser tab or on a phone');
+
+  check('window size is not fixed once set', (function () {
+    var js = read('app.js');
+    return /nearTarget/.test(js);
+  })(), 'the user must keep the freedom to resize the installed window');
+
   check('install button is wired', /beforeinstallprompt/.test(js) && /id="installBtn"/.test(html),
     'the in-app install control depends on the browser prompt event');
 

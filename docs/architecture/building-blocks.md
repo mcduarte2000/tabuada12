@@ -63,7 +63,7 @@ C4Container
 | Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `finalizeSession`, `startSessionRecord`, `resetStreak`, `renderSessionDialogs`, `renderRecords`, `openDialog` | Correct count, miss count, streak, record history, elapsed time, and the detail dialogs behind each indicator. |
 | Rendering and feedback | `say`, `react`, `setAvatar`, `applyThemeColors`, `bump`, `restartAnimation`, `burstConfetti`, `spawnRipple` | Bubble text, mascot animation, ripple and confetti effects. |
 | Audio | `ensureAudio`, `beep`, `soundCorrect`, `soundWrong`, `soundReveal` | Synthesised feedback tones, no files. |
-| Install and offline | `registerServiceWorker`, `updateInstallButton`, `beforeinstallprompt`, `appinstalled` | Register the worker, show the install control only when the browser offers it, hide it after installation. |
+| Install and offline | `registerServiceWorker`, `updateInstallButton`, `beforeinstallprompt`, `appinstalled`, `fitDesktopWindow` | Register the worker, show the install control only when the browser offers it, hide it after installation, and resize the installed desktop window to the content width once. |
 | Setup flow | `renderMascotOptions`, `selectMascot`, `ownedHello`, `startGame`, `goToMascotStep`, `resetToSetup`, `applyTheme`, `updateThemeButton`, `updateSoundButton` | Name entry, mascot choice, profile switching, preferences. |
 
 ### 5.4 Data held in memory

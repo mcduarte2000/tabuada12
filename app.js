@@ -1989,6 +1989,49 @@
     return loadContent();
   }
 
+  var DESKTOP_WINDOW = { width: 460, height: 760 };
+
+  function isInstalledApp() {
+    if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return true;
+    if (window.matchMedia && window.matchMedia('(display-mode: window-controls-overlay)').matches) return true;
+    return window.navigator.standalone === true;
+  }
+
+  function isDesktopScreen() {
+    return Math.min(window.screen.width, window.screen.height) >= 700;
+  }
+
+  function fitDesktopWindow() {
+    if (!isInstalledApp() || !isDesktopScreen()) return;
+    if (typeof window.resizeTo !== 'function') return;
+
+    var width = Math.min(DESKTOP_WINDOW.width, window.screen.availWidth || window.screen.width);
+    var height = Math.min(DESKTOP_WINDOW.height, window.screen.availHeight || window.screen.height);
+
+    if (width < 320 || height < 480) return;
+
+    var currentWidth = window.outerWidth || 0;
+    var currentHeight = window.outerHeight || 0;
+    var nearTarget = Math.abs(currentWidth - width) <= 40 && Math.abs(currentHeight - height) <= 40;
+
+    if (nearTarget) return;
+
+    try {
+      window.resizeTo(width, height);
+
+      var spareWidth = (window.screen.availWidth || width) - width;
+      var spareHeight = (window.screen.availHeight || height) - height;
+      if (spareWidth > 80 && spareHeight > 80) {
+        window.moveTo(
+          Math.round(Math.max(0, spareWidth / 2)),
+          Math.round(Math.max(0, spareHeight / 2))
+        );
+      }
+    } catch (error) {
+      /* alguns browsers ignoram resizeTo em janelas de app */
+    }
+  }
+
   function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return;
     if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') return;
@@ -2006,4 +2049,9 @@
 
   registerServiceWorker();
   init();
+
+  window.addEventListener('load', fitDesktopWindow);
+  window.addEventListener('appinstalled', function () {
+    window.setTimeout(fitDesktopWindow, 1200);
+  });
 })();

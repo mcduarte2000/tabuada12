@@ -21,6 +21,10 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ### Adicionado
 
+- A janela da aplicação instalada no computador abre com um tamanho adequado ao
+  conteúdo (cerca de 460×760), centrada, em vez de ocupar o ecrã inteiro. Só
+  acontece na app instalada em ecrãs grandes e uma única vez, para não contrariar
+  quem redimensiona a janela.
 - Seis níveis progressivos: Iniciante, Aprendiz, Esperto, Mestre, Génio e
   Einstein. Cada nível define as tabuadas, o tempo por questão e se há
   equações. Especificação em `docs/levels.md`.
