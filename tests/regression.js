@@ -210,6 +210,56 @@ function staticTests() {
       /state\.recordBest\(/.test(js) === false,
     'a long streak used to write 16, 15, 14... entries for the same session');
 
+  check('levels are defined and documented', (function () {
+    var levels = read('docs/levels.md');
+    var js = read('app.js');
+    return /Nível 1/.test(levels) && /Einstein/.test(levels) &&
+      /LEVELS = \[/.test(js) &&
+      /seconds: 30/.test(js) && /seconds: 5/.test(js) &&
+      /unlockStreak: 25/.test(js) && /unlockStreak: 200/.test(js);
+  })(), 'the six levels must exist in code and be documented');
+
+  check('levels are persisted for one year',
+    /level: 'tabuada12.level'/.test(js) &&
+      /level: 'tabuada12_level'/.test(js) &&
+      /setCookie\(COOKIE\.level, value, PROFILE_TTL\)/.test(js),
+    'the level must survive a reload in localStorage and a cookie');
+
+  check('level 1 asks up to 10, later levels from 2 to 12',
+    /maxTable: 10, excludeOne: false/.test(js) &&
+      /maxTable: 12, excludeOne: true/.test(js),
+    'excluding the table of 1 from level 2 is an explicit rule');
+
+  check('equations only from level 4', (function () {
+    var blocks = js.match(/\{ level: \d[^}]*\}/g) || [];
+    var withEq = blocks.filter(function (b) { return /equations: true/.test(b); });
+    return withEq.length === 3 && withEq.every(function (b) {
+      return /level: [456]/.test(b);
+    });
+  })(), 'missing-factor equations belong to levels 4, 5 and 6');
+
+  check('timeout phrases are complete sentences', (function () {
+    var content = JSON.parse(read('content.json'));
+    var phrases = content.mascotes.reduce(function (acc, m) {
+      return acc.concat(m.tempo || []);
+    }, []);
+    return phrases.length > 0 && phrases.every(function (p) {
+      return p.split(' ').length >= 5;
+    });
+  })(), 'a lone "Tempo!" is not Portuguese a child can learn from');
+
+  check('timeouts count as wrong answers',
+    /function timeUp/.test(js) &&
+      /state\.missCount \+= 1/.test(js) &&
+      /resetStreak\(\)/.test(js),
+    'running out of time must consume the attempt and break the streak');
+
+  check('changing mascot preserves the question',
+    /function saveQuestionForResume/.test(js) &&
+      /function resumeSavedQuestion/.test(js) &&
+      /state\.savedQuestion/.test(js),
+    'a new question on mascot change let the child dodge a hard fact');
+
   check('records are stored in a cookie too',
     /records:\s*'tabuada12_records'/.test(js) &&
       /setCookie\(COOKIE\.records,\s*compact,\s*PROFILE_TTL\)/.test(js),
@@ -386,6 +436,28 @@ async function browserTests(browser) {
 
   await page.goto('http://localhost:' + PORT + '/', { waitUntil: 'networkidle' });
 
+  async function readQuestion() {
+    return await page.evaluate(function () {
+      return {
+        a: document.getElementById('slotA').textContent,
+        b: document.getElementById('slotB').textContent,
+        r: document.getElementById('slotR').textContent,
+        sr: document.getElementById('srQuestion').textContent
+      };
+    });
+  }
+
+  async function answerCurrent() {
+    var q = await readQuestion();
+    var value;
+    if (q.a === '?') value = Number(q.r) / Number(q.b);
+    else if (q.b === '?') value = Number(q.r) / Number(q.a);
+    else value = Number(q.a) * Number(q.b);
+    await page.keyboard.type(String(value));
+    await page.keyboard.press('Enter');
+    return { q: q, value: value };
+  }
+
   check('no console errors on load', errors.length === 0, errors.join(' | '));
 
   check('title fully visible', await page.evaluate(function () {
@@ -476,8 +548,19 @@ async function browserTests(browser) {
 
   check('game shows a question', await page.evaluate(function () {
     return document.getElementById('game').hidden === false &&
-      /\d/.test(document.getElementById('factorA').textContent);
+      /\d/.test(document.getElementById('slotA').textContent);
   }), 'the game screen must appear with a question');
+
+  check('level badge is visible', await page.evaluate(function () {
+    var badge = document.getElementById('levelBadge');
+    return !!badge && /Nível \d/.test(document.getElementById('levelText').textContent) &&
+      document.getElementById('levelEmoji').textContent.length > 0;
+  }), 'the level must always be on screen with its emoji');
+
+  check('countdown starts at the level limit', await page.evaluate(function () {
+    var t = document.getElementById('statTime').textContent;
+    return /^0:(2\d|30)$/.test(t) || t === '0:30';
+  }), 'level 1 allows 30 seconds per question');
 
   check('five statistics visible', await page.evaluate(function () {
     return document.querySelectorAll('.stats .stat').length === 5;
@@ -489,14 +572,8 @@ async function browserTests(browser) {
     });
   }), 'labels must not be clipped');
 
-  var answer = await page.evaluate(function () {
-    var a = Number(document.getElementById('factorA').textContent);
-    var b = Number(document.getElementById('factorB').textContent);
-    return { a: a, b: b, product: a * b };
-  });
-
-  await page.keyboard.type(String(answer.product));
-  await page.keyboard.press('Enter');
+  var first = await answerCurrent();
+  var answer = { a: Number(first.q.a), b: Number(first.q.b), product: first.value };
   await page.waitForTimeout(300);
 
   check('correct answer increments the counter', await page.evaluate(function () {
@@ -607,11 +684,8 @@ async function browserTests(browser) {
   }), 'name and mascot must persist across visits');
 
   await page.waitForTimeout(1200);
-  var nextQuestion = await page.evaluate(function () {
-    var a = Number(document.getElementById('factorA').textContent);
-    var b = Number(document.getElementById('factorB').textContent);
-    return { a: a, b: b };
-  });
+  var nextRaw = await readQuestion();
+  var nextQuestion = { a: Number(nextRaw.a), b: Number(nextRaw.b) };
 
   check('advances to a new question', nextQuestion.a !== answer.a || nextQuestion.b !== answer.b,
     'the previous question must not repeat immediately');
@@ -624,10 +698,10 @@ async function browserTests(browser) {
     return document.getElementById('statMiss').textContent === '1';
   }), 'misses are counted per attempt, not per question');
 
-  check('same question kept after first mistake', await page.evaluate(function (q) {
-    return Number(document.getElementById('factorA').textContent) === q.a &&
-      Number(document.getElementById('factorB').textContent) === q.b;
-  }, nextQuestion), 'the child gets a second chance on the same fact');
+  check('same question kept after first mistake', await (async function () {
+    var raw = await readQuestion();
+    return Number(raw.a) === nextQuestion.a && Number(raw.b) === nextQuestion.b;
+  })(), 'the child gets a second chance on the same fact');
 
   await page.keyboard.type('998');
   await page.keyboard.press('Enter');
@@ -718,12 +792,12 @@ async function browserTests(browser) {
   check('keypad disabled while the dialog is open', await (async function () {
     await realClick('#aboutBtn');
     var before = await page.evaluate(function () {
-      return document.getElementById('answerBox').textContent;
+      return document.querySelector('.q-slot.is-answer').textContent;
     });
     await page.keyboard.press('5');
     await page.waitForTimeout(120);
     var after = await page.evaluate(function () {
-      return document.getElementById('answerBox').textContent;
+      return document.querySelector('.q-slot.is-answer').textContent;
     });
     await realClick('#aboutDialog .sheet-actions button');
     return before === after;
@@ -752,6 +826,45 @@ async function browserTests(browser) {
     }
     return total >= 30;
   }), 'the 30 mascots plus the shell must be cached');
+
+  check('countdown reaches zero and reveals', await (async function () {
+    await page.evaluate(function () {
+      localStorage.setItem('tabuada12.level', '6');
+      document.cookie = 'tabuada12_level=6; Max-Age=31536000; Path=/';
+    });
+    await page.goto('http://localhost:' + PORT + '/?timeout=1');
+    await page.waitForTimeout(500);
+    await page.fill('#nameInput', 'Tempo');
+    await page.click('#nameForm button[type="submit"]');
+    await page.waitForTimeout(200);
+    await page.click('button[data-mascot="gato"]');
+    await page.click('#startBtn');
+    await page.waitForTimeout(300);
+
+    var atStart = await page.evaluate(function () {
+      return document.getElementById('statTime').textContent;
+    });
+    await page.waitForTimeout(6200);
+    var after = await page.evaluate(function () {
+      return {
+        time: document.getElementById('statTime').textContent,
+        revealed: !document.getElementById('nextBtn').hidden,
+        miss: Number(document.getElementById('statMiss').textContent)
+      };
+    });
+    return /^0:0[0-5]$/.test(atStart) && after.time === '0:00' && after.revealed && after.miss >= 1;
+  })(), 'level 6 gives 5 seconds, then the answer is revealed with a miss');
+
+  check('level badge always shows the level', await page.evaluate(function () {
+    return /Nível \d/.test(document.getElementById('levelText').textContent) &&
+      document.getElementById('levelEmoji').textContent.length > 0;
+  }), 'the level must be marked on screen with an emoji');
+
+  check('level badge is right aligned', await page.evaluate(function () {
+    var badge = document.getElementById('levelBadge').getBoundingClientRect();
+    var brand = document.querySelector('.brand').getBoundingClientRect();
+    return brand.right - badge.right < 8 && badge.left > brand.left + 60;
+  }), 'the badge belongs on the right edge of the header row');
 
   check('reduced motion still renders the app', await page.evaluate(function () {
     return document.getElementById('game').hidden === false;

@@ -17,6 +17,38 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-09
+
+### Adicionado
+
+- Seis níveis progressivos: Iniciante, Aprendiz, Esperto, Mestre, Génio e
+  Einstein. Cada nível define as tabuadas, o tempo por questão e se há
+  equações. Especificação em `docs/levels.md`.
+- Contagem decrescente por questão, com aviso a meio tempo e alerta nos
+  últimos 20 %.
+- Esgotar o tempo conta como resposta errada, revela a resposta certa e quebra
+  a série.
+- Questões de equação a partir do nível 4, nas formas `? x 8 = 80` e
+  `7 x ? = 56`.
+- Celebração de subida de nível: ecrã "Nível X" com emoji, confete, som e
+  parabéns do mascote.
+- Emblema do nível sempre visível no cabeçalho, com emoji, alinhado à direita.
+- O nível fica guardado em `localStorage` e num cookie de 1 ano.
+
+### Corrigido
+
+- Trocar de mascote durante o jogo trocava a conta em curso, o que permitia à
+  criança escapar a uma conta difícil. A conta, o que já estava escrito, a
+  tentativa e o tempo restante são agora preservados.
+- O tempo continuava a correr enquanto a criança escolhia o mascote.
+- O produto da equação aparecia como `?`, indistinguível do fator em falta.
+
+### Alterado
+
+- O indicador "Tempo" passou de tempo decorrido para tempo restante da
+  questão.
+- As falas de tempo esgotado passaram a frases completas.
+
 ## [1.4.1] - 2026-11-08
 
 ### Alterado
@@ -229,7 +261,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.1...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.5.0...main
+[1.5.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.2.0...v1.3.0

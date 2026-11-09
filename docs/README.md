@@ -13,6 +13,8 @@ Documentation for **Tabuada 12**, versioned with the code (docs-as-code).
   Gherkin acceptance criteria, one file per closed iteration.
 - [Tests](./tests/README.md) — the regression suite and the defects it
   protects against.
+- [Levels](./levels.md) — the six levels: facts, time limits, equations and
+  how each one is unlocked.
 - [Backlog](./backlog.md) — investigated ideas that are deliberately not
   scheduled, such as publishing on F-Droid.
 - [Changelog](../CHANGELOG.md) — released versions and pending changes.

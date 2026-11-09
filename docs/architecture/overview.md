@@ -119,7 +119,7 @@ C4Context
 
 | Quality goal | Strategy |
 | --- | --- |
-| Learning effectiveness | Weighted random selection per fact. Failed facts get a weight that grows with the number of failures; mastered facts get a weight that shrinks with each first-try success. Recency dampening avoids repeating a fact answered seconds ago. Implemented in `chooseFact()`/`factWeight()`, documented in [ADR-0004](./adr/0004-adaptive-fact-selection.md). |
+| Learning effectiveness | Six progressive levels set the fact range and a per-question countdown; running out of time counts as a mistake. Weighted random selection per fact. Failed facts get a weight that grows with the number of failures; mastered facts get a weight that shrinks with each first-try success. Recency dampening avoids repeating a fact answered seconds ago. Implemented in `chooseFact()`/`factWeight()`, documented in [ADR-0004](./adr/0004-adaptive-fact-selection.md). |
 | Child-friendly usability | Single screen, one numeric keypad, no text input during play, large touch targets (48 px minimum), praise instead of scolding, automatic advance after a correct answer. |
 | Zero cost, zero operations | One HTML file, four local scripts, one JSON file and SVG assets. Installed from the browser with no store, no toolchain and no signing. Hosted from a Git branch, documented in [ADR-0001](./adr/0001-static-single-page-app.md) and [ADR-0008](./adr/0008-installable-web-app.md). |
 | Privacy by design | All state in the browser. No network call carries user data. The app asks for a fun nickname and explicitly discourages the real name, and the field disables personal-name autofill. Documented in [ADR-0005](./adr/0005-browser-local-storage-only.md). |
@@ -134,6 +134,8 @@ C4Context
   mascots under MIT without a design dependency.
 - **Web Audio API oscillators** for feedback sound, so no binary assets are
   needed and the app stays fully offline-capable.
+- **Progressive levels** with a per-question countdown, documented in
+  [levels.md](../levels.md), so difficulty and speed grow with the child.
 - **Progressive Web App** with a manifest and a service worker, so the app
   installs from Chrome or Edge on Android with the built-in prompt and starts
   offline after the first visit. See

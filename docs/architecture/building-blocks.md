@@ -55,7 +55,10 @@ C4Container
 | Constants and state | `STORAGE`, `COOKIE`, `PROGRESS_TTL`, `PROFILE_TTL`, `COOKIE_LIMIT`, `PRIORITY`, `state` | Single source of truth for magic numbers and mutable session data. |
 | Persistence | `readStored`, `writeStored`, `setCookie`, `getCookie`, `setProfileCookies`, `readProfileCookies`, `readProgress`, `saveProgress`, `encodeProgress`, `decodeProgress`, `readRecords`, `writeRecords`, `encodeRecords`, `decodeRecords` | Dual-write profile, progress and top-10 records; progress expires after 24 h, name, mascot and records after one year; tolerate corrupt or missing data. |
 | Content and phrasing | `fill`, `phrases`, `mascotPhrases`, `pickFresh`, `loadContent` | Load `content.json`, substitute placeholders, avoid repeating the previous phrase. |
-| Adaptive selection | `factKey`, `factWeight`, `chooseFact`, `recordResult` | Weighted random choice per fact and progress recording. |
+| Adaptive selection | `factKey`, `factWeight`, `chooseFact`, `recordResult` | Weighted random choice per fact, restricted to the current level's fact range. |
+| Levels | `LEVELS`, `levelConfig`, `nextLevelConfig`, `readLevel`, `writeLevel`, `renderLevel`, `checkLevelUp`, `showLevelUp`, `hideLevelUp` | Six levels with their fact range, time limit and equation mix; unlock thresholds; celebration overlay; one-year persistence. |
+| Question shape | `buildQuestion`, `questionAnswer`, `questionLabel`, `renderQuestion`, `answerSlot` | Product questions and missing-factor equations; the answer slot moves to the unknown position. |
+| Countdown | `remainingTime`, `armDeadline`, `startQuestionTimer`, `startQuestionTimerFrom`, `resetTimerDisplay`, `pauseTimer`, `resumeTimer`, `timeUp` | Per-question countdown that pauses on hidden tab and dialogs, and treats expiry as a wrong answer. |
 | Game flow | `newQuestion`, `pressDigit`, `pressDelete`, `submit`, `nextQuestion`, `scheduleAdvance` | Attempt counting, correct/wrong/reveal phases, automatic advance. |
 | Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `finalizeSession`, `startSessionRecord`, `resetStreak`, `renderSessionDialogs`, `renderRecords`, `openDialog` | Correct count, miss count, streak, record history, elapsed time, and the detail dialogs behind each indicator. |
 | Rendering and feedback | `say`, `react`, `setAvatar`, `applyThemeColors`, `bump`, `restartAnimation`, `burstConfetti`, `spawnRipple` | Bubble text, mascot animation, ripple and confetti effects. |
@@ -80,6 +83,10 @@ C4Container
 | `sound` | Whether sound effects are enabled. |
 | `startedAt`, `timerId` | Session clock. |
 | `progress` | Per-fact counters: `ok`, `second`, `fail`, `last`, `lastOk`. |
+| `level` | Current level, from 1 to 6, persisted for one year. |
+| `question` | Current fact plus its kind (`product`, `missingA`, `missingB`) and product. |
+| `dueAt`, `remaining`, `deadlineId`, `paused` | Countdown state. |
+| `savedQuestion` | Question, input, attempt and remaining time kept while the mascot step is open. |
 
 ## 6. Runtime view
 

@@ -48,6 +48,19 @@ CHANGELOG.md          Keep a Changelog + SemVer
 Editing `content.json` requires an HTTP server (`python3 -m http.server`),
 because `fetch` is blocked on `file://`.
 
+## Levels
+
+- `docs/levels.md` is the specification of the six levels: fact range, time
+  limit, equation mix and unlock threshold. Change the document and `LEVELS` in
+  `app.js` in the same commit; the regression suite compares them.
+- The level is persisted in `localStorage` and a one-year cookie, like the
+  profile. A level is never lost.
+- Only a first-try correct answer extends the streak that unlocks levels.
+  Second-try successes and timeouts reset it.
+- Running out of time is a wrong answer, not a free pass.
+- The level badge is always visible, right aligned in the header, with an
+  emoji per level.
+
 ## Code conventions
 
 - ES5 syntax (`var`, `function`) and one IIFE in `app.js`. Keep it that way so

@@ -8,17 +8,30 @@
     records: 'tabuada12.records',
     sound: 'tabuada12.sound',
     theme: 'tabuada12.theme',
-    progress: 'tabuada12.progress'
+    progress: 'tabuada12.progress',
+    level: 'tabuada12.level'
   };
 
   var COOKIE = {
     name: 'tabuada12_name',
     mascot: 'tabuada12_mascot',
     progress: 'tabuada12_progress',
-    records: 'tabuada12_records'
+    records: 'tabuada12_records',
+    level: 'tabuada12_level'
   };
 
   var PROGRESS_TTL = 24 * 60 * 60;
+
+  var LEVELS = [
+    { level: 1, name: 'Iniciante', emoji: '🐣', maxTable: 10, excludeOne: false, seconds: 30, equations: false, unlockStreak: 0 },
+    { level: 2, name: 'Aprendiz', emoji: '🐥', maxTable: 12, excludeOne: true, seconds: 20, equations: false, unlockStreak: 25 },
+    { level: 3, name: 'Esperto', emoji: '🦊', maxTable: 12, excludeOne: true, seconds: 12, equations: false, unlockStreak: 50 },
+    { level: 4, name: 'Mestre', emoji: '🧠', maxTable: 12, excludeOne: true, seconds: 10, equations: true, unlockStreak: 50 },
+    { level: 5, name: 'Génio', emoji: '🚀', maxTable: 12, excludeOne: true, seconds: 7, equations: true, unlockStreak: 100 },
+    { level: 6, name: 'Einstein', emoji: '🏆', maxTable: 12, excludeOne: true, seconds: 5, equations: true, unlockStreak: 200 }
+  ];
+
+  var EQUATION_CHANCE = 0.34;
   var PROFILE_TTL = 365 * 24 * 60 * 60;
   var COOKIE_LIMIT = 3800;
 
@@ -57,13 +70,22 @@
     srQuestion: document.getElementById('srQuestion'),
     card: document.getElementById('card'),
     question: document.getElementById('question'),
-    factorA: document.getElementById('factorA'),
-    factorB: document.getElementById('factorB'),
-    answer: document.getElementById('answerBox'),
     keypad: document.getElementById('keypad'),
     confirm: document.getElementById('confirmBtn'),
     next: document.getElementById('nextBtn'),
     statTime: document.getElementById('statTime'),
+    levelBadge: document.getElementById('levelBadge'),
+    levelEmoji: document.getElementById('levelEmoji'),
+    levelText: document.getElementById('levelText'),
+    levelUp: document.getElementById('levelUp'),
+    levelUpEmoji: document.getElementById('levelUpEmoji'),
+    slotA: document.getElementById('slotA'),
+    slotB: document.getElementById('slotB'),
+    slotR: document.getElementById('slotR'),
+    levelUpTitle: document.getElementById('levelUpTitle'),
+    levelUpName: document.getElementById('levelUpName'),
+    operatorX: document.getElementById('operatorX'),
+    operatorEq: document.getElementById('operatorEq'),
     statCorrect: document.getElementById('statCorrect'),
     statMiss: document.getElementById('statMiss'),
     statStreak: document.getElementById('statStreak'),
@@ -117,7 +139,14 @@
     startedAt: null,
     elapsed: 0,
     timerId: null,
-    progress: {}
+    progress: {},
+    level: 1,
+    question: { kind: 'product', a: 0, b: 0, missing: null },
+    dueAt: 0,
+    remaining: 0,
+    deadlineId: null,
+    paused: false,
+    savedQuestion: null
   };
 
   var PRIORITY = {
@@ -284,6 +313,18 @@
     beep(220, 0, 0.16, 'triangle', 0.045);
   }
 
+  function soundLevelUp() {
+    beep(523.25, 0, 0.12, 'sine', 0.05);
+    beep(659.25, 0.1, 0.12, 'sine', 0.05);
+    beep(783.99, 0.2, 0.12, 'sine', 0.05);
+    beep(1046.5, 0.3, 0.26, 'sine', 0.045);
+  }
+
+  function soundTimeout() {
+    beep(196, 0, 0.1, 'square', 0.03);
+    beep(155.56, 0.1, 0.22, 'square', 0.03);
+  }
+
   function soundReveal() {
     beep(392, 0, 0.14, 'sine', 0.04);
     beep(329.63, 0.14, 0.2, 'sine', 0.035);
@@ -354,30 +395,21 @@
     return minutes + ':' + (seconds < 10 ? '0' + seconds : String(seconds));
   }
 
-  function elapsedTime() {
-    return state.elapsed + (state.startedAt ? Date.now() - state.startedAt : 0);
+  function remainingTime() {
+    if (!state.dueAt) return state.remaining;
+    return Math.max(0, state.dueAt - Date.now());
   }
 
   function renderTime() {
-    els.statTime.textContent = formatTime(elapsedTime());
-  }
+    var config = levelConfig();
+    var remaining = state.paused || !state.dueAt ? state.remaining : remainingTime();
 
-  function startTimer() {
-    if (!state.startedAt) {
-      state.startedAt = Date.now();
-    }
-    renderTime();
-    if (state.timerId === null) {
-      state.timerId = window.setInterval(renderTime, 1000);
-    }
-  }
+    els.statTime.textContent = formatTime(remaining);
+    els.statTime.setAttribute('aria-label', 'Tempo restante: ' + formatTime(remaining));
 
-  function pauseTimer() {
-    if (state.startedAt) {
-      state.elapsed += Date.now() - state.startedAt;
-      state.startedAt = null;
-    }
-    stopTimer();
+    var ratio = remaining / (config.seconds * 1000);
+    els.statTime.parentNode.classList.toggle('danger', ratio <= 0.2);
+    els.statTime.parentNode.classList.toggle('warning', ratio > 0.2 && ratio <= 0.5);
   }
 
   function stopTimer() {
@@ -385,6 +417,59 @@
       window.clearInterval(state.timerId);
       state.timerId = null;
     }
+    if (state.deadlineId !== null) {
+      window.clearTimeout(state.deadlineId);
+      state.deadlineId = null;
+    }
+  }
+
+  function pauseTimer() {
+    if (state.paused) return;
+    if (state.dueAt) {
+      state.remaining = Math.max(0, state.dueAt - Date.now());
+      state.dueAt = 0;
+    }
+    state.paused = true;
+    stopTimer();
+    renderTime();
+  }
+
+  function resumeTimer() {
+    if (!state.paused) return;
+    state.paused = false;
+    if (state.phase === 'answering' && state.remaining > 0) {
+      armDeadline(state.remaining);
+    }
+    renderTime();
+  }
+
+  function armDeadline(ms) {
+    stopTimer();
+
+    state.dueAt = Date.now() + ms;
+    state.remaining = ms;
+    renderTime();
+
+    state.timerId = window.setInterval(renderTime, 250);
+    state.deadlineId = window.setTimeout(function () {
+      state.dueAt = 0;
+      stopTimer();
+      timeUp();
+    }, ms);
+  }
+
+  function startQuestionTimer() {
+    if (state.paused) return;
+    var config = levelConfig();
+    armDeadline(config.seconds * 1000);
+  }
+
+  function resetTimerDisplay() {
+    var config = levelConfig();
+    state.dueAt = 0;
+    state.paused = false;
+    state.remaining = config.seconds * 1000;
+    renderTime();
   }
 
   function sanitizeRecords(list) {
@@ -487,9 +572,11 @@
   }
 
   function renderAnswer() {
+    var slot = answerSlot();
     var hasInput = state.input.length > 0;
-    els.answer.textContent = hasInput ? state.input : '?';
-    els.answer.classList.toggle('is-empty', !hasInput);
+
+    slot.textContent = hasInput ? state.input : '?';
+    slot.classList.toggle('is-empty', !hasInput);
   }
 
   function updateConfirm() {
@@ -506,6 +593,47 @@
   function scheduleAdvance(fn, delay) {
     clearAdvance();
     advanceTimer = window.setTimeout(fn, delay);
+  }
+
+  function levelConfig(level) {
+    var target = level || state.level;
+    for (var i = 0; i < LEVELS.length; i += 1) {
+      if (LEVELS[i].level === target) return LEVELS[i];
+    }
+    return LEVELS[0];
+  }
+
+  function nextLevelConfig(level) {
+    for (var i = 0; i < LEVELS.length; i += 1) {
+      if (LEVELS[i].level === level + 1) return LEVELS[i];
+    }
+    return null;
+  }
+
+  function readLevel() {
+    var fromCookie = parseInt(getCookie(COOKIE.level), 10);
+    var fromStore = parseInt(readStored(STORAGE.level, '0'), 10);
+    var value = Math.max(fromCookie || 0, fromStore || 0);
+
+    if (value < 1 || value > LEVELS.length) return 1;
+    return value;
+  }
+
+  function writeLevel() {
+    var value = String(state.level);
+    writeStored(STORAGE.level, value);
+    setCookie(COOKIE.level, value, PROFILE_TTL);
+  }
+
+  function renderLevel() {
+    var config = levelConfig();
+
+    if (els.levelEmoji) els.levelEmoji.textContent = config.emoji;
+    if (els.levelText) els.levelText.textContent = 'Nível ' + config.level;
+    if (els.levelBadge) {
+      els.levelBadge.setAttribute('title', 'Nível ' + config.level + ' — ' + config.name);
+      els.levelBadge.setAttribute('aria-label', 'Nível ' + config.level + ', ' + config.name);
+    }
   }
 
   function factKey(a, b) {
@@ -690,11 +818,14 @@
   function chooseFact() {
     var pool = [];
     var total = 0;
+    var config = levelConfig();
+    var min = config.excludeOne ? 2 : 1;
+    var max = config.maxTable;
     var a;
     var b;
 
-    for (a = 1; a <= 12; a += 1) {
-      for (b = 1; b <= 12; b += 1) {
+    for (a = min; a <= max; a += 1) {
+      for (b = min; b <= max; b += 1) {
         var weight = factWeight(a, b);
 
         if (a === state.a && b === state.b) weight *= 0.08;
@@ -714,32 +845,95 @@
     return pool[pool.length - 1];
   }
 
+  function buildQuestion() {
+    var pick = chooseFact();
+    var config = levelConfig();
+    var a = pick.a;
+    var b = pick.b;
+    var kind = 'product';
+
+    if (config.equations && Math.random() < EQUATION_CHANCE) {
+      kind = Math.random() < 0.5 ? 'missingA' : 'missingB';
+    }
+
+    return { kind: kind, a: a, b: b, product: a * b };
+  }
+
+  function questionAnswer(q) {
+    if (q.kind === 'missingA') return q.a;
+    if (q.kind === 'missingB') return q.b;
+    return q.product;
+  }
+
+  function questionLabel(q) {
+    if (q.kind === 'missingA') return '? vezes ' + q.b + ' igual a ' + q.product;
+    if (q.kind === 'missingB') return q.a + ' vezes ? igual a ' + q.product;
+    return 'Quanto é ' + q.a + ' vezes ' + q.b + '?';
+  }
+
+  function answerSlot() {
+    var kind = state.question.kind;
+    if (kind === 'missingA') return els.slotA;
+    if (kind === 'missingB') return els.slotB;
+    return els.slotR;
+  }
+
+  function renderQuestion() {
+    var q = state.question;
+
+    [els.slotA, els.slotB, els.slotR].forEach(function (slot) {
+      slot.classList.remove('is-answer', 'is-empty', 'flash', 'pop');
+      slot.removeAttribute('aria-label');
+    });
+
+    if (q.kind === 'missingA') {
+      els.slotA.textContent = '?';
+      els.slotA.classList.add('is-unknown');
+      els.slotB.textContent = String(q.b);
+      els.slotB.classList.remove('is-unknown');
+      els.slotR.textContent = String(q.product);
+    } else if (q.kind === 'missingB') {
+      els.slotA.textContent = String(q.a);
+      els.slotA.classList.remove('is-unknown');
+      els.slotB.textContent = '?';
+      els.slotB.classList.add('is-unknown');
+      els.slotR.textContent = String(q.product);
+    } else {
+      els.slotA.textContent = String(q.a);
+      els.slotB.textContent = String(q.b);
+      els.slotA.classList.remove('is-unknown');
+      els.slotB.classList.remove('is-unknown');
+      els.slotR.textContent = '?';
+    }
+
+    var slot = answerSlot();
+    slot.classList.add('is-answer', 'is-empty');
+    slot.setAttribute('aria-label', 'A tua resposta');
+
+    els.card.classList.remove('is-correct', 'is-revealed');
+    els.keypad.hidden = false;
+    els.next.hidden = true;
+    els.srQuestion.textContent = questionLabel(q);
+  }
+
   function newQuestion() {
     clearAdvance();
 
-    var pick = chooseFact();
-    var a = pick.a;
-    var b = pick.b;
-
-    state.a = a;
-    state.b = b;
+    state.question = buildQuestion();
+    state.a = state.question.a;
+    state.b = state.question.b;
     state.input = '';
     state.attempt = 1;
     state.phase = 'answering';
     state.busy = false;
 
-    els.factorA.textContent = String(a);
-    els.factorB.textContent = String(b);
-    els.card.classList.remove('is-correct', 'is-revealed');
-    els.answer.classList.remove('flash', 'pop');
-    els.keypad.hidden = false;
-    els.next.hidden = true;
+    renderQuestion();
     say(mascotPhrases('perguntar'), 'neutral');
     renderAnswer();
     renderStats();
     updateConfirm();
     restartAnimation(els.question, 'pop');
-    els.srQuestion.textContent = 'Quanto é ' + a + ' vezes ' + b + '?';
+    startQuestionTimer();
   }
 
   function pressDigit(digit) {
@@ -783,14 +977,14 @@
     if (state.phase !== 'answering' || state.busy) return;
 
     if (!state.input) {
-      restartAnimation(els.answer, 'flash');
+      restartAnimation(answerSlot(), 'flash');
       return;
     }
 
-    var product = state.a * state.b;
+    var expected = questionAnswer(state.question);
     var value = Number(state.input);
 
-    if (value === product) {
+    if (value === expected) {
       var firstTry = state.attempt === 1;
 
       state.busy = true;
@@ -806,8 +1000,9 @@
         state.secondTryCount += 1;
       }
 
+      stopTimer();
       els.card.classList.add('is-correct');
-      restartAnimation(els.answer, 'pop');
+      restartAnimation(answerSlot(), 'pop');
       say(mascotPhrases(firstTry ? 'acertou' : 'acertouSegunda'), 'ok', 'check');
       react('yay');
       soundCorrect();
@@ -817,10 +1012,13 @@
       if (firstTry) bump(els.statStreak);
       updateConfirm();
 
+      if (firstTry && checkLevelUp()) return;
+
       scheduleAdvance(newQuestion, 1250);
       return;
     }
 
+    stopTimer();
     state.missCount += 1;
 
     if (state.attempt === 1) {
@@ -839,15 +1037,16 @@
       return;
     }
 
+    stopTimer();
     state.missSecond += 1;
     state.phase = 'revealed';
-    state.input = String(product);
+    state.input = String(expected);
     state.busy = false;
     recordResult(state.a, state.b, 'fail');
     resetStreak();
     bump(els.statMiss);
     els.card.classList.add('is-revealed');
-    restartAnimation(els.answer, 'pop');
+    restartAnimation(answerSlot(), 'pop');
     say(mascotPhrases('revelou'), 'info', 'bulb');
     react('oops');
     soundReveal();
@@ -859,6 +1058,135 @@
     els.next.focus({ preventScroll: true });
 
     scheduleAdvance(newQuestion, 7000);
+  }
+
+  function saveQuestionForResume() {
+    if (state.phase !== 'answering') {
+      state.savedQuestion = null;
+      return;
+    }
+
+    state.savedQuestion = {
+      question: {
+        kind: state.question.kind,
+        a: state.question.a,
+        b: state.question.b,
+        product: state.question.product
+      },
+      input: state.input,
+      attempt: state.attempt,
+      remaining: state.paused || !state.dueAt ? state.remaining : remainingTime()
+    };
+  }
+
+  function resumeSavedQuestion() {
+    var saved = state.savedQuestion;
+    state.savedQuestion = null;
+
+    if (!saved || !saved.question) return false;
+
+    state.question = saved.question;
+    state.a = saved.question.a;
+    state.b = saved.question.b;
+    state.input = saved.input;
+    state.attempt = saved.attempt;
+    state.phase = 'answering';
+    state.busy = false;
+
+    renderQuestion();
+    renderAnswer();
+    renderStats();
+    updateConfirm();
+    startQuestionTimerFrom(saved.remaining);
+
+    return true;
+  }
+
+  function startQuestionTimerFrom(ms) {
+    if (state.paused) {
+      state.remaining = ms;
+      renderTime();
+      return;
+    }
+    armDeadline(Math.max(500, ms));
+  }
+
+  function timeUp() {
+    if (state.phase !== 'answering' || state.busy) return;
+
+    var expected = questionAnswer(state.question);
+
+    state.busy = true;
+    state.missCount += 1;
+    state.missSecond += 1;
+    state.phase = 'revealed';
+    state.input = String(expected);
+    recordResult(state.a, state.b, 'fail');
+    resetStreak();
+    bump(els.statMiss);
+
+    els.card.classList.add('is-revealed');
+    restartAnimation(answerSlot(), 'pop');
+    say(mascotPhrases('tempo'), 'err', 'error');
+    react('oops');
+    soundTimeout();
+    renderAnswer();
+    renderStats();
+    updateConfirm();
+    els.keypad.hidden = true;
+    els.next.hidden = false;
+    els.next.focus({ preventScroll: true });
+
+    scheduleAdvance(newQuestion, 7000);
+  }
+
+  function showLevelUp(config) {
+    if (!els.levelUp) return;
+
+    els.levelUpEmoji.textContent = config.emoji;
+    els.levelUpTitle.textContent = 'Nível ' + config.level;
+    els.levelUpName.textContent = config.name;
+    els.levelUp.hidden = false;
+
+    burstConfetti();
+    burstConfetti();
+    soundLevelUp();
+  }
+
+  function hideLevelUp() {
+    if (!els.levelUp) return;
+    els.levelUp.hidden = true;
+  }
+
+  function checkLevelUp() {
+    var next = nextLevelConfig(state.level);
+    if (!next) return false;
+    if (state.streak < next.unlockStreak) return false;
+
+    state.level = next.level;
+    writeLevel();
+    renderLevel();
+
+    if (els.levelBadge) {
+      restartAnimation(els.levelBadge, 'pop');
+    }
+
+    state.streak = 0;
+    renderStats();
+
+    showLevelUp(next);
+    say(mascotPhrases('nivel'), 'ok', 'star');
+
+    state.paused = true;
+    stopTimer();
+
+    window.setTimeout(function () {
+      hideLevelUp();
+      state.paused = false;
+      newQuestion();
+    }, 2600);
+
+    return true;
   }
 
   function nextQuestion() {
@@ -1133,8 +1461,12 @@
   function startGame() {
     if (!state.mascot || !state.name) return;
 
-    finalizeSession();
-    startSessionRecord();
+    var resuming = !!state.savedQuestion;
+
+    if (!resuming) {
+      finalizeSession();
+      startSessionRecord();
+    }
 
     writeStored(STORAGE.name, state.name);
     writeStored(STORAGE.mascot, state.mascot.id);
@@ -1149,18 +1481,27 @@
     if (els.gameName) els.gameName.textContent = state.mascot.name;
     applyThemeColors(state.mascot);
 
-    renderTime();
-    newQuestion();
-    startTimer();
+    state.paused = false;
+    renderLevel();
+
+    var resumed = resumeSavedQuestion();
+    if (!resumed) {
+      resetTimerDisplay();
+      newQuestion();
+    }
 
     updateSoundButton();
 
-    say(fill(ownedHello(state.mascot), {}), 'info');
-    window.setTimeout(function () {
-      if (state.phase === 'answering' && state.attempt === 1 && !state.input) {
-        say(mascotPhrases('perguntar'), 'neutral');
-      }
-    }, 2400);
+    if (resuming) {
+      say(mascotPhrases('perguntar'), 'neutral');
+    } else {
+      say(fill(ownedHello(state.mascot), {}), 'info');
+      window.setTimeout(function () {
+        if (state.phase === 'answering' && state.attempt === 1 && !state.input) {
+          say(mascotPhrases('perguntar'), 'neutral');
+        }
+      }, 2400);
+    }
   }
 
   function goToMascotStep() {
@@ -1197,6 +1538,13 @@
     stopTimer();
     finalizeSession();
 
+    if (keepSession) {
+      saveQuestionForResume();
+      pauseTimer();
+    } else {
+      state.savedQuestion = null;
+    }
+
     state.phase = 'answering';
     state.busy = false;
     state.input = '';
@@ -1209,10 +1557,8 @@
       state.missFirst = 0;
       state.missSecond = 0;
       state.streak = 0;
-      state.startedAt = null;
-      state.elapsed = 0;
       startSessionRecord();
-      renderTime();
+      resetTimerDisplay();
     }
 
     els.game.hidden = true;
@@ -1604,7 +1950,7 @@
     if (document.hidden) {
       pauseTimer();
     } else {
-      startTimer();
+      resumeTimer();
     }
   });
 
@@ -1613,6 +1959,7 @@
     state.records = readRecords();
     state.sound = readStored(STORAGE.sound, 'on') !== 'off';
     state.progress = readProgress();
+    state.level = readLevel();
 
     var profile = readProfileCookies();
     var savedName = profile.name || readStored(STORAGE.name, '').trim();
@@ -1627,8 +1974,9 @@
 
     state.name = savedName;
     renderMascotOptions();
+    renderLevel();
     renderStats();
-    renderTime();
+    resetTimerDisplay();
     updateSoundButton();
     updateThemeButton();
 

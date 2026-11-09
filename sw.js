@@ -15,7 +15,7 @@
  */
 'use strict';
 
-var VERSION = 'tabuada12-v3';
+var VERSION = 'tabuada12-v5';
 var SHELL = VERSION + '-shell';
 var FONTS = VERSION + '-fonts';
 

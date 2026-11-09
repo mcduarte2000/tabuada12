@@ -53,6 +53,14 @@ defect from returning unnoticed.
 | Progress TTL 24 h, profile 1 year | Expiry drifted from the documented values |
 | Records stored in a one-year cookie | The record history could be lost with `localStorage` |
 | One record per session | A 16-answer streak wrote 16 descending entries |
+| Levels documented and coded | The level table drifted from `docs/levels.md` |
+| Level persisted for one year | The child dropped back to level 1 on every visit |
+| Table of 1 excluded from level 2 | A level 2 question could be `1 x 7` |
+| Equations only from level 4 | Equations leaked into early levels |
+| Timeout counts as a wrong answer | Expiry was free, so waiting beat guessing |
+| Changing mascot keeps the question | The child could re-roll a hard fact |
+| Level badge right aligned | The badge drifted into the middle of the header |
+| Timeout phrases are full sentences | A bare "Tempo!" is not usable Portuguese |
 | Manifest is installable with icons and screenshots | Chrome silently refuses installation |
 | Every manifest icon exists on disk | A 404 blocks install with no visible reason |
 | Every precached file exists | `cache.addAll` is atomic, so one 404 disables offline |

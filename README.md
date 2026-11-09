@@ -9,7 +9,11 @@ GitHub Pages ou Cloudflare Pages.
 
 ## Funcionalidades
 
-- Contas de multiplicação aleatórias entre 1 × 1 e 12 × 12.
+- Seis níveis progressivos, do Iniciante ao Einstein, com tabuadas e tempos
+  próprios (ver [`docs/levels.md`](docs/levels.md)).
+- Contagem decrescente por questão; esgotar o tempo conta como erro.
+- Questões de equação (`? × 8 = 80`) a partir do nível 4.
+- Contas de multiplicação aleatórias dentro das tabuadas do nível atual.
 - Duas tentativas por conta: ao segundo erro, a resposta correta é revelada
   e o jogo avança.
 - Repetição inteligente: as contas erradas voltam com prioridade alta e as

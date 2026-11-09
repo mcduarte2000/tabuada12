@@ -40,6 +40,10 @@
           <img src="assets/icon.svg" alt="" width="30" height="30">
         </div>
         <h1 class="brand-title">Tabuada 12</h1>
+        <span class="level-badge" id="levelBadge" aria-live="polite">
+          <span class="level-emoji" id="levelEmoji" aria-hidden="true">🐣</span>
+          <span class="level-text" id="levelText">Nível 1</span>
+        </span>
       </div>
       <div class="top-actions">
           <button id="soundToggle" class="icon-button" type="button" aria-pressed="true" aria-label="Desativar efeitos sonoros" title="Efeitos sonoros">
@@ -169,11 +173,11 @@
         <p class="visually-hidden" id="srQuestion" aria-live="polite"></p>
 
         <div class="question" id="question" aria-hidden="true">
-          <span id="factorA">3</span>
-          <span class="operator">×</span>
-          <span id="factorB">4</span>
-          <span class="operator">=</span>
-          <span class="answer is-empty" id="answerBox">?</span>
+          <span class="q-slot" id="slotA">3</span>
+          <span class="operator" id="operatorX">×</span>
+          <span class="q-slot" id="slotB">4</span>
+          <span class="operator" id="operatorEq">=</span>
+          <span class="q-slot" id="slotR">5</span>
         </div>
 
         <div class="keypad" id="keypad" aria-label="Teclado numérico">
@@ -206,6 +210,15 @@
   </main>
 
   <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <div class="level-up" id="levelUp" role="status" aria-live="assertive" hidden>
+    <div class="level-up-card">
+      <span class="level-up-emoji" id="levelUpEmoji" aria-hidden="true">🐣</span>
+      <p class="level-up-kicker">Subiste de nível!</p>
+      <p class="level-up-title" id="levelUpTitle">Nível 2</p>
+      <p class="level-up-name" id="levelUpName">Aprendiz</p>
+    </div>
+  </div>
 
   <dialog class="sheet" id="correctDialog" aria-labelledby="correctTitle">
     <div class="sheet-handle" aria-hidden="true"></div>

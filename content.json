@@ -45,6 +45,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -90,6 +104,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -135,6 +163,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -180,6 +222,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -225,6 +281,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -270,6 +340,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -315,6 +399,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -360,6 +458,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -405,6 +517,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -450,6 +576,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -495,6 +635,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -540,6 +694,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -585,6 +753,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -630,6 +812,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -675,6 +871,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -720,6 +930,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -765,6 +989,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -810,6 +1048,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -855,6 +1107,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -900,6 +1166,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -945,6 +1225,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -990,6 +1284,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1035,6 +1343,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1080,6 +1402,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1125,6 +1461,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1170,6 +1520,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1215,6 +1579,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1260,6 +1638,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1305,6 +1697,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     },
     {
@@ -1350,6 +1756,20 @@
         "Era {produto}, {nome}. Fica guardado na memória!",
         "{a} × {b} = {produto}. {interjeicao}! Agora já sabes.",
         "A resposta é {produto}. Da próxima acertas!"
+      ],
+      "tempo": [
+        "O tempo esgotou! Não faz mal, {nome}. Vamos à próxima.",
+        "Uups, não foste rápido o suficiente. A resposta era {produto}.",
+        "{interjeicao}! O tempo terminou. Para a próxima vais a tempo.",
+        "O relógio ganhou esta, {nome}. A resposta certa era {produto}.",
+        "Acabou o tempo! Respira e tenta a próxima com calma."
+      ],
+      "nivel": [
+        "Uau, {nome}! Subiste de nível! {interjeicao} de orgulho!",
+        "Parabéns, {nome}! Nível novo! Continuas a brilhar.",
+        "{interjeicao}! Que salto! Subiste de nível, {nome}!",
+        "És mesmo bom, {nome}! Nível alcançado!",
+        "Olha para ti, {nome}! Mais um nível! Estou a torcer por ti."
       ]
     }
   ],
@@ -1376,6 +1796,12 @@
     "revelou": [
       "A resposta certa é {produto}.",
       "Era {produto}!"
+    ],
+    "tempo": [
+      "O tempo esgotou. A resposta era {produto}."
+    ],
+    "nivel": [
+      "Parabéns, {nome}! Subiste de nível!"
     ]
   }
 }
