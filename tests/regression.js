@@ -661,6 +661,19 @@ function staticTests() {
       /state\.phase = 'revealed'/.test(js.slice(js.indexOf('function timeUp()'), js.indexOf('function showLevelUp')));
   })(), 'expiry must always end in the reveal phase, never fall through');
 
+  check('the confirm key needs the right number of digits', (function () {
+    var start = js.indexOf('function expectedDigits()');
+    var end = js.indexOf('function updateConfirm()');
+    var block = js.slice(start, end);
+    return /questionAnswer\(state\.question\)/.test(block) &&
+      /state\.input\.length === expectedDigits\(\)/.test(block) &&
+      /els\.confirm\.disabled = !canSubmit\(\)/.test(js);
+  })(), 'a dropped key leaves a short answer that must be refused, and 100 is not an attempt at 10');
+
+  check('Enter obeys the digit count, not just the button', (function () {
+    return /if \(!canSubmit\(\)\)/.test(js.slice(js.indexOf('function submit()'), js.indexOf('function saveQuestionForResume')));
+  })(), 'the keyboard shortcut must not bypass the rule the button enforces');
+
   check('the time display rounds up', (function () {
     return /function formatTime\(ms\)[\s\S]{0,220}?Math\.ceil/.test(js);
   })(), 'flooring showed 0:00 for a whole second while the question was still answerable');
@@ -678,8 +691,10 @@ function staticTests() {
   check('the shown version matches the newest changelog release', (function () {
     var shown = js.match(/var APP_VERSION = '([0-9]+\.[0-9]+\.[0-9]+)'/);
     var released = read('CHANGELOG.md').match(/^## \[([0-9]+\.[0-9]+\.[0-9]+)\]/m);
-    return !!shown && !!released && shown[1] === released[1];
-  })(), 'a version string that drifts from the changelog misleads support');
+    var inMarkup = html.match(/id="appVersion">([0-9]+\.[0-9]+\.[0-9]+)</);
+    return !!shown && !!released && !!inMarkup &&
+      shown[1] === released[1] && inMarkup[1] === released[1];
+  })(), 'a version string that drifts from the changelog or the markup misleads support');
 }
 
 // ---------------------------------------------------------------------------
@@ -1223,6 +1238,174 @@ async function browserTests(browser) {
       celebrating.disabled === true && celebrating.opacity < 0.9 &&
       celebrating.cursor === 'default';
   })(), 'a key that turns colour but drops the press is the reported "nothing happens"');
+
+  check('the confirm key needs as many digits as the answer', await (async function () {
+    await page.goto('http://localhost:' + PORT + '/?digits=1');
+    await page.waitForTimeout(400);
+    await page.fill('#nameInput', 'Digitos');
+    await page.click('#nameForm button[type="submit"]');
+    await page.waitForTimeout(200);
+    await page.click('button[data-mascot="gato"]');
+    await page.click('#startBtn');
+    await page.waitForTimeout(350);
+
+    var probe = await page.evaluate(function () {
+      var slot = document.querySelector('.q-slot.is-answer');
+      var parts = ['slotA', 'slotB', 'slotR'].map(function (id) {
+        return document.getElementById(id).textContent;
+      });
+      var values = parts.map(function (text) {
+        return text === '?' ? null : Number(text);
+      });
+      var answer;
+      if (values[0] === null) answer = values[2] / values[1];
+      else if (values[1] === null) answer = values[2] / values[0];
+      else answer = values[0] * values[1];
+      return { answer: answer, digits: String(answer).length, empty: slot.textContent };
+    });
+
+    if (probe.digits < 2) return 'skip';
+
+    var confirm = page.locator('#confirmBtn');
+
+    var isDisabled = async function () {
+      return await confirm.evaluate(function (el) { return el.disabled; });
+    };
+
+    var emptyDisabled = await isDisabled();
+
+    // type exactly one digit: a 2+ digit answer must stay unavailable
+    await page.keyboard.type(String(probe.answer).charAt(0));
+    await page.waitForTimeout(80);
+    var shortDisabled = await isDisabled();
+
+    // fill the remaining digits: now it must be available
+    await page.keyboard.type(String(probe.answer).slice(1));
+    await page.waitForTimeout(80);
+    var fullDisabled = await isDisabled();
+
+    // the disabled state must also be visible
+    var look = await confirm.evaluate(function (el) {
+      return {
+        opacity: Number(getComputedStyle(el).opacity),
+        cursor: getComputedStyle(el).cursor,
+        bg: getComputedStyle(el).backgroundColor
+      };
+    });
+
+    return emptyDisabled === true && shortDisabled === true && fullDisabled === false &&
+      look.cursor === 'pointer';
+  })(), 'a dropped key press leaves a short answer; the child must not be able to submit it');
+
+  check('a too-long answer is refused as well', await (async function () {
+    var probe = await page.evaluate(function () {
+      var parts = ['slotA', 'slotB', 'slotR'].map(function (id) {
+        return document.getElementById(id).textContent;
+      });
+      var values = parts.map(function (text) { return text === '?' ? null : Number(text); });
+      var answer;
+      if (values[0] === null) answer = values[2] / values[1];
+      else if (values[1] === null) answer = values[2] / values[0];
+      else answer = values[0] * values[1];
+      return { correct: String(answer) };
+    });
+
+    for (var i = 0; i < 4; i += 1) await page.keyboard.press('Backspace');
+    await page.keyboard.type(probe.correct);
+    var atExact = await page.evaluate(function () {
+      return document.getElementById('confirmBtn').disabled;
+    });
+
+    if (probe.correct.length >= 3) return atExact === false;
+
+    await page.keyboard.type('9');
+    var tooLong = await page.evaluate(function () {
+      return {
+        input: document.querySelector('.q-slot.is-answer').textContent,
+        disabled: document.getElementById('confirmBtn').disabled
+      };
+    });
+
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(200);
+    var submitted = await page.evaluate(function () {
+      return !document.getElementById('nextBtn').hidden;
+    });
+
+    return atExact === false && tooLong.disabled === true && submitted === false;
+  })(), '100 is not an attempt at 10; the confirm key must refuse the extra digit');
+
+  check('a wrong-length answer says so instead of scoring a miss', await (async function () {
+    var probe = await page.evaluate(function () {
+      var parts = ['slotA', 'slotB', 'slotR'].map(function (id) {
+        return document.getElementById(id).textContent;
+      });
+      var values = parts.map(function (text) { return text === '?' ? null : Number(text); });
+      var answer;
+      if (values[0] === null) answer = values[2] / values[1];
+      else if (values[1] === null) answer = values[2] / values[0];
+      else answer = values[0] * values[1];
+      return { correct: String(answer) };
+    });
+
+    if (probe.correct.length >= 3) return 'skip';
+
+    for (var i = 0; i < 4; i += 1) await page.keyboard.press('Backspace');
+
+    var before = await page.evaluate(function () {
+      return document.getElementById('statMiss').textContent;
+    });
+
+    // one digit short, then Enter
+    await page.keyboard.type(probe.correct.slice(0, -1));
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(250);
+
+    var shortResult = await page.evaluate(function () {
+      return {
+        miss: document.getElementById('statMiss').textContent,
+        bubble: document.getElementById('bubbleText').textContent,
+        revealed: !document.getElementById('nextBtn').hidden
+      };
+    });
+
+    return before === shortResult.miss &&
+      shortResult.revealed === false &&
+      /faltam/i.test(shortResult.bubble);
+  })(), 'a wrong-length answer is a typing slip, not a mistake to punish');
+
+  check('a short answer cannot be submitted even by pressing Enter', await (async function () {
+    var probe = await page.evaluate(function () {
+      var parts = ['slotA', 'slotB', 'slotR'].map(function (id) {
+        return document.getElementById(id).textContent;
+      });
+      var values = parts.map(function (text) { return text === '?' ? null : Number(text); });
+      var answer;
+      if (values[0] === null) answer = values[2] / values[1];
+      else if (values[1] === null) answer = values[2] / values[0];
+      else answer = values[0] * values[1];
+      return { correct: String(answer) };
+    });
+
+    // clear, then type one digit fewer than needed
+    await page.keyboard.press('Backspace');
+    await page.keyboard.press('Backspace');
+    await page.keyboard.press('Backspace');
+    var short = probe.correct.slice(0, probe.correct.length - 1);
+    await page.keyboard.type(short);
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(200);
+
+    return await page.evaluate(function () {
+      return {
+        phase: !document.getElementById('nextBtn').hidden,
+        input: document.querySelector('.q-slot.is-answer').textContent,
+        correct: document.getElementById('statCorrect').textContent
+      };
+    }).then(function (after) {
+      return after.phase === false && after.input === short;
+    });
+  })(), 'the keyboard shortcut must obey the same rule as the button');
 
   check('level badge always shows the level', await page.evaluate(function () {
     return /Nível \d/.test(document.getElementById('levelText').textContent) &&

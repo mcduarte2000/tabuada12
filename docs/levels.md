@@ -14,6 +14,15 @@ level reached is remembered for one year.
   in an equation.
 - **Running out of time is a wrong answer.** It consumes the attempt in play,
   shows the mascot's "time is up" line, and applies the same streak reset.
+- **The answer must have exactly as many digits as the correct answer.** A
+  dropped key press on a touchscreen leaves a short answer, and a child should
+  not lose an attempt because of the hardware. The confirm key stays visibly
+  unavailable until the digit count matches, and the Enter shortcut obeys the
+  same rule. Too many digits is refused for the same reason: `100` is not an
+  attempt at `10`. A wrong-length answer costs nothing: it says "Faltam
+  números." or "São números a mais.", ends no attempt and leaves the statistics
+  untouched. The digit keys stay live up to the three-digit limit, so a child
+  can see and correct an over-long answer instead of finding a dead keypad.
 - **The streak that unlocks a level is counted inside the current level.** On
   reaching a new level, the streak resets to zero and the count starts again
   towards the next threshold.

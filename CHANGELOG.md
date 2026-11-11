@@ -17,6 +17,21 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-11-11
+
+### Corrigido
+
+- **Uma tecla perdida podia custar uma tentativa.** Num ecrã tátil que falha um
+  toque, a criança escrevia `1` em vez de `12`, carregava em confirmar e perdia
+  a tentativa por um erro do teclado, não dela. O botão de confirmar só fica
+  disponível quando o número de dígitos escritos é igual ao da resposta certa.
+- **Dígitos a mais também são recusados.** `100` não é uma tentativa de `10`, e
+  o mesmo vale para `1` ou `10` quando a resposta é `100`. O botão fica cinzento
+  e a mensagem diz o que falta ou o que sobra.
+- Uma resposta com o número errado de dígitos não conta como falha: a pergunta
+  fica aberta, a mascote diz «Faltam números.» ou «São números a mais.» e as
+  estatísticas não mudam. O atalho Enter segue a mesma regra do botão.
+
 ## [1.8.0] - 2026-11-11
 
 Esta versão junta duas iterações: correções de fiabilidade nos controlos e a
@@ -369,7 +384,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.0...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.1...main
+[1.8.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.0...v1.6.1

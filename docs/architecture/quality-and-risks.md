@@ -72,6 +72,7 @@ retained.
 | R17 | A new tune can bleed into the previous one, because every tune shares one `Tone.Transport`. | Stray notes from the old melody play over the new one. | Medium: it happened once during development. | Parts are disposed and the transport is reset before a new tune is scheduled; a static check asserts that order. |
 | R18 | Tone.js is about 341 KB, roughly five times the project's own JavaScript. | A slower first visit on a slow connection. | Low to medium on mobile networks. | The file is vendored and precached once, so it is a first-visit cost only, not a per-visit one. |
 | R19 | The melodies were generated from public ABC sources, not checked note by note. | An error in a source transcription would ship as a wrong melody. | Low. | Each tune records its source URL; two well-known tunes were compared against the expected melody by hand during verification. |
+| R20 | The confirm key compares the typed digit count with the correct answer, so a mistake in `expectedDigits()` would block a legitimate answer rather than score it. | A child cannot submit a correct answer. | Low: the value comes from the same `questionAnswer()` that is used to score. | The digit count is derived from `questionAnswer()`, never stored separately, so the gate and the scoring can never disagree. Covered by static and browser checks with one-, two- and three-digit answers. |
 
 ### 11.2 Platform limitations
 

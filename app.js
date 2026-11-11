@@ -21,7 +21,7 @@
   };
 
   var PROGRESS_TTL = 24 * 60 * 60;
-  var APP_VERSION = '1.8.0';
+  var APP_VERSION = '1.8.1';
 
   var LEVELS = [
     { level: 1, name: 'Iniciante', emoji: '🐣', maxTable: 10, excludeOne: false, seconds: 30, equations: false, unlockStreak: 0 },
@@ -619,6 +619,22 @@
     slot.classList.toggle('is-empty', !hasInput);
   }
 
+  /*
+   * How many digits the correct answer has. A dropped key press leaves a short
+   * answer that is wrong only because of the keyboard, so the confirm key stays
+   * unavailable until the count matches exactly. Too many digits is refused for
+   * the same reason: 100 is not an attempt at 10.
+   */
+  function expectedDigits() {
+    var answer = questionAnswer(state.question);
+    return String(Math.abs(answer)).length;
+  }
+
+  function canSubmit() {
+    if (state.phase !== 'answering' || state.busy) return false;
+    return state.input.length === expectedDigits();
+  }
+
   function updateConfirm() {
     var typing = state.phase === 'answering' && !state.busy;
     var full = state.input.length >= MAX_INPUT;
@@ -626,12 +642,17 @@
     var index;
     var key;
 
+    /*
+     * Digits stay usable up to the hard limit, even past the expected length,
+     * so a child can type 100 for an answer of 10 and be refused rather than
+     * find the keypad dead. Only the confirm key enforces the digit count.
+     */
     for (index = 0; index < keys.length; index += 1) {
       key = keys[index];
-      key.disabled = !typing || (full && /^[0-9]$/.test(key.dataset.key));
+      key.disabled = /^[0-9]$/.test(key.dataset.key) ? !typing || full : !typing;
     }
 
-    els.confirm.disabled = !typing || state.input.length === 0;
+    els.confirm.disabled = !canSubmit();
   }
 
   function clearAdvance() {
@@ -990,6 +1011,7 @@
   function pressDigit(digit) {
     if (state.phase !== 'answering' || state.busy) return;
     if (state.input.length >= MAX_INPUT) return;
+
     state.input = state.input === '0' ? digit : state.input + digit;
     renderAnswer();
     updateConfirm();
@@ -1029,6 +1051,14 @@
 
     if (!state.input) {
       restartAnimation(answerSlot(), 'flash');
+      return;
+    }
+
+    if (!canSubmit()) {
+      restartAnimation(answerSlot(), 'flash');
+      say(state.input.length < expectedDigits()
+        ? 'Faltam números.'
+        : 'São números a mais.', 'err', 'error');
       return;
     }
 

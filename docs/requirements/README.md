@@ -13,6 +13,7 @@ iteration, written when the iteration closes.
 | 4 | Accessibility fixes and self-hosted typeface | completed | [iteration-04.md](./iteration-04.md) |
 | 5 | Reliable controls and an honest countdown | completed | [iteration-05.md](./iteration-05.md) |
 | 6 | Traditional music, a radio bar and a music page | completed | [iteration-06.md](./iteration-06.md) |
+| 7 | Do not punish a dropped key press | completed | [iteration-07.md](./iteration-07.md) |
 
 ## Why this folder exists
 

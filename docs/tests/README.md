@@ -78,6 +78,8 @@ defect from returning unnoticed.
 | Leaving the game screen stops the music | Music played on under a screen that shows no music controls |
 | Piano is the default instrument | The requested default timbre must not depend on a saved cookie |
 | The information dialog makes no offline claim about music | The sentence was removed on request |
+| The confirm key needs the right number of digits | A dropped key press left a short answer that scored a miss |
+| Enter obeys the digit count | The shortcut must not bypass the rule the button enforces |
 | A new track never overlaps the previous one | Leftover Parts from the old tune were audible as stray notes |
 | The player offers a choice of instruments | Four extra timbres were requested and must stay reachable |
 | The music page lists every tune | A page nobody can reach, or that lists a tune with no way to hear it, is useless |
@@ -152,6 +154,10 @@ Run with Playwright or system Chrome at 360x640.
   default cursor; a scripted click on it changes nothing.
 - The information dialog opens with the installed version and a link to the
   rendered changelog on GitHub.
+- With an answer of `18`: the confirm key is grey and `not-allowed` while empty
+  or holding `1`, purple and `pointer` at `18`, and grey again at `189`.
+  Pressing Enter in either wrong-length case keeps the question open, says which
+  way it is wrong, and leaves the miss counter unchanged.
 - The radio bar is absent on the setup screens and present on the game screen.
 - Pressing play produces a non-zero signal at the destination, shows the track
   name, and switches the button to stop; pressing stop silences it and returns
