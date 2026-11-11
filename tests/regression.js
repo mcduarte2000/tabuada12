@@ -188,12 +188,133 @@ function staticTests() {
   });
   check('no unknown placeholders', badPlaceholder === null, 'unknown token: ' + badPlaceholder);
 
-  check('single audio toggle', (html.match(/id="soundToggle"/g) || []).length === 1 &&
-    (html.match(/id="musicToggle"/g) || []).length === 0,
-    'there must be exactly one sound control and no music control');
+  check('the music bar sits on the game screen only', (function () {
+    var game = html.slice(html.indexOf('<section id="game"'));
+    game = game.slice(0, game.indexOf('</main>'));
+    return /id="radio"/.test(game) &&
+      !/id="radio"/.test(html.slice(0, html.indexOf('<section id="game"')));
+  })(), 'music controls belong to the screen where the child is playing');
 
-  check('music removal kept app.js clean', /\bMusic\b|musicToggle|trackChip/.test(js) === false,
-    'no leftover references to the removed music feature');
+  check('the music bar has play and stop, not a speaker toggle', (function () {
+    return /id="musicPlay"/.test(html) &&
+      /icon-play/.test(html) && /icon-stop/.test(html) &&
+      !/id="soundToggle"/.test(html.slice(html.indexOf('id="radio"'), html.indexOf('</main>')));
+  })(), 'the requested control is a play and stop button');
+
+  check('music is off until the visitor asks for it', (function () {
+    var player = read('music.js');
+    return /DEFAULT_ENABLED = false/.test(player) &&
+      /state\.enabled = readCookie\(COOKIE\.enabled\) === 'on'/.test(player) &&
+      /playback never starts by itself/.test(player);
+  })(), 'sound that starts on its own surprises a child and a parent');
+
+  check('a remembered preference never starts playback', (function () {
+    var player = read('music.js');
+    var unlock = player.slice(player.indexOf('var unlock = function'));
+    unlock = unlock.slice(0, unlock.indexOf('document.addEventListener'));
+    return unlock.indexOf('startRadio') === -1;
+  })(), 'music restarted on the mascot step because the first gesture resumed it');
+
+  check('leaving the game screen stops the music', (function () {
+    var player = read('music.js');
+    return /MutationObserver/.test(player) &&
+      /game\.hidden && state\.playing/.test(player) &&
+      /pauseRadio\(\)/.test(player);
+  })(), 'music played on under a screen that shows no music controls');
+
+  check('piano is the default instrument', (function () {
+    var player = read('music.js');
+    return /readCookie\(COOKIE\.instrument\) \|\| 'piano'/.test(player) &&
+      /instrument: 'piano'/.test(player);
+  })(), 'the requested default timbre must not depend on a saved cookie');
+
+  check('the music choice is kept in a cookie, not localStorage', (function () {
+    var player = read('music.js');
+    return /document\.cookie/.test(player) &&
+      /tabuada12_music/.test(player) &&
+      /localStorage/.test(player) === false;
+  })(), 'the decision must survive a reload under the same name as the rest of the app');
+
+  check('the player offers a choice of instruments', (function () {
+    var player = read('music.js');
+    var picker = /INSTRUMENTS = \[/.test(player) &&
+      /id="musicInstrument"/.test(html) &&
+      /INSTRUMENTS\.forEach/.test(player);
+    var ids = player.match(/^      id: '[a-z]+',$/gm) || [];
+    return picker && ids.length >= 8 &&
+      /piano/.test(player) && /guitar/.test(player) &&
+      /ukulele/.test(player) && /clarinet/.test(player);
+  })(), 'the tone of the music should be selectable');
+
+  check('music lives outside the game logic', /\bmusicToggle\b/.test(js) === false &&
+    /musicPlay/.test(read('music.js')),
+    'a music bug must not be able to break a question');
+
+  check('Tone.js is vendored, never fetched', (function () {
+    if (/cdnjs|unpkg|jsdelivr|cdn\./.test(html.replace(/https:\/\/github\.com[^"]*/g, ''))) {
+      return false;
+    }
+    return /assets\/vendor\/tone\/Tone\.js/.test(html) &&
+      fs.existsSync(path.join(ROOT, 'assets/vendor/tone/Tone.js')) &&
+      fs.existsSync(path.join(ROOT, 'assets/vendor/tone/LICENSE.md'));
+  })(), 'a runtime request to a CDN breaks offline play and the privacy promise');
+
+  check('the playlist has eighteen public-domain tracks', (function () {
+    var music = read('assets/music/tracks.js');
+    var ids = music.match(/^    id: '/gm) || [];
+    var credited = music.match(/^    credit: /gm) || [];
+    var sourced = music.match(/^    source: /gm) || [];
+    return ids.length === 18 && credited.length === 18 && sourced.length === 18;
+  })(), 'every track needs an id, a credit and a source');
+
+  check('every melody is note and duration pairs', (function () {
+    var music = read('assets/music/tracks.js');
+    var pairs = music.match(/\['(?:[A-G][#b]?-?\d|rest)','[0-9]+[nt][.]?'\]/g) || [];
+    return pairs.length > 800;
+  })(), 'a malformed melody would throw inside Tone.Part at play time');
+
+  check('a new track never overlaps the previous one', (function () {
+    var player = read('music.js');
+    return /disposeCurrent\(\);[\s\S]{0,200}?Transport\.stop\(\)/.test(player) &&
+      /Transport\.cancel\(0\)/.test(player);
+  })(), 'leftover Parts from the old tune were audible as stray notes');
+
+  check('the music page lists every tune with a play button', (function () {
+    var page = read('musicas.html');
+    var script = read('musicas.js');
+    return /id="musicList"/.test(page) &&
+      /engine\.tracks\(\)\.forEach/.test(script) &&
+      /playTrack/.test(script) &&
+      /track\.about/.test(script) &&
+      /track\.year/.test(script) &&
+      /track\.country/.test(script);
+  })(), 'the page must show the story of each tune and let a child hear it');
+
+  check('the information dialog links to the music page', (function () {
+    var dialog = html.slice(html.indexOf('id="aboutDialog"'));
+    var music = dialog.slice(dialog.indexOf('Música'));
+    var link = music.indexOf('href="musicas.html"');
+    var tracks = music.indexOf('Tarantella Napoletana');
+    return link !== -1 && tracks !== -1 && link > tracks;
+  })(), 'the link belongs at the end of the music section, after the credits');
+
+  check('the information dialog makes no offline claim about music', (function () {
+    var dialog = html.slice(html.indexOf('id="aboutDialog"'));
+    return !/sem rede|continua a funcionar sem/.test(dialog);
+  })(), 'the offline sentence was removed on request');
+
+  check('the music credits are in the information dialog', (function () {
+    return /Música/.test(html) && /Tone\.js/.test(html) &&
+      /Cielito Lindo/.test(html) && /Quirino Mendoza/.test(html);
+  })(), 'the licence and authorship of every tune must be reachable in the app');
+
+  check('music credits are also in LICENSE', (function () {
+    var licence = read('LICENSE');
+    return /## \d+\. Music/.test(licence) &&
+      /Tone\.js/.test(licence) &&
+      /Cielito Lindo/.test(licence) &&
+      /Soldier's Joy/.test(licence);
+  })(), 'LICENSE is the authoritative third-party notice');
 
   check('clock pauses on hidden tab', /pauseTimer/.test(js) && /visibilitychange/.test(js),
     'elapsed time must stop accumulating while the tab is hidden');
@@ -499,6 +620,14 @@ function staticTests() {
       /## Third-party content/.test(text) && /## Tests/.test(text);
   })(), 'detail must move, not disappear');
 
+  check('the reuse rule is stated in both instruction files', (function () {
+    var agents = read('AGENTS.md');
+    var contributing = read('CONTRIBUTING.md');
+    return /Reuse before you build/i.test(agents) &&
+      /### Reuse before you build/.test(contributing) &&
+      /authoring-time/i.test(contributing);
+  })(), 'a hand-rolled tool is written when nobody searches first; the ABC parser was one');
+
   var licence = read('LICENSE');
   check('licence lists third-party content',
     licence.indexOf('Third-party notices') >= 0 && licence.indexOf('Fluent Emoji') >= 0,
@@ -514,6 +643,43 @@ function staticTests() {
     check('Gherkin blocks balanced in ' + path.basename(file), text.split('```').length % 2 === 1,
       'unbalanced code fences');
   });
+
+  check('a key that cannot accept a press does not look pressable',
+    /\.key:disabled[\s\S]{0,200}?opacity:/.test(css) &&
+      /\.key:disabled[\s\S]{0,200}?cursor:\s*default/.test(css),
+    'a disabled key that still lights up on touch reads as a broken game');
+
+  check('a wrong first attempt keeps the countdown armed', (function () {
+    var block = js.slice(js.indexOf('function submit()'), js.indexOf('function saveQuestionForResume'));
+    var wrongPath = block.slice(block.indexOf('state.missCount += 1'));
+    var firstAttempt = wrongPath.slice(0, wrongPath.indexOf('state.attempt = 2'));
+    return firstAttempt.indexOf('stopTimer()') === -1;
+  })(), 'clearing the deadline on the first miss leaves the second attempt untimed forever');
+
+  check('a question can never sit answerable at zero', (function () {
+    return /function timeUp\(\)[\s\S]{0,500}?if \(state\.phase !== 'answering' \|\| state\.busy\) return;/.test(js) &&
+      /state\.phase = 'revealed'/.test(js.slice(js.indexOf('function timeUp()'), js.indexOf('function showLevelUp')));
+  })(), 'expiry must always end in the reveal phase, never fall through');
+
+  check('the time display rounds up', (function () {
+    return /function formatTime\(ms\)[\s\S]{0,220}?Math\.ceil/.test(js);
+  })(), 'flooring showed 0:00 for a whole second while the question was still answerable');
+
+  check('an open dialog pauses the countdown', (function () {
+    return /function openDialog[\s\S]{0,900}?pauseTimer\('dialog'\)/.test(js) &&
+      /function closeDialog[\s\S]{0,500}?resumeTimer\('dialog'\)/.test(js);
+  })(), 'reading the Acertos sheet used to cost the child the question');
+
+  check('the information dialog shows the installed version', (function () {
+    return /id="appVersion"/.test(html) &&
+      /blob\/main\/CHANGELOG\.md/.test(html);
+  })(), 'a parent reporting a bug needs the version that is installed and its release notes');
+
+  check('the shown version matches the newest changelog release', (function () {
+    var shown = js.match(/var APP_VERSION = '([0-9]+\.[0-9]+\.[0-9]+)'/);
+    var released = read('CHANGELOG.md').match(/^## \[([0-9]+\.[0-9]+\.[0-9]+)\]/m);
+    return !!shown && !!released && shown[1] === released[1];
+  })(), 'a version string that drifts from the changelog misleads support');
 }
 
 // ---------------------------------------------------------------------------
@@ -958,6 +1124,105 @@ async function browserTests(browser) {
     });
     return /^0:0[0-5]$/.test(atStart) && after.time === '0:00' && after.revealed && after.miss >= 1;
   })(), 'level 6 gives 5 seconds, then the answer is revealed with a miss');
+
+  check('the clock keeps running after a wrong first attempt', await (async function () {
+    await page.goto('http://localhost:' + PORT + '/?secondattempt=1');
+    await page.waitForTimeout(400);
+    await page.fill('#nameInput', 'Tempo');
+    await page.click('#nameForm button[type="submit"]');
+    await page.waitForTimeout(200);
+    await page.click('button[data-mascot="gato"]');
+    await page.click('#startBtn');
+    await page.waitForTimeout(250);
+
+    await page.keyboard.type('999');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(150);
+    var before = await page.evaluate(function () {
+      return document.getElementById('statTime').textContent;
+    });
+    await page.waitForTimeout(2200);
+    var after = await page.evaluate(function () {
+      return {
+        time: document.getElementById('statTime').textContent,
+        revealed: !document.getElementById('nextBtn').hidden
+      };
+    });
+    return before !== after.time && after.revealed;
+  })(), 'a frozen clock on the second attempt means a level-6 question can never expire');
+
+  check('no question stays answerable at 0:00', await (async function () {
+    await page.goto('http://localhost:' + PORT + '/?zero=1');
+    await page.waitForTimeout(400);
+    await page.fill('#nameInput', 'Tempo');
+    await page.click('#nameForm button[type="submit"]');
+    await page.waitForTimeout(200);
+    await page.click('button[data-mascot="gato"]');
+    await page.click('#startBtn');
+    await page.waitForTimeout(250);
+
+    var zero = null;
+    for (var tick = 0; tick < 30; tick += 1) {
+      var sample = await page.evaluate(function () {
+        return {
+          time: document.getElementById('statTime').textContent,
+          keypad: document.getElementById('keypad').hidden === false,
+          typing: document.querySelectorAll('#keypad button[data-key]:not(:disabled)').length > 0
+        };
+      });
+      if (sample.time === '0:00' && sample.keypad && sample.typing) {
+        zero = sample;
+        break;
+      }
+      if (!sample.keypad) break;
+      await page.waitForTimeout(200);
+    }
+    return zero === null;
+  })(), 'an expired question must be revealed with a miss, never left waiting for input');
+
+  await page.evaluate(function () {
+    localStorage.setItem('tabuada12.level', '6');
+    document.cookie = 'tabuada12_level=6; Max-Age=31536000; Path=/';
+  });
+
+  check('keys that ignore a press look disabled', await (async function () {
+    await page.goto('http://localhost:' + PORT + '/?keys=1');
+    await page.waitForTimeout(400);
+    await page.fill('#nameInput', 'Teclas');
+    await page.click('#nameForm button[type="submit"]');
+    await page.waitForTimeout(200);
+    await page.click('button[data-mascot="gato"]');
+    await page.click('#startBtn');
+    await page.waitForTimeout(300);
+
+    var idle = await page.evaluate(function () {
+      var key = document.querySelector('#keypad button[data-key="5"]');
+      return {
+        disabled: key.disabled,
+        opacity: Number(getComputedStyle(key).opacity),
+        cursor: getComputedStyle(key).cursor
+      };
+    });
+
+    var q = await readQuestion();
+    var value = Number(q.a) * Number(q.b);
+    await page.keyboard.type(String(value));
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(200);
+
+    var celebrating = await page.evaluate(function () {
+      var key = document.querySelector('#keypad button[data-key="5"]');
+      return {
+        disabled: key.disabled,
+        opacity: Number(getComputedStyle(key).opacity),
+        cursor: getComputedStyle(key).cursor
+      };
+    });
+
+    return idle.disabled === false && idle.opacity === 1 &&
+      celebrating.disabled === true && celebrating.opacity < 0.9 &&
+      celebrating.cursor === 'default';
+  })(), 'a key that turns colour but drops the press is the reported "nothing happens"');
 
   check('level badge always shows the level', await page.evaluate(function () {
     return /Nível \d/.test(document.getElementById('levelText').textContent) &&

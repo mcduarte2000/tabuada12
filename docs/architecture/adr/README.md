@@ -14,10 +14,12 @@ One record per hard-to-reverse decision. Format follows MADR.
 | [0006](./0006-material-design-3.md) | Use Material Design 3 tokens as the visual system | accepted |
 | [0007](./0007-synthesised-sound-effects.md) | Synthesise feedback sounds with the Web Audio API | accepted |
 | [0008](./0008-installable-web-app.md) | Ship as an installable Progressive Web App | accepted |
+| [0009](./0009-timer-and-input-honesty.md) | Give the countdown one owner and never show input that is discarded | accepted |
+| [0010](./0010-vendored-tonejs-music.md) | Play traditional music from note data with a vendored Tone.js | accepted |
 
 ## Numbering
 
 Numbers are monotonic and never reused. Gaps are acceptable. A superseded ADR
 keeps its number and changes its status to `superseded by ADR-MMMM`.
 
-The next decision uses the next free number: **0009**.
+The next decision uses the next free number: **0011**.

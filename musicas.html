@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Músicas — Tabuada 12</title>
+  <meta name="description" content="As músicas tradicionais da Tabuada 12, com a história de cada uma e a possibilidade de ouvir.">
+  <meta name="theme-color" content="#6750a4">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/roboto-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="musicas.css">
+</head>
+<body>
+  <main class="app music-page">
+    <header class="top-app-bar">
+      <div class="brand">
+        <span class="brand-mark">
+          <img src="assets/icon.svg" alt="" width="30" height="30">
+        </span>
+        <h1 class="brand-title">Músicas</h1>
+      </div>
+      <div class="top-actions">
+        <a class="icon-button" href="index.html" aria-label="Voltar ao jogo" title="Voltar ao jogo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <p class="music-intro">
+      Estas são as músicas que tocam durante o jogo. Todas são melodias
+      tradicionais, tocadas no teu dispositivo por um sintetizador. Toca em
+      ouvir para as conheceres.
+    </p>
+
+    <div class="music-toolbar">
+      <label class="music-toolbar-field">
+        <span>Instrumento</span>
+        <select id="pageInstrument" aria-label="Instrumento"></select>
+      </label>
+      <label class="music-toolbar-field">
+        <span>Volume</span>
+        <input type="range" id="pageVolume" min="0" max="1" step="0.05" value="0.6" aria-label="Volume da música">
+      </label>
+    </div>
+
+    <ul class="music-list" id="musicList"></ul>
+
+    <p class="music-foot">
+      Os créditos completos estão no ficheiro <code>LICENSE</code> do projeto.
+    </p>
+  </main>
+
+  <script src="assets/vendor/tone/Tone.js"></script>
+  <script src="assets/music/tracks.js"></script>
+  <script src="music.js"></script>
+  <script src="musicas.js"></script>
+</body>
+</html>

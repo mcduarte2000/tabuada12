@@ -53,6 +53,10 @@ CI runs both suites on every push: [`.github/workflows/ci.yml`](.github/workflow
 | `app.js` | all game logic, one IIFE, ES5 |
 | `mascots.js` | mascot list and fallback phrases |
 | `content.json` | per-mascot phrases, editable, fetched at runtime |
+| `music.js` | music engine and the radio bar; no game logic |
+| `assets/music/tracks.js` | the 18 tunes, generated from public ABC; never hand-edited |
+| `assets/vendor/tone/` | Tone.js and its MIT licence |
+| `musicas.html`, `musicas.js`, `musicas.css` | the music page |
 | `sw.js`, `manifest.webmanifest` | PWA shell and metadata |
 | `assets/` | icons, screenshots, mascot SVGs, vendored licences |
 | `tests/regression.js` | regression suite |
@@ -77,6 +81,11 @@ CI runs both suites on every push: [`.github/workflows/ci.yml`](.github/workflow
 - **Accessibility is a gate**: every control is a `<button>` with an accessible
   name, feedback uses live regions, `prefers-reduced-motion` is honoured.
 - **Tests first for defects**: write the failing check, watch it fail, then fix.
+- **Reuse before you build**: search for an existing tool, library or dataset
+  before writing your own. State the search you did and why the existing
+  option was rejected. A dependency that only runs at authoring time may live
+  in a throwaway environment and never ships; see
+  [`CONTRIBUTING.md`](CONTRIBUTING.md#reuse-before-you-build).
 - **`docs/levels.md` and `LEVELS` change together**; the suite compares them.
 - **Bump `VERSION` in `sw.js`** in the same commit as any precached file change.
 

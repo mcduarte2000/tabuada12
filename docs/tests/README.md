@@ -65,6 +65,23 @@ defect from returning unnoticed.
 | Level badge right aligned | The badge sat next to the title, because the flex row shrank to its content |
 | Badge rule is not defeated by its parent | A correct `margin-left: auto` with a content-sized parent does nothing |
 | Timeout phrases are full sentences | A bare "Tempo!" is not usable Portuguese |
+| A wrong first attempt keeps the countdown armed | The clock froze on the second attempt, so a level-6 fact could never expire |
+| Expiry always reveals | A question could sit answerable at `0:00` after a pause at the last millisecond |
+| The time display rounds up | `0:00` showed for a whole second while input was still accepted |
+| An open dialog pauses the countdown | Reading the Acertos sheet used to consume the child's time |
+| Keys that ignore a press look disabled | A key rippled and typed nothing, which reads as a broken game |
+| The music bar sits on the game screen only | Music controls on the setup screens distract from the one task there |
+| The music bar has play and stop | A speaker icon does not say whether music is running |
+| Music is off until asked for | Sound that starts by itself surprises a child and a parent |
+| The music choice is kept in a cookie | The decision must survive a reload like the other preferences |
+| A remembered preference never starts playback | Music started on the mascot step because the first gesture resumed it |
+| Leaving the game screen stops the music | Music played on under a screen that shows no music controls |
+| Piano is the default instrument | The requested default timbre must not depend on a saved cookie |
+| The information dialog makes no offline claim about music | The sentence was removed on request |
+| A new track never overlaps the previous one | Leftover Parts from the old tune were audible as stray notes |
+| The player offers a choice of instruments | Four extra timbres were requested and must stay reachable |
+| The music page lists every tune | A page nobody can reach, or that lists a tune with no way to hear it, is useless |
+| The information dialog links to the music page | The page must be reachable from the app |
 | Manifest is installable with icons and screenshots | Chrome silently refuses installation |
 | Every manifest icon exists on disk | A 404 blocks install with no visible reason |
 | Every precached file exists | `cache.addAll` is atomic, so one 404 disables offline |
@@ -93,6 +110,8 @@ defect from returning unnoticed.
 | Licence lists third-party content | MIT attribution is a legal obligation |
 | Every mascot file credited | Same reason |
 | Gherkin fences balanced | Requirements must stay renderable |
+| The version shown matches the changelog | A drifting version string misleads whoever reports a bug |
+| The information dialog shows the version | Support needs to know which build the child is running |
 
 ### Browser checks
 
@@ -125,6 +144,28 @@ Run with Playwright or system Chrome at 360x640.
   includes the running session marked "agora".
 - Reduced motion does not break layout.
 - At 320x568: title fits, subtitle is not clipped, no vertical overflow.
+- After a wrong first attempt the countdown keeps running and can expire on the
+  second attempt, revealing the answer with a miss.
+- A question never sits answerable at `0:00`: sampling the display while a
+  level-6 question runs finds no zero sample with an enabled key.
+- A key that cannot accept input is disabled, under 0.9 opacity and uses the
+  default cursor; a scripted click on it changes nothing.
+- The information dialog opens with the installed version and a link to the
+  rendered changelog on GitHub.
+- The radio bar is absent on the setup screens and present on the game screen.
+- Pressing play produces a non-zero signal at the destination, shows the track
+  name, and switches the button to stop; pressing stop silences it and returns
+  the button to play.
+- With the music cookie unset, nothing plays and the audio context stays
+  suspended until a gesture. With the cookie set to `on`, the pages remain
+  silent: the first gesture only unlocks audio, and the play button is the only
+  thing that starts sound.
+- Leaving the game screen while music plays silences it, and returning does not
+  resume it on its own.
+- Each of the eight instruments produces a measurable signal, so none is
+  effectively silent.
+- The music page lists all 18 tunes with country, era, author and a play button
+  that starts the same engine used by the radio bar.
 
 ## Input quality
 
@@ -137,6 +178,16 @@ unclickable for a person.
 Static checks also assert the affordance: `.stat` sets `cursor: pointer` and
 `.stat--static` resets it, so a clickable-looking element is always a real
 button and a static one never looks tappable.
+
+The keypad follows the same rule from the other direction: `updateConfirm`
+derives `disabled` from the very predicate that gates `pressDigit` and
+`submit`, and `spawnRipple` refuses a disabled button. A press that would be
+ignored therefore cannot show feedback, and a press that shows feedback cannot
+be ignored. See [ADR-0009](../architecture/adr/0009-timer-and-input-honesty.md).
+
+Beware the service worker when reproducing a defect by hand: a registered
+worker serves the previous `app.js` from cache, so a fix can look absent. Either
+unregister the worker and clear caches, or serve the copy without `sw.js`.
 
 ## Adding a case
 

@@ -25,6 +25,24 @@ No comments, with two exceptions:
 
 Both are rare. A comment that restates the code is noise.
 
+### Reuse before you build
+
+Before writing a tool, parser, converter or helper, search for one that already
+exists. State where you looked and why the existing option was rejected. "I did
+not check" is not a reason; neither is "it was quicker to write my own".
+
+This applies to authoring-time work as much as to shipped code. A converter used
+once to generate a data file is still a tool someone else has already written and
+tested, and a hand-rolled version will silently produce wrong output. The ABC-to-
+note-array generator for `assets/music/tracks.js` is the cautionary example: a
+regex parser was written first and produced melodies that did not match the
+sources, while `music21` parsed the same ABC correctly.
+
+An authoring-time dependency may live in a throwaway environment (a virtualenv, a
+temporary directory) and never ship. That keeps `AGENTS.md`'s "no dependencies"
+rule intact: the rule is about what the browser downloads, not about what a
+contributor runs to produce a file.
+
 ### Numbers
 
 Every magic number lives in a constant block at the top of `app.js`:
@@ -237,6 +255,16 @@ The app is installable (ADR-0008).
   work. This is the most common "my fix did nothing" cause in this project.
 - Add every new runtime file to `SHELL_FILES`. `cache.addAll` is atomic: one 404
   disables offline support entirely, and the suite checks every listed file exists.
+- **Vendored libraries are not dependencies at build time.** Tone.js ships as a
+  file in `assets/vendor/`, is precached like any other asset, and needs no
+  install step. A new library still needs an ADR (see ADR-0010) and a licence
+  entry in `LICENSE`.
+- **Generated data is not hand-edited.** `assets/music/tracks.js` is produced
+  from public ABC notation by an authoring-time script. Change the source, or
+  change the entry through that script; editing notes by hand breaks the link to
+  the recorded source. If `assets/music/tracks.js` is missing entirely the radio
+  bar stays hidden and the game runs normally; a malformed entry inside it will
+  throw when that tune is played, so the suite checks the shape of every melody.
 - Icons: keep an `any` icon at 192 or 512 px, and a separate maskable icon with the
   artwork inside the centred 80 % safe zone.
 - Test offline before committing: load once online, switch the network off, reload,

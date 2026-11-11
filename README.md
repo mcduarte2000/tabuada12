@@ -25,6 +25,8 @@ GitHub Pages ou Cloudflare Pages.
 - O nome, o mascote e o progresso ficam também em cookies: o perfil dura
   um ano e o progresso expira ao fim de 24 horas.
 - Tema dia/noite e efeitos sonoros opcionais.
+- Música tradicional opcional enquanto se joga, com oito instrumentos à escolha
+  e uma [página com todas as melodias](musicas.html) e a sua história.
 - Instalável como aplicação (PWA) no Chrome ou Edge do Android, com
   funcionamento offline depois da primeira visita.
 - Interface Material Design 3, responsiva e com suporte a telemóvel
@@ -57,7 +59,7 @@ no ecrã principal e abre sem barra do browser. No iPhone e iPad, usar
 *Partilhar → Adicionar ao ecrã principal*.
 
 Depois da primeira visita a app funciona sem rede: o service worker guarda a
-interface, os textos e os 30 mascotes.
+interface, os textos, os 30 mascotes e as músicas.
 
 Ao alterar qualquer ficheiro da lista de cache em `sw.js`, aumentar
 `VERSION` para os browsers descarregarem a versão nova.
@@ -116,11 +118,14 @@ Resumo:
 | Conteúdo | Autor | Licença | Onde |
 | --- | --- | --- | --- |
 | [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) | Microsoft | MIT | `assets/mascots/fluent/` |
-| [Roboto](https://fonts.google.com/specimen/Roboto) | Google | Apache 2.0 | carregada em runtime do Google Fonts |
+| [Roboto](https://fonts.google.com/specimen/Roboto) | Google | Apache 2.0 | `assets/fonts/` |
 | [Material Design 3](https://m3.material.io/) | Google | Apache 2.0 | tokens de cor em `styles.css` |
+| [Tone.js](https://github.com/Tonejs/Tone.js) | Yotam Mann | MIT | `assets/vendor/tone/` |
 
-Não são usados ficheiros de música nem áudio de terceiros. Os efeitos
-sonoros são gerados em tempo real pela Web Audio API.
+Não são usados ficheiros de música nem gravações. Os efeitos sonoros são gerados
+em tempo real pela Web Audio API e as músicas são melodias tradicionais tocadas
+por Tone.js a partir de dados de notas. Os créditos de cada melodia estão na
+secção 4 de [`LICENSE`](LICENSE).
 
 ## Documentação
 

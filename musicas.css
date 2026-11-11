@@ -1,0 +1,136 @@
+/* Styles for the music page only. The game page never loads this file. */
+
+.music-page {
+  padding: 14px 16px 28px;
+}
+
+.music-intro {
+  margin: 4px 0 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant);
+}
+
+.music-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--md-surface-container);
+}
+
+.music-toolbar-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--md-on-surface-variant);
+}
+
+.music-toolbar-field select {
+  height: 34px;
+  padding: 0 6px;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 9px;
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  font: inherit;
+  font-size: 12.5px;
+}
+
+.music-toolbar-field input[type="range"] {
+  width: 84px;
+  height: 34px;
+  accent-color: var(--md-primary);
+}
+
+.music-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.music-item {
+  margin: 0;
+}
+
+.music-play {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 14px;
+  background: var(--md-surface-container-low, var(--md-surface));
+  color: var(--md-on-surface);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 150ms var(--motion-standard), border-color 150ms var(--motion-standard);
+}
+
+.music-play:hover { border-color: var(--md-primary); }
+.music-play:active { transform: scale(.995); }
+
+.music-play-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.music-play-icon svg { width: 18px; height: 18px; display: block; }
+.music-play .icon-stop { display: none; }
+.music-play.is-playing .icon-play { display: none; }
+.music-play.is-playing .icon-stop { display: block; }
+
+.music-play.is-playing {
+  border-color: var(--md-primary);
+  background: var(--md-primary-container);
+}
+
+.music-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.music-item-title {
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.music-item-meta {
+  font-size: 11.5px;
+  color: var(--md-on-surface-variant);
+}
+
+.music-item-about {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--md-on-surface-variant);
+}
+
+.music-foot {
+  margin: 18px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-play { transition: none; }
+}

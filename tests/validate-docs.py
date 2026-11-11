@@ -240,7 +240,9 @@ def check_asset_notices(report, root, asset_dirs):
             continue
         files = []
         for _b, _d, names in os.walk(base):
-            files.extend(n for n in names if n.lower().endswith((".svg", ".png", ".jpg", ".woff", ".woff2", ".mp3", ".ogg", ".wav")))
+            files.extend(n for n in names if n.lower().endswith(
+                (".svg", ".png", ".jpg", ".woff", ".woff2", ".mp3", ".ogg", ".wav",
+                 ".js", ".txt")))
         unlisted = [n for n in files if n not in licence]
         report.check(
             not unlisted,
@@ -318,7 +320,11 @@ def main():
     check_adrs(report, root)
     check_requirements(report, root)
     check_changelog(report, root)
-    check_asset_notices(report, root, args.assets or ["assets/mascots/fluent"])
+    check_asset_notices(report, root, args.assets or [
+        "assets/mascots/fluent",
+        "assets/vendor/tone",
+        "assets/fonts",
+    ])
     if not args.no_git:
         check_tag(report, root)
 

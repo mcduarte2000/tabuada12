@@ -14,7 +14,7 @@
  */
 'use strict';
 
-var VERSION = 'tabuada12-v8';
+var VERSION = 'tabuada12-v13';
 var SHELL = VERSION + '-shell';
 
 var SHELL_FILES = [
@@ -35,7 +35,14 @@ var SHELL_FILES = [
   'assets/screenshot-setup.png',
   'assets/screenshot-game.png',
   'assets/fonts/roboto-latin.woff2',
-  'assets/fonts/LICENSE-roboto.txt'
+  'assets/fonts/LICENSE-roboto.txt',
+  'assets/vendor/tone/Tone.js',
+  'assets/vendor/tone/LICENSE.md',
+  'assets/music/tracks.js',
+  'music.js',
+  'musicas.html',
+  'musicas.css',
+  'musicas.js'
 ];
 
 var MASCOTS = [

@@ -49,8 +49,9 @@ Ranked by importance. Each goal has a short scenario that makes it testable.
 - **ES5 syntax** in `app.js`, inside a single IIFE, so the file runs as-is in
   any browser without tooling.
 - **Browser storage only** for state: `localStorage` and cookies.
-- **No external request at runtime.** Roboto is vendored and precached. The app
-  works fully offline from the first visit.
+- **No external request at runtime.** Roboto, Tone.js and every melody are
+  vendored or generated and precached. The app works fully offline from the
+  first visit.
 
 ### Organisational constraints
 

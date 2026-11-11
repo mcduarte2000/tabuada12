@@ -21,6 +21,7 @@
   };
 
   var PROGRESS_TTL = 24 * 60 * 60;
+  var APP_VERSION = '1.8.0';
 
   var LEVELS = [
     { level: 1, name: 'Iniciante', emoji: '🐣', maxTable: 10, excludeOne: false, seconds: 30, equations: false, unlockStreak: 0 },
@@ -32,6 +33,7 @@
   ];
 
   var EQUATION_CHANCE = 0.34;
+  var MAX_INPUT = 3;
   var PROFILE_TTL = 365 * 24 * 60 * 60;
   var COOKIE_LIMIT = 3800;
 
@@ -103,7 +105,8 @@
     bestLead: document.getElementById('bestLead'),
     bestNote: document.getElementById('bestNote'),
     recordList: document.getElementById('recordList'),
-    confetti: document.getElementById('confetti')
+    confetti: document.getElementById('confetti'),
+    appVersion: document.getElementById('appVersion')
   };
 
   var ICONS = {
@@ -146,6 +149,7 @@
     remaining: 0,
     deadlineId: null,
     paused: false,
+    pauseReasons: {},
     savedQuestion: null
   };
 
@@ -389,7 +393,7 @@
   }
 
   function formatTime(ms) {
-    var total = Math.max(0, Math.floor(ms / 1000));
+    var total = Math.max(0, Math.ceil(ms / 1000));
     var minutes = Math.floor(total / 60);
     var seconds = total % 60;
     return minutes + ':' + (seconds < 10 ? '0' + seconds : String(seconds));
@@ -413,6 +417,11 @@
   }
 
   function stopTimer() {
+    if (state.dueAt) {
+      state.remaining = Math.max(0, state.dueAt - Date.now());
+      state.dueAt = 0;
+    }
+
     if (state.timerId !== null) {
       window.clearInterval(state.timerId);
       state.timerId = null;
@@ -423,7 +432,21 @@
     }
   }
 
-  function pauseTimer() {
+  function hasPauseReason() {
+    for (var reason in state.pauseReasons) {
+      if (state.pauseReasons.hasOwnProperty(reason)) return true;
+    }
+    return false;
+  }
+
+  function clearPauseReasons() {
+    state.pauseReasons = {};
+    state.paused = false;
+  }
+
+  function pauseTimer(reason) {
+    state.pauseReasons[reason || 'manual'] = true;
+
     if (state.paused) return;
     if (state.dueAt) {
       state.remaining = Math.max(0, state.dueAt - Date.now());
@@ -434,12 +457,20 @@
     renderTime();
   }
 
-  function resumeTimer() {
-    if (!state.paused) return;
+  function resumeTimer(reason) {
+    delete state.pauseReasons[reason || 'manual'];
+    if (hasPauseReason() || !state.paused) return;
+
     state.paused = false;
-    if (state.phase === 'answering' && state.remaining > 0) {
-      armDeadline(state.remaining);
+
+    if (state.phase === 'answering') {
+      if (state.remaining > 0) {
+        armDeadline(state.remaining);
+      } else {
+        timeUp();
+      }
     }
+
     renderTime();
   }
 
@@ -453,21 +484,30 @@
     state.timerId = window.setInterval(renderTime, 250);
     state.deadlineId = window.setTimeout(function () {
       state.dueAt = 0;
+      state.remaining = 0;
       stopTimer();
       timeUp();
     }, ms);
   }
 
   function startQuestionTimer() {
-    if (state.paused) return;
     var config = levelConfig();
-    armDeadline(config.seconds * 1000);
+    var ms = config.seconds * 1000;
+
+    if (state.paused) {
+      state.dueAt = 0;
+      state.remaining = ms;
+      renderTime();
+      return;
+    }
+
+    armDeadline(ms);
   }
 
   function resetTimerDisplay() {
     var config = levelConfig();
     state.dueAt = 0;
-    state.paused = false;
+    clearPauseReasons();
     state.remaining = config.seconds * 1000;
     renderTime();
   }
@@ -580,7 +620,18 @@
   }
 
   function updateConfirm() {
-    els.confirm.disabled = state.phase !== 'answering' || state.input.length === 0;
+    var typing = state.phase === 'answering' && !state.busy;
+    var full = state.input.length >= MAX_INPUT;
+    var keys = els.keypad.querySelectorAll('button[data-key]');
+    var index;
+    var key;
+
+    for (index = 0; index < keys.length; index += 1) {
+      key = keys[index];
+      key.disabled = !typing || (full && /^[0-9]$/.test(key.dataset.key));
+    }
+
+    els.confirm.disabled = !typing || state.input.length === 0;
   }
 
   function clearAdvance() {
@@ -938,7 +989,7 @@
 
   function pressDigit(digit) {
     if (state.phase !== 'answering' || state.busy) return;
-    if (state.input.length >= 3) return;
+    if (state.input.length >= MAX_INPUT) return;
     state.input = state.input === '0' ? digit : state.input + digit;
     renderAnswer();
     updateConfirm();
@@ -1018,7 +1069,6 @@
       return;
     }
 
-    stopTimer();
     state.missCount += 1;
 
     if (state.attempt === 1) {
@@ -1178,11 +1228,13 @@
     say(mascotPhrases('nivel'), 'ok', 'star');
 
     state.paused = true;
+    state.pauseReasons.levelUp = true;
     stopTimer();
 
     window.setTimeout(function () {
       hideLevelUp();
-      state.paused = false;
+      delete state.pauseReasons.levelUp;
+      state.paused = hasPauseReason();
       newQuestion();
     }, 2600);
 
@@ -1481,7 +1533,9 @@
     if (els.gameName) els.gameName.textContent = state.mascot.name;
     applyThemeColors(state.mascot);
 
-    state.paused = false;
+    if (!resuming) clearPauseReasons();
+    delete state.pauseReasons.setup;
+    state.paused = hasPauseReason();
     renderLevel();
 
     var resumed = resumeSavedQuestion();
@@ -1540,9 +1594,10 @@
 
     if (keepSession) {
       saveQuestionForResume();
-      pauseTimer();
+      pauseTimer('setup');
     } else {
       state.savedQuestion = null;
+      clearPauseReasons();
     }
 
     state.phase = 'answering';
@@ -1754,6 +1809,8 @@
 
     if (typeof render === 'function') render();
 
+    if (!els.game.hidden) pauseTimer('dialog');
+
     if (typeof dialog.showModal === 'function') {
       dialog.showModal();
     } else {
@@ -1767,8 +1824,24 @@
     if (title && title.focus) title.focus({ preventScroll: true });
   }
 
+  function closeDialog(dialog) {
+    if (!dialog) return;
+
+    if (dialog.open === true && typeof dialog.close === 'function') {
+      dialog.close();
+    } else {
+      dialog.removeAttribute('open');
+    }
+
+    resumeTimer('dialog');
+  }
+
   function openAbout() {
     if (!els.aboutDialog) return;
+
+    if (els.appVersion) els.appVersion.textContent = APP_VERSION;
+
+    if (!els.game.hidden) pauseTimer('dialog');
 
     if (typeof els.aboutDialog.showModal === 'function') {
       els.aboutDialog.showModal();
@@ -1841,11 +1914,17 @@
   [els.correctDialog, els.missDialog, els.bestDialog].forEach(function (dialog) {
     if (!dialog) return;
     dialog.addEventListener('click', function (event) {
-      if (event.target === dialog) dialog.close();
+      if (event.target === dialog) closeDialog(dialog);
+    });
+    dialog.addEventListener('close', function () {
+      resumeTimer('dialog');
     });
   });
   els.aboutDialog.addEventListener('click', function (event) {
-    if (event.target === els.aboutDialog) els.aboutDialog.close();
+    if (event.target === els.aboutDialog) closeDialog(els.aboutDialog);
+  });
+  els.aboutDialog.addEventListener('close', function () {
+    resumeTimer('dialog');
   });
 
   attachMascotDrag();
@@ -1948,9 +2027,9 @@
     if (els.game.hidden) return;
 
     if (document.hidden) {
-      pauseTimer();
+      pauseTimer('hidden');
     } else {
-      resumeTimer();
+      resumeTimer('hidden');
     }
   });
 

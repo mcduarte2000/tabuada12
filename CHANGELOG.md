@@ -17,6 +17,68 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-11
+
+Esta versão junta duas iterações: correções de fiabilidade nos controlos e a
+música tradicional.
+
+### Adicionado
+
+- **Música tradicional durante o jogo.** Dezoito melodias tradicionais tocam em
+  sequência aleatória, sintetizadas no próprio dispositivo com Tone.js. Não há
+  ficheiros de áudio nem pedidos de rede.
+- **Escolha de instrumento.** Oito timbres: triângulo, flauta, sino, caixa de
+  música, piano, guitarra, ukelele e clarinete. O piano é o som inicial. A
+  escolha fica guardada.
+- **Página «Músicas»**, ligada a partir do ecrã de informação, com a história de
+  cada melodia, o país, a época, o autor e um botão para ouvir.
+- **Controlo de volume** na barra de música.
+- O ecrã de informação mostra a versão instalada e uma ligação direta ao
+  `CHANGELOG.md`, para que um adulto consiga relatar um problema indicando a
+  versão certa.
+
+### Alterado
+
+- A barra de música aparece apenas no ecrã de jogo.
+- O botão de música é **Tocar / Parar**, em vez de um altifalante.
+- A música começa **desligada** e nunca começa sozinha. A decisão de tocar ou
+  parar fica guardada num cookie, `tabuada12_music`, mas essa memória só define
+  o estado do botão: é sempre preciso carregar em Tocar.
+- A ligação para a página das músicas fica no fim da secção de música do ecrã de
+  informação, com o mesmo espaçamento dos outros botões.
+
+### Corrigido
+
+- **O teclado numérico podia parecer que aceitava uma tecla sem a aceitar.** Uma
+  tecla premida durante a animação de acerto, ou depois do limite de três
+  dígitos, mudava de cor e não escrevia nada. As teclas que não aceitam o toque
+  ficam agora visivelmente desativadas e não reagem.
+- **O cronómetro congelava na segunda tentativa.** Depois de uma primeira
+  resposta errada, o tempo deixava de contar, pelo que a conta nunca expirava.
+  O tempo passou a correr nas duas tentativas, como as regras dos níveis
+  descrevem.
+- **Uma conta podia ficar a 0:00 sem contar como falha.** Se o fim do tempo
+  coincidisse com uma pausa, a conta seguinte não voltava a armar o cronómetro e
+  a pergunta ficava respondível indefinidamente. O fim do tempo resolve sempre a
+  pergunta como falha.
+- O indicador de tempo mostrava `0:00` durante o último segundo, embora a conta
+  ainda aceitasse resposta. Passa a arredondar para cima.
+- Abrir os painéis de Acertos, Falhas, Recordes ou Informação não parava o
+  cronómetro, e ler as estatísticas custava tempo de resposta. Os painéis pausam
+  e retomam o tempo.
+- **A música começava no ecrã do mascote.** Se a preferência guardada fosse
+  «ligada», o primeiro toque em qualquer sítio retomava a música, pelo que ela
+  começava no segundo ecrã da configuração, sem controlos à vista. O primeiro
+  toque passou a servir apenas para desbloquear o áudio.
+- **A música continuava ao sair do jogo.** Sair do ecrã de jogo escondia a
+  barra mas deixava a música a tocar. Ao sair do ecrã de jogo, a música para.
+- **Sons estranhos no meio das músicas.** As partes da melodia anterior ficavam
+  ligadas ao transporte partilhado enquanto a seguinte começava, pelo que notas
+  da música antiga soavam sobre a nova. As partes antigas são agora libertadas
+  antes de o transporte avançar.
+- A guitarra e o ukelele ficavam quase inaudíveis ao lado dos outros
+  instrumentos; o nível foi equilibrado.
+
 ## [1.7.0] - 2026-11-09
 
 ### Adicionado
@@ -307,7 +369,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.7.0...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.0...main
+[1.8.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.5.0...v1.6.0

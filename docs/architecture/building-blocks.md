@@ -35,6 +35,10 @@ C4Container
 | `styles.css` | Material Design 3 tokens, light and dark palettes, layout, components, motion. Mascot picker is a horizontal carousel with page dots and a scroll hint; line heights are unitless so text scales with the system font size; the header sits at the top of the page and stacks a left-aligned row with the static app icon and title above a right-aligned row of action buttons, while the speaking mascot and its name render beside the speech bubble. |
 | `app.js` | Entire game logic in one IIFE, ES5 syntax. |
 | `mascots.js` | `window.MASCOTS` list (30 entries: id, name, image path, background colour) and `window.FALLBACK_CONTENT`. |
+| `music.js` | Background music engine and the radio bar. Plays note data through Tone.js, owns the eight instruments, volume, play/stop and the cookie that remembers the choice. Exposes `window.MusicEngine`; contains no game logic, so a music fault cannot break a question. |
+| `assets/music/tracks.js` | `window.MUSIC_TRACKS`: 18 traditional tunes as `[note, duration]` pairs, plus title, origin, credit, country, era, one-line history and source URL. Generated at authoring time from public ABC notation with `music21`; never edited by hand. |
+| `musicas.html`, `musicas.css`, `musicas.js` | The music page: every tune with its story and a play button, reusing `window.MusicEngine`. |
+| `assets/vendor/tone/Tone.js` | Tone.js 14.8.49, vendored byte-identical from cdnjs with its MIT licence, so the app makes no third-party request. |
 | `content.json` | Per-mascot phrase pools and generic pools, fetched at runtime. |
 | `manifest.webmanifest` | PWA metadata: name, standalone display, five icons (any and maskable), two phone screenshots, one shortcut. |
 | `sw.js` | Service worker: precaches the shell, all mascots and the font, network-first for navigations, cache-first for same-origin assets. No third-party handling. |
@@ -57,7 +61,7 @@ C4Container
 | Adaptive selection | `factKey`, `factWeight`, `chooseFact`, `recordResult` | Weighted random choice per fact, restricted to the current level's fact range. |
 | Levels | `LEVELS`, `levelConfig`, `nextLevelConfig`, `readLevel`, `writeLevel`, `renderLevel`, `checkLevelUp`, `showLevelUp`, `hideLevelUp` | Six levels with their fact range, time limit and equation mix; unlock thresholds; celebration overlay; one-year persistence. |
 | Question shape | `buildQuestion`, `questionAnswer`, `questionLabel`, `renderQuestion`, `answerSlot` | Product questions and missing-factor equations; the answer slot moves to the unknown position. |
-| Countdown | `remainingTime`, `armDeadline`, `startQuestionTimer`, `startQuestionTimerFrom`, `resetTimerDisplay`, `pauseTimer`, `resumeTimer`, `timeUp` | Per-question countdown that pauses on hidden tab and dialogs, and treats expiry as a wrong answer. |
+| Countdown | `remainingTime`, `armDeadline`, `startQuestionTimer`, `startQuestionTimerFrom`, `resetTimerDisplay`, `pauseTimer`, `resumeTimer`, `hasPauseReason`, `clearPauseReasons`, `timeUp` | Single-owner countdown spanning both attempts of a question. Named pause reasons stack (hidden tab, open dialog, level-up, setup); expiry always resolves the question as a miss. See [ADR-0009](./adr/0009-timer-and-input-honesty.md). |
 | Game flow | `newQuestion`, `pressDigit`, `pressDelete`, `submit`, `nextQuestion`, `scheduleAdvance` | Attempt counting, correct/wrong/reveal phases, automatic advance. |
 | Session statistics | `renderStats`, `formatTime`, `renderTime`, `startTimer`, `stopTimer`, `updateBest`, `finalizeSession`, `startSessionRecord`, `resetStreak`, `renderSessionDialogs`, `renderRecords`, `openDialog` | Correct count, miss count, streak, record history, elapsed time, and the detail dialogs behind each indicator. |
 | Rendering and feedback | `say`, `react`, `setAvatar`, `applyThemeColors`, `bump`, `restartAnimation`, `burstConfetti`, `spawnRipple` | Bubble text, mascot animation, ripple and confetti effects. |
@@ -84,7 +88,7 @@ C4Container
 | `progress` | Per-fact counters: `ok`, `second`, `fail`, `last`, `lastOk`. |
 | `level` | Current level, from 1 to 6, persisted for one year. |
 | `question` | Current fact plus its kind (`product`, `missingA`, `missingB`) and product. |
-| `dueAt`, `remaining`, `deadlineId`, `paused` | Countdown state. |
+| `dueAt`, `remaining`, `deadlineId`, `paused`, `pauseReasons` | Countdown state; `pauseReasons` is the set of holds that keep the clock stopped. |
 | `savedQuestion` | Question, input, attempt and remaining time kept while the mascot step is open. |
 
 ## 6. Runtime view

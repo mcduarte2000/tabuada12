@@ -67,9 +67,19 @@ The "Tempo" indicator shows the **time remaining for the current question**, in
 `m:ss`, counting down. It turns amber in the last third of the limit and red in
 the last three seconds.
 
-The timer stops while an answer has been accepted, while the answer is being
-revealed, while a dialog is open, while a level-up celebration is on screen,
-and while the browser tab is hidden. It resumes from where it stopped.
+One countdown spans **both attempts** of a question: a wrong first answer does
+not stop it, so a child who used the whole first attempt has the same limit for
+the second. Only resolving the question — correct answer, second miss or expiry
+— stops it.
+
+The timer is held, and resumes from the same value, while an answer has been
+accepted, while the answer is being revealed, while a dialog is open, while a
+level-up celebration is on screen, and while the browser tab is hidden. Pauses
+can overlap, so each one is a named reason; the timer runs only when no reason
+is held.
+
+The display rounds up. `0:00` appears only when the question is resolved, and
+never while an answer can still be given.
 
 ## Level-up celebration
 

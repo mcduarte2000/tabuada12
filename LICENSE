@@ -105,8 +105,72 @@ project that copies the licence from an old tutorial will state the wrong one.
   custom properties in `styles.css`. No Material code or component library is
   bundled.
 
-## 4. Nothing else
+## 4. Music
+
+The background music is generated at runtime from note data. There are no audio
+files and no recordings: every tune is a synthetic performance of a melody held
+as plain data in `assets/music/tracks.js`.
+
+The melodies are traditional, except where noted. Each was transcribed to ABC
+notation on a public folk-music archive, and that ABC was converted to note
+data with `music21` at authoring time; nothing was copied from a recording,
+MIDI file or modern arrangement. The `source` field in `assets/music/tracks.js`
+and the table below name that archive page.
+
+**Copyright position.** This project is published in Portugal, where copyright
+runs for 70 years from the year after the author's death. Every tune below meets
+that test except **Cielito Lindo**, whose author died in 1957, so protection ends
+on 31 December 2027. It is included with its author credited; the music can be
+switched off with the radio button.
+
+| Tune | Credit | Country | Source |
+| --- | --- | --- | --- |
+| Soldier's Joy | Traditional | Ireland / USA | https://thesession.org/tunes/1356 |
+| Waltzing Matilda | Traditional (words: Banjo Paterson) | Australia | https://thesession.org/tunes/16232 |
+| Yankee Doodle | Traditional | USA | https://thesession.org/tunes/10574 |
+| Turkey in the Straw | Traditional | USA | https://thesession.org/tunes/2638 |
+| The Irish Washerwoman | Traditional | Ireland | https://thesession.org/tunes/92 |
+| Pop Goes the Weasel | Traditional | England | https://thesession.org/tunes/10534 |
+| Arkansas Traveler | Traditional | USA | https://thesession.org/tunes/5583 |
+| Buffalo Gals | Traditional | USA | https://thesession.org/tunes/24492 |
+| Drunken Sailor | Traditional | Ireland / UK | https://thesession.org/tunes/15961 |
+| Old Joe Clark | Traditional | USA | https://thesession.org/tunes/14474 |
+| The Sailor's Hornpipe | Traditional | UK | https://thesession.org/tunes/12708 |
+| La Cucaracha | Traditional | Mexico | https://abcnotation.com (musicaviva mirror) |
+| She'll Be Coming 'Round the Mountain | Traditional | USA | https://abcnotation.com (Thornton Rose mirror) |
+| Alouette | Traditional | Canada (Quebec) | https://abcnotation.com (Digital Tradition mirror) |
+| Oh! Susanna | Stephen Foster (1848) | USA | https://abcnotation.com (Nottingham Music Database) |
+| Cielito Lindo | Quirino Mendoza y Cortes (1882) | Mexico | https://abcnotation.com (John Chambers) |
+| Old MacDonald Had a Farm | Traditional | USA / UK | https://en.wikipedia.org/wiki/Old_MacDonald_Had_a_Farm |
+| Tarantella Napoletana | Traditional | Italy (Naples) | https://abcnotation.com (demo tunes) |
+
+Notes on two tunes:
+
+- **Old MacDonald Had a Farm.** The only ABC transcription found was licensed
+  CC BY-NC-SA, which this project cannot use. The melody is public domain, so it
+  was written out from the standard tune instead. It is the one melody here not
+  derived from a permissively licensed transcription.
+- **The Irish Washerwoman** and **The Sailor's Hornpipe** were each transcribed
+  under an alternate title in the archives used (`Corporal Casey` and `College
+  Hornpipe`). They are the same traditional tunes under their other names.
+
+## 5. Tone.js
+
+- **Work:** Tone.js 14.8.49
+- **Author:** Yotam Mann and contributors
+- **Source:** https://github.com/Tonejs/Tone.js
+- **File origin:** https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js
+- **Licence:** MIT, full text in `assets/vendor/tone/LICENSE.md`
+- **Files:** `assets/vendor/tone/Tone.js`, `assets/vendor/tone/LICENSE.md`,
+  `assets/vendor/tone/Tone.js.LICENSE.txt`
+- **Modification statement:** none. The file is redistributed byte-identical as
+  published by cdnjs.
+
+It is vendored rather than loaded from a CDN so that the app keeps its promise
+of making no third-party request and working offline.
+
+## 6. Nothing else
 
 No other third-party content is included. There are no audio files, no
-analytics, no icon fonts and no JavaScript libraries. Sound effects are
-generated at runtime by the Web Audio API inside `app.js`.
+analytics, no icon fonts. Sound effects are generated at runtime by the Web
+Audio API inside `app.js`.

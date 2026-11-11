@@ -58,8 +58,8 @@ is a prerequisite for both.
 
 * Positive: installing is one tap in Chrome, with the screenshots and icons
   prepared for a rich install prompt.
-* Positive: the app starts offline after the first visit, which also removes
-  the Google Fonts dependency at runtime.
+* Positive: the app starts offline after the first visit. The typeface was later
+  self-hosted (iteration 4), which removed the last runtime request.
 * Positive: no account, no store review, no signing key, no release cadence.
 * Negative / risks: discovery depends on sharing a link; there is no Play
   Store search result.
@@ -84,8 +84,7 @@ is a prerequisite for both.
   screenshots. Navigation uses network-first with a cache fallback, so a deploy
   is picked up on the next online visit while offline still works. Static
   assets are cache-first.
-- Google Fonts requests are cached at runtime; when offline they resolve to an
-  empty stylesheet and font response instead of an error, so the app silently
-  falls back to system fonts.
+- Roboto is self-hosted in `assets/fonts/` and precached (iteration 4), so there
+  is no font request at runtime and no fallback path to reason about.
 - The header shows an install button only after the browser fires
   `beforeinstallprompt`, and hides it again after `appinstalled`.
