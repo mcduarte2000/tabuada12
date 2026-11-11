@@ -206,13 +206,8 @@ def check_tag(report, root):
             capture_output=True, text=True, check=True
         ).stdout.strip()
 
-        dirty = subprocess.run(
-            ["git", "-C", root, "status", "--porcelain"],
-            capture_output=True, text=True, check=True
-        ).stdout.strip()
-
         report.check(
-            target == head or bool(dirty),
+            target == head,
             "newest tag points at HEAD",
             f"tag {tags[0]} is behind HEAD; tag the release or expect a newer commit"
         )

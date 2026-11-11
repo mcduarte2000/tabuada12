@@ -21,7 +21,7 @@
   };
 
   var PROGRESS_TTL = 24 * 60 * 60;
-  var APP_VERSION = '1.8.1';
+  var APP_VERSION = '1.8.2';
 
   var LEVELS = [
     { level: 1, name: 'Iniciante', emoji: '🐣', maxTable: 10, excludeOne: false, seconds: 30, equations: false, unlockStreak: 0 },

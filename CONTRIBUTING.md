@@ -301,6 +301,13 @@ exits non-zero on failure.
 - Annotated tags `vX.Y.Z`, pushed separately from the branch.
 - Breaking the stored-data format so old data cannot be read is a MAJOR change.
 - Never rewrite a published tag. Cut a patch version instead.
+- **A version that only ever existed in an uncommitted tree was not released.**
+  Check `git tag` against `HEAD` before writing a changelog entry. The validator
+  asserts that the newest tag points at `HEAD`, on a clean tree, so an untagged
+  release fails the suite rather than shipping quietly.
+- **The version lives in three places** and they must agree: `APP_VERSION` in
+  `app.js`, the `id="appVersion"` text in `index.html`, and the top dated entry
+  in `CHANGELOG.md`. The suite compares all three; edit them in one go.
 
 ### Version numbers mean
 
@@ -318,3 +325,12 @@ exits non-zero on failure.
 - Do not commit a tag pointing at a commit that lacks part of what the changelog
   claims. Write the entry, then tag, then verify the tag resolves to a commit that
   contains everything.
+- **Commit first, then verify, then push.** Both suites also pass on a dirty
+  tree, and that hides failures: the tag check is only meaningful once the work
+  is committed. Run them again after committing and before pushing.
+- **Do not split uncommitted work across commits to look tidy.** When two
+  iterations share files, say so and commit them together. Fabricating an
+  intermediate state produces a history that never built.
+- **Measure before writing a number in a document.** Test counts, file sizes and
+  timings come from the run that just happened. The validator rejects table
+  numbers that drift from the code, but prose counts are your responsibility.

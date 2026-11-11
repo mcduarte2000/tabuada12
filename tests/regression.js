@@ -614,6 +614,41 @@ function staticTests() {
     return read('AGENTS.md').split('\n').length <= 140;
   })(), 'a bloated instruction file is skipped by readers');
 
+  check('AGENTS.md records the mistakes already made here', (function () {
+    var agents = read('AGENTS.md');
+    return /Stop and ask, do not guess/.test(agents) &&
+      /Inventing a release/.test(agents) &&
+      /Splitting uncommitted work/.test(agents) &&
+      /Changing behaviour past what was asked/.test(agents);
+  })(), 'each rule here exists because an agent got it wrong once');
+
+  check('AGENTS.md warns about the cache and unmeasured numbers', (function () {
+    var agents = read('AGENTS.md');
+    return /Never trust a cached build/.test(agents) &&
+      /Never quote a number you did not measure/.test(agents);
+  })(), 'a stale service worker and an invented test count both shipped wrong results');
+
+  check('AGENTS.md makes the three version places explicit', (function () {
+    var agents = read('AGENTS.md');
+    return /APP_VERSION/.test(agents) && /appVersion/.test(agents) &&
+      /CHANGELOG\.md/.test(agents) && /on a clean tree/.test(agents);
+  })(), 'the suite version check only fires once the tree is committed');
+
+  check('AGENTS.md claims no external request and names no CDN', (function () {
+    var agents = read('AGENTS.md');
+    return /no external request at all/.test(agents) &&
+      !/Google Fonts/.test(agents) &&
+      !/cdnjs|unpkg|jsdelivr/.test(agents);
+  })(), 'the contract said the only request was Google Fonts long after self-hosting');
+
+  check('CONTRIBUTING.md records the release and commit traps', (function () {
+    var text = read('CONTRIBUTING.md');
+    return /only ever existed in an uncommitted tree/.test(text) &&
+      /Commit first, then verify, then push/.test(text) &&
+      /Do not split uncommitted work/.test(text) &&
+      /Measure before writing a number/.test(text);
+  })(), 'the same three mistakes were made twice in this repository');
+
   check('CONTRIBUTING.md holds the moved detail', (function () {
     var text = read('CONTRIBUTING.md');
     return /## Code/.test(text) && /## Documentation/.test(text) &&

@@ -17,6 +17,30 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+## [1.8.2] - 2026-11-11
+
+### Alterado
+
+- **Regras do projeto mais rigorosas.** `AGENTS.md` passa a nomear os erros já
+  cometidos neste repositório, para não se repetirem: inventar uma versão que só
+  existiu em trabalho não commitado, dividir trabalho por commits para o
+  histórico parecer arrumado, mudar comportamento além do pedido, e confiar num
+  resultado obtido com um service worker a servir a versão antiga.
+- `AGENTS.md` deixa de afirmar que o único pedido externo é o Google Fonts; a
+  aplicação não faz qualquer pedido externo.
+- `CONTRIBUTING.md` explica que a versão vive em três sítios e que as duas
+  suites também passam com a árvore suja, pelo que é preciso commitá-la antes de
+  verificar e só depois publicar.
+
+### Corrigido
+
+- O validador aceitava uma versão por publicar desde que houvesse alterações por
+  commitar. Passa a exigir que a etiqueta mais recente aponte para `HEAD` numa
+  árvore limpa, que é o erro que deixou o changelog a anunciar versões que nunca
+  foram publicadas.
+- O teste da versão só comparava `app.js` com o changelog; `index.html` podia
+  ficar atrás. Passa a comparar os três sítios.
+
 ## [1.8.1] - 2026-11-11
 
 ### Corrigido
@@ -384,7 +408,8 @@ Primeira versão publicada.
 - Licença MIT, README com instruções de execução, publicação, estrutura e
   créditos.
 
-[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.1...main
+[Unreleased]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.2...main
+[1.8.2]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/mcduarte2000/tabuada12/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/mcduarte2000/tabuada12/compare/v1.6.1...v1.7.0

@@ -80,6 +80,12 @@ defect from returning unnoticed.
 | The information dialog makes no offline claim about music | The sentence was removed on request |
 | The confirm key needs the right number of digits | A dropped key press left a short answer that scored a miss |
 | Enter obeys the digit count | The shortcut must not bypass the rule the button enforces |
+| AGENTS.md records the mistakes already made here | Each rule exists because an agent got it wrong once |
+| AGENTS.md warns about the cache and unmeasured numbers | A stale worker and an invented count both shipped wrong results |
+| AGENTS.md makes the three version places explicit | The version check only fires once the tree is committed |
+| AGENTS.md claims no external request | The contract still named Google Fonts long after self-hosting |
+| CONTRIBUTING.md records the release and commit traps | The same three mistakes were made twice |
+| The newest tag points at HEAD | An untagged release was described in the changelog |
 | A new track never overlaps the previous one | Leftover Parts from the old tune were audible as stray notes |
 | The player offers a choice of instruments | Four extra timbres were requested and must stay reachable |
 | The music page lists every tune | A page nobody can reach, or that lists a tune with no way to hear it, is useless |

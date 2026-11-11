@@ -6,9 +6,9 @@ how to work here and where everything lives. Detail lives in
 
 ## Project
 
-**Tabuada 12** is a free, static web app that helps children practise
+**Tabuada 12** is a free, static web app where children practise the
 multiplication tables from 1 to 12. A chosen animal mascot asks random questions,
-the child gets two attempts, and wrong answers are revisited more often.
+the child gets two attempts, and failed facts return more often.
 
 - Live app: <https://tabuada12.miguelduarte.eu/>
 - Repository: <https://github.com/mcduarte2000/tabuada12>
@@ -38,10 +38,8 @@ python3 tests/validate-docs.py .
 ```sh
 # "build" is a copy of the repository root; nothing is compiled or bundled
 # deploy: push to main (GitHub Pages) or let Cloudflare Pages read the branch
+# an HTTP server is required: content.json is fetched, which fails on file://
 ```
-
-An HTTP server is required, not optional: `content.json` is loaded with `fetch`,
-which is blocked on `file://`.
 
 CI runs both suites on every push: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
@@ -87,7 +85,12 @@ CI runs both suites on every push: [`.github/workflows/ci.yml`](.github/workflow
   in a throwaway environment and never ships; see
   [`CONTRIBUTING.md`](CONTRIBUTING.md#reuse-before-you-build).
 - **`docs/levels.md` and `LEVELS` change together**; the suite compares them.
-- **Bump `VERSION` in `sw.js`** in the same commit as any precached file change.
+- **Bump `VERSION` in `sw.js`** whenever a precached file changes, same commit.
+- **Never trust a cached build.** A registered service worker serves the old
+  `app.js`, so a fix can look broken or a bug can look fixed. Verify with
+  `sw.js` blocked or the worker unregistered, or the result means nothing.
+- **Never quote a number you did not measure.** Test counts and sizes in docs
+  come from the run that just happened, never from an estimate.
 
 Full rules: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
@@ -95,7 +98,8 @@ Full rules: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 - **No dependencies, no build step, no framework.** Adding one requires an ADR.
 - **No backend, no analytics, no tracking.** State stays in the browser.
-- **No third-party runtime script.** The only external request is Google Fonts.
+- **No third-party runtime script.** The app makes no external request at all:
+  every asset, font and library is vendored and precached.
 - **Generated or vendored files**: `assets/mascots/fluent/` and its licence file.
   Replace them only as a whole set, and update `LICENSE` in the same commit.
 - **Published git tags.** Never rewrite one; cut a patch version instead.
@@ -108,5 +112,27 @@ python3 tests/validate-docs.py .
 git status --porcelain     # confirm only intended files are staged
 ```
 
-Both suites must pass. If a document and the code disagree, fix one before
-closing: the suite checks the pairs that matter, not the prose.
+Both suites must pass **on a clean tree**. They also pass on a dirty tree, and
+that hides real failures: the version check only fires once everything is
+committed. Commit first, re-run both suites, and only then push and tag.
+
+The version number lives in three places and they must agree: `APP_VERSION` in
+`app.js`, the `<strong id="appVersion">` text in `index.html`, and the top entry
+in `CHANGELOG.md`. The suite compares all three.
+
+If a document and the code disagree, fix one before closing: the suite checks
+the pairs that matter, not the prose.
+
+### Stop and ask, do not guess
+
+Mistakes already made here. When one applies, stop and ask, do not choose:
+
+- **Splitting uncommitted work into several commits.** If two iterations share
+  files, say so and commit them together; never fabricate an intermediate state
+  to make the history look tidy.
+- **Inventing a release.** A version that only ever existed in an uncommitted
+  working tree was not released. Check `git tag` against `HEAD` before writing
+  a changelog entry, and never describe a number as shipped until it is tagged.
+- **Changing behaviour past what was asked.** Restricting the keypad further than
+  requested, or adding autoplay "because it remembers the choice", are both real
+  examples. Implement the request, then state the trade-off you noticed.

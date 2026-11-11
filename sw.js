@@ -14,7 +14,7 @@
  */
 'use strict';
 
-var VERSION = 'tabuada12-v14';
+var VERSION = 'tabuada12-v15';
 var SHELL = VERSION + '-shell';
 
 var SHELL_FILES = [
