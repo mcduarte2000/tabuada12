@@ -487,6 +487,21 @@ function staticTests() {
   check('service worker is versioned', /var VERSION = 'tabuada12-v\d+'/.test(sw),
     'a version bump is the only way to retire stale caches');
 
+  check('.well-known/assetlinks.json names the Android app', (function () {
+    try {
+      var links = JSON.parse(read('.well-known/assetlinks.json'));
+      var stmt = links[0];
+      return links.length === 1 &&
+        stmt.relation.indexOf('delegate_permission/common.handle_all_urls') >= 0 &&
+        stmt.target.namespace === 'android_app' &&
+        stmt.target.package_name === 'eu.miguelduarte.tabuada12' &&
+        typeof stmt.target.sha256_cert_fingerprints[0] === 'string' &&
+        read('android/app/build.gradle').indexOf('applicationId "eu.miguelduarte.tabuada12"') >= 0;
+    } catch (error) {
+      return false;
+    }
+  })(), 'a wrong Digital Asset Links statement opens the TWA as a Custom Tab with the URL bar');
+
   check('app registers the service worker', /serviceWorker\.register\('sw\.js'\)/.test(js),
     'the manifest alone does not make the app offline-capable');
 

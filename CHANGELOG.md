@@ -17,6 +17,14 @@ As versões correspondem aos commits indicados nas ligações no fim do ficheiro
 
 ## [Unreleased]
 
+### Adicionado
+
+- **Aplicação Android.** O jogo pode agora ser empacotado como aplicação Android
+  (Trusted Web Activity) a partir de `android/`, sem alterar o código do jogo.
+  Ver [ADR-0011](docs/architecture/adr/0011-android-trusted-web-activity.md),
+  [`android/README.md`](android/README.md) e
+  [`.well-known/assetlinks.json`](.well-known/assetlinks.json).
+
 ## [1.8.2] - 2026-11-11
 
 ### Alterado

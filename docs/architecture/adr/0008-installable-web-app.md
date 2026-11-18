@@ -71,6 +71,8 @@ is a prerequisite for both.
   listed file exists.
 * Follow-up: when a Play Store listing is wanted, add a Trusted Web Activity on
   top of this and publish `assetlinks.json`. No app code changes are required.
+  Scheduled as the direct-APK Android app in
+  [ADR-0011](./0011-android-trusted-web-activity.md).
 
 ## Implementation notes
 

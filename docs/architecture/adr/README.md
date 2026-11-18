@@ -16,10 +16,11 @@ One record per hard-to-reverse decision. Format follows MADR.
 | [0008](./0008-installable-web-app.md) | Ship as an installable Progressive Web App | accepted |
 | [0009](./0009-timer-and-input-honesty.md) | Give the countdown one owner and never show input that is discarded | accepted |
 | [0010](./0010-vendored-tonejs-music.md) | Play traditional music from note data with a vendored Tone.js | accepted |
+| [0011](./0011-android-trusted-web-activity.md) | Ship the Android app as a Trusted Web Activity shell | accepted |
 
 ## Numbering
 
 Numbers are monotonic and never reused. Gaps are acceptable. A superseded ADR
 keeps its number and changes its status to `superseded by ADR-MMMM`.
 
-The next decision uses the next free number: **0011**.
+The next decision uses the next free number: **0012**.

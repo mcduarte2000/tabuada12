@@ -52,3 +52,5 @@ framework is smaller than the cost of its toolchain.
   at runtime. Mitigated by keeping functions small and verifying in a browser.
 * Negative / risks: `app.js` will eventually be large. Splitting it into
   multiple `<script>` files or ES modules requires a new ADR.
+* Exception: the `android/` TWA shell has its own Gradle toolchain, scoped to
+  that directory only; see [ADR-0011](./0011-android-trusted-web-activity.md).
