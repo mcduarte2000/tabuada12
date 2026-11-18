@@ -67,6 +67,7 @@ CI runs both suites on every push: [`.github/workflows/ci.yml`](.github/workflow
 | `docs/levels.md` | the six levels: facts, time limits, equations |
 | `docs/tests/README.md` | every check, and the defect it prevents |
 | `docs/backlog.md` | investigated, deliberately unscheduled |
+| `android/` | Android app (Trusted Web Activity shell), own Gradle build — ADR-0011 |
 | `CONTRIBUTING.md` | code, documentation and licensing rules |
 
 ## Conventions in one screen

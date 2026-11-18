@@ -94,6 +94,7 @@ defect from returning unnoticed.
 | Every manifest icon exists on disk | A 404 blocks install with no visible reason |
 | Every precached file exists | `cache.addAll` is atomic, so one 404 disables offline |
 | Service worker is versioned | Stale shells survive forever |
+| `assetlinks.json` names the Android package with the `handle_all_urls` relation | A mismatched Digital Asset Links statement makes Chrome open the TWA as a Custom Tab with the URL bar |
 | Service worker activates and caches the shell | Offline support that never engages |
 | App loads offline | The main promise of the PWA route |
 | Time label says remaining | The markup said elapsed while the value counted down |

@@ -49,6 +49,12 @@ C4Container
 | `assets/fonts/roboto-latin.woff2` | Roboto Variable, latin subset, 37 KB, serving weights 100-900 from one file. Precached, declared with `@font-face` in `styles.css`. |
 | `assets/fonts/LICENSE-roboto.txt` | The SIL Open Font License 1.1 text for the vendored font. |
 
+The repository also carries `android/`, the Android application that wraps the
+hosted PWA in a Trusted Web Activity (see
+[ADR-0011](./adr/0011-android-trusted-web-activity.md)). It is not part of the
+served site (`.assetsignore` excludes it from the deploy) and has its own
+Gradle build that runs only on a developer machine.
+
 ### 5.3 Modules inside `app.js`
 
 `app.js` is one IIFE with no imports. Blocks are grouped by responsibility.

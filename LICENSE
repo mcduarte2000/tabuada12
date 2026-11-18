@@ -169,7 +169,18 @@ Notes on two tunes:
 It is vendored rather than loaded from a CDN so that the app keeps its promise
 of making no third-party request and working offline.
 
-## 6. Nothing else
+## 6. Android app template
+
+- **Work:** Bubblewrap template project (`packages/core/template_project`)
+- **Author:** Google LLC (the Gradle wrapper jar is (c) Gradle Inc.)
+- **Source:** https://github.com/GoogleChromeLabs/bubblewrap, core 1.27.0
+- **Licence:** Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0);
+  the licence header is kept at the top of each vendored file
+- **Files:** the Gradle, manifest, Java, resource XML and wrapper files under
+  `android/`, rendered for this project. The launcher icons, splash and
+  `store_icon.png` are this project's own assets (MIT), not Bubblewrap's.
+
+## 7. Nothing else
 
 No other third-party content is included. There are no audio files, no
 analytics, no icon fonts. Sound effects are generated at runtime by the Web

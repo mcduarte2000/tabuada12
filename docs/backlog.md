@@ -15,6 +15,9 @@ relevant ADR or in `quality-and-risks.md`.
 
 * Investigated: 2026-11-08
 * Status: not started, deliberately deferred
+* Update 2026-11-18: the no-review alternative at the bottom of this entry is
+  now scheduled — see [ADR-0011](./architecture/adr/0011-android-trusted-web-activity.md)
+  and `android/`. The F-Droid route itself stays deferred for the reasons above.
 * Effort: large. Requires a build pipeline the project does not have.
 * Prerequisite: the PWA is shipped (ADR-0008). It is the starting point, not
   the deliverable.

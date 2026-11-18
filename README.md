@@ -29,6 +29,8 @@ GitHub Pages ou Cloudflare Pages.
   e uma [página com todas as melodias](musicas.html) e a sua história.
 - Instalável como aplicação (PWA) no Chrome ou Edge do Android, com
   funcionamento offline depois da primeira visita.
+- [Aplicação Android](android/README.md) (Trusted Web Activity): o jogo também
+  pode ser distribuído como APK, abrindo em ecrã inteiro sem barra do browser.
 - Interface Material Design 3, responsiva e com suporte a telemóvel
   (safe areas, alvos táteis e `prefers-reduced-motion`).
 
@@ -64,6 +66,16 @@ interface, os textos, os 30 mascotes e as músicas.
 Ao alterar qualquer ficheiro da lista de cache em `sw.js`, aumentar
 `VERSION` para os browsers descarregarem a versão nova.
 
+## Aplicação Android
+
+Além de instalar como PWA, o jogo pode ser empacotado como aplicação Android:
+um *Trusted Web Activity* em [`android/`](android/README.md) que abre
+<https://tabuada12.miguelduarte.eu/> em ecrã inteiro, sem duplicar o código do
+jogo. A verificação do domínio usa
+[`.well-known/assetlinks.json`](.well-known/assetlinks.json), com a
+*impressão digital* SHA-256 da chave de assinatura do APK. A decisão está no
+[ADR-0011](docs/architecture/adr/0011-android-trusted-web-activity.md).
+
 ## Estrutura
 
 ```
@@ -86,6 +98,7 @@ assets/
   apple-touch-icon.png
   mascots/fluent/     mascotes SVG + licença de origem
 docs/                 documentação de arquitetura (arc42 + ADRs)
+android/              aplicação Android (TWA), com o seu próprio build Gradle (ADR-0011)
 ```
 
 ## Conteúdo editável
